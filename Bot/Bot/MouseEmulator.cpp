@@ -4,7 +4,12 @@
 #include <iostream>
 
 MouseEmulator::MouseEmulator()
-{}
+{
+	screen_size.x = GetSystemMetrics(SM_CXSCREEN);
+	screen_size.y = GetSystemMetrics(SM_CYSCREEN);
+
+	cout << "Screeen : " << screen_size.x << "///" << screen_size.y << "\n";
+}
 
 
 MouseEmulator::~MouseEmulator()
@@ -12,7 +17,13 @@ MouseEmulator::~MouseEmulator()
 
 void MouseEmulator::AddPoint(int x, int y)
 {
-	points.push_back(Point<int>(x, y));
+	float x_conv = (float)x / (float)screen_size.x * 65535.0f;//Mouse coordinates screen conversion
+	float y_conv = (float)y / (float)screen_size.y * 65535.0f;
+	points.push_back(Point<int>(x_conv, y_conv));
+
+	/*cout << "Click x:  " << x << " y: " << y << "\n";
+	cout << "Click[CONV] x:  " << x_conv << " y: " << y_conv << "\n";
+	cout << "Click[RES] x:  " << points.back().x << " y: " << points.back().y << "\n";*/
 }
 
 void MouseEmulator::PrintPoints()
@@ -38,6 +49,8 @@ bool MouseEmulator::Move(float dt)
 	current_mouse_position.x = cursor_pos.x;
 	current_mouse_position.y = cursor_pos.y;
 
+	ScreenToMouseUnits(current_mouse_position.x, current_mouse_position.y);
+
 	if (!has_dst)
 		if (ComputeDst())
 			return true; //End
@@ -58,11 +71,24 @@ bool MouseEmulator::Move(float dt)
 	final_pos.x = current_mouse_position.x + (int)displacement.x;
 	final_pos.y = current_mouse_position.y + (int)displacement.y;
 
-	SetCursorPos(final_pos.x, final_pos.y);
+
+	INPUT input;
+	input.type = INPUT_MOUSE;
+	input.mi.dx = displacement.x;
+	input.mi.dy = displacement.y;
+	input.mi.dwFlags = MOUSEEVENTF_MOVE;
+	input.mi.mouseData = 0;
+	input.mi.dwExtraInfo = NULL;
+	input.mi.time = 0;
+	SendInput(1, &input, sizeof(INPUT));
+	//SetCursorPos(final_pos.x, final_pos.y);
 
 	//Check dst
 	if (final_pos.DistanceTo(dst) < dst_threshold)
+	{
 		has_dst = false;
+		LeftClick();
+	}
 
 	return false;
 }
@@ -85,4 +111,24 @@ bool MouseEmulator::ComputeDst()
 	++point_id;
 
 	return false;
+}
+
+void MouseEmulator::LeftClick()
+{
+	INPUT input = { 0 };
+
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+	SendInput(1, &input, sizeof(INPUT));
+
+	ZeroMemory(&input, sizeof(INPUT));
+	input.type = INPUT_MOUSE;
+	input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+	SendInput(1, &input, sizeof(INPUT));
+}
+
+void MouseEmulator::ScreenToMouseUnits(int & x, int & y) const
+{
+	x = (float)x / (float)screen_size.x * MOUSE_SCREEN_SIZE;
+	y = (float)y / (float)screen_size.y * MOUSE_SCREEN_SIZE;
 }

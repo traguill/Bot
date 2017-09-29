@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define MOUSE_SCREEN_SIZE 65535.0f
+
 class MouseEmulator
 {
 public:
@@ -28,6 +30,10 @@ private:
 
 	bool ComputeDst();
 
+	void LeftClick();
+
+	void ScreenToMouseUnits(int& x, int& y)const;
+
 public:
 
 	float speed = 0.0f;
@@ -44,6 +50,8 @@ private:
 	unsigned int point_id = 0;
 
 	Point<int> current_mouse_position;
+
+	Point<int> screen_size;
 };
 
 #endif // !__MOUSEEMULATOR_H__
