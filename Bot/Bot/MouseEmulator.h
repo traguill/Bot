@@ -29,8 +29,11 @@ public:
 private:
 
 	bool ComputeDst();
+	bool RecomputeDst();
 
 	void LeftClick();
+	void LeftClickUp();
+	
 
 	void ScreenToMouseUnits(int& x, int& y)const;
 
@@ -52,6 +55,12 @@ private:
 	Point<int> current_mouse_position;
 
 	Point<int> screen_size;
+
+	bool mouse_down = false;
+	float countdown_mouse = 0.0f; //Counter for the time the left button is down
+
+	bool can_start = false;
+	float countdown_init = 0.0f;
 };
 
 #endif // !__MOUSEEMULATOR_H__

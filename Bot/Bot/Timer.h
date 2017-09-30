@@ -13,11 +13,12 @@ public:
 
 private:
 
-	__int64 frequency;
-	float ticks_per_ms;
-	__int64 start_time;
-	float delta_time;
-
+	__int64 frequency = 0;
+	float ticks_per_ms = 0.0f;
+	__int64 start_time = 0;
+	float delta_time = 0.0f;
 };
+
+extern Timer* timer;
 #endif // !__TIMER_H__
 

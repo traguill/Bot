@@ -18,7 +18,7 @@ int clicks_counter;
 bool start_moving;
 
 MouseEmulator mouse;
-Timer timer;
+Timer* timer = nullptr;
 
 LRESULT __stdcall MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
@@ -56,21 +56,19 @@ int  main()
 	cout << "Introduce the number of clicks: \n";
 	cin >> num_clicks;
 
-	cout << "Introduce the speed: ";
-	cin >> mouse.speed;
-
-	cout << "Introduce the threshold: \n";
-	cin >> mouse.dst_threshold;
+	mouse.speed = 800;
+	mouse.dst_threshold = 20;
 
 
 	MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
 	MSG msg;
 
-	timer.Init();
+	timer = new Timer();
+	timer->Init();
 
 	while (!quit)
 	{
-		float dt = timer.Update();
+		float dt = timer->Update();
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -85,6 +83,10 @@ int  main()
 	}
 
 	UnhookWindowsHookEx(MouseHook);
+
+	delete timer;
+	cout << "EXIT";
+	Sleep(2000);
 
 	return 0;
 }
