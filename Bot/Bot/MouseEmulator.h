@@ -10,8 +10,6 @@
 
 using namespace std;
 
-#define MOUSE_SCREEN_SIZE 65535.0f
-
 class MouseEmulator
 {
 public:

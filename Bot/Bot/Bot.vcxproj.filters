@@ -16,6 +16,15 @@
     <Filter Include="Source Files\Helpers">
       <UniqueIdentifier>{f639299d-d605-4a7f-829e-a75c3410b5c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Mouse">
+      <UniqueIdentifier>{ceef456a-2989-4eca-a864-068d5dcd9ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modules">
+      <UniqueIdentifier>{4c3f5b35-42b3-4e33-80aa-ec94ff9c0da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console">
+      <UniqueIdentifier>{d631e7bc-068a-4bde-839c-360ea02b3fa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,6 +36,24 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseRoutine.cpp">
+      <Filter>Source Files\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Cmd.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -37,6 +64,24 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseRoutine.h">
+      <Filter>Source Files\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Cmd.h">
+      <Filter>Source Files\Console</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <iostream>
 
+#include "Input.h"
+
 MouseEmulator::MouseEmulator()
 {
 	screen_size.x = GetSystemMetrics(SM_CXSCREEN);

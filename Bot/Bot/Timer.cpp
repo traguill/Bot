@@ -2,12 +2,8 @@
 
 #include <windows.h>
 
-#include <iostream>
-
 Timer::Timer()
-{
-	std::cout << "Timer created";
-}
+{}
 
 Timer::~Timer()
 {
