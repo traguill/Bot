@@ -4,6 +4,7 @@
 
 #include "Editor.h"
 #include "Input.h"
+#include "Console.h"
 
 using namespace std;
 
@@ -21,6 +22,9 @@ Application::~Application()
 
 bool Application::Update(float dt)
 {
+	if (quit_request)
+		return false;
+
 	bool ret = false;
 
 	input->Update();
@@ -73,4 +77,10 @@ bool Application::CreateNewRoutine()
 
 
 	return true;
+}
+
+void Quit(const vector<string>* args)
+{
+	App->quit_request = true; //Stop main thread
+	console->quit_request = true;
 }

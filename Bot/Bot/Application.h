@@ -1,6 +1,11 @@
 #ifndef __APLICATION_H__
 #define __APLICATION_H__
 
+#include <vector>
+#include <string>
+
+using namespace std;
+
 class Editor;
 class Input;
 
@@ -27,13 +32,15 @@ private:
 public:
 	Editor* editor = nullptr;
 	Input* input = nullptr;
+	bool quit_request = false;
+
 private:
 
 	APP_STATE state = MENU;
-
-	
-
 };
+
+//Console commands
+void Quit(const vector<string>* args);
 
 extern Application* App;
 #endif // !__APLICATION_H__

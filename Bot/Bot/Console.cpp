@@ -1,55 +1,22 @@
 #include "Console.h"
 #include "Cmd.h"
-
-void Testing(const vector<string>* args)
-{
-	printf("This is a test funcion\n");
-
-	if (args->size() > 0)
-	{
-		for (auto s : *args)
-		{
-			printf("Arg: %s", s.data());
-		}
-	}
-	else
-	{
-		printf("No args were sent\n");
-	}
-}
+#include "Application.h"
 
 Console::Console()
-{
-	
-}
+{}
 
 Console::~Console()
-{
-}
+{}
 
 void Console::Start()
 {
-	Cmd tst;
-
-	strcpy_s(&tst.command[0], sizeof(char) * 8, "test");
-
-	const char* desc = "This is a descripton test :)";
-	strcpy_s(&tst.description[0], sizeof(char) * 128, desc);
-	
-	//Option
-	CmdOption tst_op;
-	tst_op.option = 'b';
-	tst_op.f = &Testing;
-
-	tst.options.insert(pair<char, CmdOption>(tst_op.option, tst_op));
-
-	RegisterCommand(tst);
+	LoadDefaultCommands();
 }
 
 bool Console::Execute(const char* cmd) const
 {
 	if (cmd == nullptr)
-		return false;
+		return true;
 
 	bool ret = false;
 
@@ -57,7 +24,7 @@ bool Console::Execute(const char* cmd) const
 	ret = SplitCommand(cmd, user_input);
 
 	//Debug-----------------------------------------------
-	printf("Command %s\n", &user_input.command[0]);
+	/*printf("Command %s\n", &user_input.command[0]);
 	if (user_input.option != NULL)
 		printf("Option: %c\n", user_input.option);
 	if (user_input.args.size() > 0)
@@ -68,7 +35,7 @@ bool Console::Execute(const char* cmd) const
 			++count;
 			printf("Arg(%i): %s\n", count, arg.data());
 		}
-	}
+	}*/
 
 	map<string, Cmd>::const_iterator result = commands.find(user_input.command);
 
@@ -192,4 +159,17 @@ bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 	}
 
 	return true;
+}
+
+void Console::LoadDefaultCommands()
+{
+	//Exit
+	Cmd exit;
+
+	strcpy_s(&exit.command[0], sizeof(char) * 8, "exit");
+	const char* desc = "Quits the application";
+	strcpy_s(&exit.description[0], sizeof(char) * 128, desc);
+	exit.f = &Quit;
+
+	RegisterCommand(exit);
 }

@@ -10,12 +10,12 @@
 #include "Application.h"
 #include "Input.h"
 #include "Console.h"
+#include <atomic>
 
 using namespace std;
 
 Timer* timer = nullptr;
 Application* App = nullptr;
-bool quit = false;
 Console* console = nullptr;
 
 HHOOK MouseHook;
@@ -42,28 +42,16 @@ LRESULT __stdcall MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 void InputMethod()
 {
-	cout << "Joinigng input\n";
-
-	bool end = false;
-
 	string msg;
-	while (!end)
+	bool quit = false;
+	while (!quit)
 	{
 		getline(cin, msg);
-		
-		if (msg.compare("q") == 0)
-		{
-			cout << "Exiting\n";
-			end = true;
-		}
-		else
-		{
-			console->Execute(msg.data());
-		}
+		console->Execute(msg.data());
+		quit = console->quit_request;
 	}
 
-	cout << "Ending the input thread\n";
-	quit = true;
+	printf("Input thread exit\n");
 }
 
 int  main()
@@ -81,12 +69,11 @@ int  main()
 	console->Start();
 	
 	std::thread t = std::thread(InputMethod);
-	cout << "Starting input thread\n";
-	t.join();
+	t.detach();
 	
 
 	//MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
-
+	bool quit = false;
 	while (!quit)
 	{
 		float dt = timer->Update();
@@ -104,7 +91,7 @@ int  main()
 	delete console;
 	delete App;
 	delete timer;
-	cout << "EXIT";
+	printf("Application exits\n");
 	Sleep(500);
 
 	return 0;

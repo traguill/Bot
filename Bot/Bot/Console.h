@@ -10,8 +10,6 @@ using namespace std;
 class Cmd;
 struct CmdUserIn;
 
-void Testing(const vector<string>* args);
-
 class Console
 {
 public:
@@ -28,10 +26,14 @@ public:
 private:
 	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
 
+	void LoadDefaultCommands();
+
 private:
 	map<string, Cmd> commands;
+public:
+	bool quit_request = false;
 };
 
-
+extern Console* console;
 
 #endif 
