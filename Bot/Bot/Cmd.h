@@ -14,14 +14,16 @@ struct CmdUserIn
 	vector<string> args;
 };
 
+typedef void(*function)(const vector<string>* args);
+
 struct CmdOption
 {
 	char option;
 	char description[128];
-	void(*function)(const vector<string>* args);
+	function f;
 };
 
-typedef void(*functions)(const vector<string>* args);
+
 
 class Cmd
 {
@@ -33,7 +35,7 @@ public:
 	char command[8];
 	char description[128];
 	map<char, CmdOption> options;
-	functions f;
+	function f;
 };
 #endif // !__CMD_H__
 

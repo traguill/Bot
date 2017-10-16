@@ -4,6 +4,18 @@
 void Testing(const vector<string>* args)
 {
 	printf("This is a test funcion\n");
+
+	if (args->size() > 0)
+	{
+		for (auto s : *args)
+		{
+			printf("Arg: %s", s.data());
+		}
+	}
+	else
+	{
+		printf("No args were sent\n");
+	}
 }
 
 Console::Console()
@@ -22,8 +34,16 @@ void Console::Start()
 	strcpy_s(&tst.command[0], sizeof(char) * 8, "test");
 
 	const char* desc = "This is a descripton test :)";
-	strcpy_s(&tst.description[0], sizeof(desc), desc);
-	tst.f = &Testing;
+	strcpy_s(&tst.description[0], sizeof(char) * 128, desc);
+	
+	//Option
+	CmdOption tst_op;
+	tst_op.option = 'b';
+	tst_op.f = &Testing;
+
+	tst.options.insert(pair<char, CmdOption>(tst_op.option, tst_op));
+
+	RegisterCommand(tst);
 }
 
 bool Console::Execute(const char* cmd) const
@@ -36,7 +56,8 @@ bool Console::Execute(const char* cmd) const
 	CmdUserIn user_input;
 	ret = SplitCommand(cmd, user_input);
 
-	printf("Command %s\n", user_input);
+	//Debug-----------------------------------------------
+	printf("Command %s\n", &user_input.command[0]);
 	if (user_input.option != NULL)
 		printf("Option: %c\n", user_input.option);
 	if (user_input.args.size() > 0)
@@ -49,12 +70,30 @@ bool Console::Execute(const char* cmd) const
 		}
 	}
 
-	map<const char*, Cmd>::const_iterator result = commands.find(user_input.command);
+	map<string, Cmd>::const_iterator result = commands.find(user_input.command);
 
 	if (result != commands.end())
 	{
-		vector<string> empty;
-		(*(result->second.f))(&empty);
+		if (result->second.f != NULL) //Only command + args(optional)
+		{
+			(*(result->second.f))(&user_input.args);
+		}
+		else
+		{
+			map<char, CmdOption>::const_iterator cmd_option = result->second.options.find(user_input.option);
+			if (cmd_option != result->second.options.end())
+			{
+				(*(cmd_option->second.f))(&user_input.args);
+			}
+			else
+			{
+				printf("Command %s does not accept %c\n", &user_input.command[0], user_input.option);
+			}
+		}
+	}
+	else
+	{
+		printf("%s is not a valid command\n", &user_input.command[0]);
 	}
 
 	return ret;
@@ -64,13 +103,11 @@ bool Console::RegisterCommand(Cmd& cmd)
 {
 	if (commands.end() == commands.find(cmd.command))
 	{
-		commands.insert(pair<const char*, Cmd>(cmd.command, cmd));
+		commands.insert(pair<string, Cmd>(&cmd.command[0], cmd));
 		return true;
 	}
 	return false;
 }
-
-
 
 bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 {

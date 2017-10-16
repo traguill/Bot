@@ -29,7 +29,7 @@ private:
 	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
 
 private:
-	map<const char*, Cmd> commands;
+	map<string, Cmd> commands;
 };
 
 
