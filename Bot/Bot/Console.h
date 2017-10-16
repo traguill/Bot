@@ -6,6 +6,7 @@
 using namespace std;
 
 class Cmd;
+struct CmdUserIn;
 
 class Console
 {
@@ -16,6 +17,9 @@ public:
 	bool Execute(const char* cmd)const;
 
 	bool RegisterCommand();
+
+private:
+	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
 
 private:
 	map<const char*, Cmd> commands;

@@ -16,6 +16,32 @@ bool Console::Execute(const char* cmd) const
 
 	bool ret = false;
 
+	CmdUserIn user_input;
+	ret = SplitCommand(cmd, user_input);
+
+	printf("Command %s\n", user_input);
+	if (user_input.option != NULL)
+		printf("Option: %c\n", user_input.option);
+	if (user_input.args.size() > 0)
+	{
+		int count = 0;
+		for (auto arg : user_input.args)
+		{
+			++count;
+			printf("Arg(%i): %s\n", count, arg.data());
+		}
+	}
+
+	return ret;
+}
+
+bool Console::RegisterCommand()
+{
+	return false;
+}
+
+bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
+{
 	//Split the command
 	char c = 'c';
 	int i = 0;
@@ -26,8 +52,7 @@ bool Console::Execute(const char* cmd) const
 	//Command
 	char cmd_name[8];
 	char option = '\0';
-	char** argv;
-	int argc = 0;
+	vector<string> args;
 
 	while (c != '\0')
 	{
@@ -74,44 +99,28 @@ bool Console::Execute(const char* cmd) const
 		{ //TODO: Replace arguments for a vector of strings
 			has_args = true;
 			size_t length = strlen(cmd) - i;
-			argv = new char*;
-			*argv = (char*)malloc(length);
-			char a = 'a';
-			int i2 = 0;
-			argc = 1;
-			while (a != '\0')
+			string args_s = string(cmd, i, length);
+
+			char* tmp = nullptr;
+			tmp = strtok(&args_s[0], " ");
+			while (tmp != NULL)
 			{
-				a = cmd[i+i2];
-
-				if (a == ' ')
-				{
-					*(argv[0]+i2) = '\0';
-					++argc;
-				}
-				else
-					*(argv[0]+i2) = a;
-
-				++i2;
+				args.push_back(tmp);
+				tmp = strtok(NULL, " ");
 			}
 			break;
 		}
 		++i;
 	}
 
-	printf("Command %s\n", cmd_name);
-	if (has_options)
-		printf("Option: %c\n", option);
+	memcpy(&result.command, &cmd_name, sizeof(char) * 8);
+	if(has_options)
+		result.option = option;
 
 	if (has_args)
 	{
-		for (int j = 0; j < argc; ++j)
-			printf("Arg %d : %s\n", j, argv[j]);
+		result.args = args;
 	}
 
-	return ret;
-}
-
-bool Console::RegisterCommand()
-{
-	return false;
+	return true;
 }
