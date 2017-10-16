@@ -18,8 +18,10 @@ struct CmdOption
 {
 	char option;
 	char description[128];
-	void(*function)(const vector<string>& args);
+	void(*function)(const vector<string>* args);
 };
+
+typedef void(*functions)(const vector<string>* args);
 
 class Cmd
 {
@@ -27,11 +29,11 @@ public:
 	Cmd();
 	~Cmd();
 
-private:
+public:
 	char command[8];
 	char description[128];
 	map<char, CmdOption> options;
-	void (*function)(const vector<string>& args);
+	functions f;
 };
 #endif // !__CMD_H__
 

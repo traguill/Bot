@@ -78,6 +78,7 @@ int  main()
 	App = new Application();
 
 	console = new Console();
+	console->Start();
 	
 	std::thread t = std::thread(InputMethod);
 	cout << "Starting input thread\n";

@@ -1,12 +1,29 @@
 #include "Console.h"
 #include "Cmd.h"
 
+void Testing(const vector<string>* args)
+{
+	printf("This is a test funcion\n");
+}
+
 Console::Console()
 {
+	
 }
 
 Console::~Console()
 {
+}
+
+void Console::Start()
+{
+	Cmd tst;
+
+	strcpy_s(&tst.command[0], sizeof(char) * 8, "test");
+
+	const char* desc = "This is a descripton test :)";
+	strcpy_s(&tst.description[0], sizeof(desc), desc);
+	tst.f = &Testing;
 }
 
 bool Console::Execute(const char* cmd) const
@@ -32,13 +49,28 @@ bool Console::Execute(const char* cmd) const
 		}
 	}
 
+	map<const char*, Cmd>::const_iterator result = commands.find(user_input.command);
+
+	if (result != commands.end())
+	{
+		vector<string> empty;
+		(*(result->second.f))(&empty);
+	}
+
 	return ret;
 }
 
-bool Console::RegisterCommand()
+bool Console::RegisterCommand(Cmd& cmd)
 {
+	if (commands.end() == commands.find(cmd.command))
+	{
+		commands.insert(pair<const char*, Cmd>(cmd.command, cmd));
+		return true;
+	}
 	return false;
 }
+
+
 
 bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 {
