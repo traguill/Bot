@@ -15,6 +15,7 @@ void ListAreas(const vector<string>* args); //-l
 void RemoveArea(const vector<string>* args); //-r
 void EditArea(const vector<string>* args); //-e
 void RedefineAreaSpace(const string& area_name); //helper
+void ShowArea(const vector<string>* args); //-s
 
 
 #endif // !__COMMANDS_H__

@@ -179,6 +179,7 @@ void Console::LoadDefaultCommands()
 	CreateOption('l', "Lists all areas.", ListAreas, area); // -l list
 	CreateOption('r', "<area_to_remove> Removes area_to_remove from the list", RemoveArea, area); // -r remove
 	CreateOption('e', "Edit an area.\n Use 'area -e rename <area_to_rename> <new_name>' to change the name.\n Use 'area -e space <area>' to edit it.", EditArea, area);
+	CreateOption('s', "Makes an area visible.", ShowArea, area); //-s show
 
 	RegisterCommand(area);
 

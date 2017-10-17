@@ -226,3 +226,26 @@ void RedefineAreaSpace(const string& area_name)
 
 	App->editor->area_manager->last_area_visible = false; //Hide area
 }
+
+void ShowArea(const vector<string>* args)
+{
+	if (args == nullptr)
+	{
+		MSG_ERROR("Nullptr passed to ShowArea() method.");
+		return;
+	}
+
+	if (args->size() == 0)
+	{
+		MSG_ERROR("Error: option -s requires a value");
+		MSG_INFO("Usage: area -s <area_to_show>");
+		return;
+	}
+
+	string name = (*args)[0];
+	bool ret = App->editor->area_manager->MakeAreaVisible(name);
+
+	if (ret == false)
+		MSG_ERROR("Area %s does not exist", name.data());
+
+}

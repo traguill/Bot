@@ -121,6 +121,23 @@ bool AreaManager::EditArea(const string & name, int left, int top, int bottom, i
 	return false;
 }
 
+bool AreaManager::MakeAreaVisible(const string & name)
+{
+	map<string, Area*>::iterator it = area_list.find(name);
+
+	if (it != area_list.end())
+	{
+		bottom = (*it).second->bottom_right.x;
+		right = (*it).second->bottom_right.y;
+		left = (*it).second->left_top.x;
+		top = (*it).second->left_top.y;
+		last_area_visible = true;
+		return true;
+	}
+
+	return false;
+}
+
 bool AreaManager::AreaEditingUpdate()
 {
 	if (App->input->GetMouseButton(0) == BUTTON_STATE::DOWN)

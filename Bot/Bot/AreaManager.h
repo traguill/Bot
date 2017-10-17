@@ -30,6 +30,7 @@ public:
 	bool RemoveArea(const string& name);
 	bool Rename(const string& old_name, const string& new_name);
 	bool EditArea(const string& name, int left, int top, int bottom, int right);
+	bool MakeAreaVisible(const string& name);
 
 	bool AreaEditingUpdate(); //Returns true when the edition is done
 
