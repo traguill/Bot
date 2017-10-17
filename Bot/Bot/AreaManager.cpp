@@ -41,6 +41,25 @@ bool AreaManager::CreateArea(const string & name, int left, int top, int bottom,
 	return ret.second;
 }
 
+bool AreaManager::RemoveArea(const string & name)
+{
+	map<string, Area*>::iterator it = area_list.find(name);
+
+	if (it == area_list.end())
+	{
+		MSG_ERROR("Area %s does not exist. Remove failed.", name.data());
+		return false;
+	}
+	else
+	{
+		delete it->second;
+		area_list.erase(it);
+		return true;
+	}
+
+	return false;
+}
+
 bool AreaManager::AreaEditingUpdate()
 {
 	if (App->input->GetMouseButton(0) == BUTTON_STATE::DOWN)

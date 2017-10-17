@@ -197,6 +197,14 @@ void Console::LoadDefaultCommands()
 
 	area.options.insert(pair<char, CmdOption>(area_l.option, area_l));
 
+	CmdOption area_r; //Remove
+	area_r.option = 'r';
+	const char* desc4 = "<area_to_remove> Removes area_to_remove from the list";
+	strcpy_s(&area_r.description[0], sizeof(char) * 128, desc4);
+	area_r.f = RemoveArea;
+
+	area.options.insert(pair<char, CmdOption>(area_r.option, area_r));
+
 
 	RegisterCommand(area); //TODO CREATE A METHOD TO SPEED UP THIS
 

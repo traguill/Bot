@@ -26,6 +26,7 @@ public:
 	void Update();
 
 	bool CreateArea(const string& name, int left, int top, int bottom, int right);
+	bool RemoveArea(const string& name);
 
 	bool AreaEditingUpdate(); //Returns true when the edition is done
 
