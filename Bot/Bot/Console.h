@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include "Cmd.h"
 
 using namespace std;
 
@@ -27,6 +28,9 @@ private:
 	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
 
 	void LoadDefaultCommands();
+
+	Cmd CreateCommand(const char* name, const char* description, defFunction func);
+	void CreateOption(char option, const char* description, defFunction func, Cmd& command);
 
 private:
 	map<string, Cmd> commands;

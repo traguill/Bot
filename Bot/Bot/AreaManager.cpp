@@ -25,6 +25,18 @@ void AreaManager::Update()
 	}
 }
 
+bool AreaManager::ExistsArea(const string & name) const
+{
+	bool ret = false;
+
+	if (area_list.find(name) == area_list.end())
+		ret = false;
+	else
+		ret = true;
+
+	return ret;
+}
+
 bool AreaManager::CreateArea(const string & name, int left, int top, int bottom, int right)
 {
 	if (area_list.find(name) != area_list.end())
@@ -54,6 +66,55 @@ bool AreaManager::RemoveArea(const string & name)
 	{
 		delete it->second;
 		area_list.erase(it);
+		return true;
+	}
+
+	return false;
+}
+
+bool AreaManager::Rename(const string & old_name, const string & new_name)
+{
+	map<string, Area*>::iterator it = area_list.find(old_name);
+
+	if (it == area_list.end())
+	{
+		MSG_ERROR("Area %s does not exist. Rename failed.", old_name.data());
+		return false;
+	}
+	else
+	{
+		map<string, Area*>::iterator it2 = area_list.find(new_name);
+
+		if (it2 != area_list.end())
+		{
+			MSG_ERROR("Can't rename area %s to %s because area %s is already on the list", old_name.data(), new_name.data(), new_name.data());
+			return false;
+		}
+
+		Area* a = it->second;
+		a->name = new_name.data();
+		area_list.erase(it);
+
+		pair<map<string, Area*>::iterator, bool> ret;
+		ret = area_list.insert(pair<string, Area*>(new_name, a));
+		if (ret.second == false)
+		{
+			MSG_ERROR("Area %s could not be renamed to %s. Insertion failed. The area has been removed (sry)", old_name.data(), new_name.data()); //Should never happen, but just in case
+		}
+
+		return ret.second;
+	}
+	return false;
+}
+
+bool AreaManager::EditArea(const string & name, int left, int top, int bottom, int right)
+{
+	map<string, Area*>::iterator it = area_list.find(name);
+
+	if (it != area_list.end())
+	{
+		(*it).second->left_top = Point<int>(left, top);
+		(*it).second->bottom_right = Point<int>(bottom, right);
 		return true;
 	}
 

@@ -1,5 +1,4 @@
 #include "Console.h"
-#include "Cmd.h"
 #include "Application.h"
 
 #include "Commands.h"
@@ -165,47 +164,46 @@ bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 
 void Console::LoadDefaultCommands()
 {
-	//Exit
-	Cmd exit;
-
-	strcpy_s(&exit.command[0], sizeof(char) * 8, "exit");
-	const char* desc = "Quits the application.";
-	strcpy_s(&exit.description[0], sizeof(char) * 128, desc);
-	exit.f = &Quit;
-
+	//exit
+	Cmd exit = CreateCommand("exit", "Quits the application", (defFunction)(&Quit));
 	RegisterCommand(exit);
 
-	//Areas
-	Cmd area;
-	strcpy_s(&area.command[0], sizeof(char) * 8, "area");
-	const char* desc1 = "Handles the areas where the bot will interact.";
-	strcpy_s(&area.description[0], sizeof(char) * 128, desc1);
-	//Options
-	CmdOption area_c; //Create
-	area_c.option = 'c';
-	const char* desc2 = "Creates a new area.";
-	strcpy_s(&area_c.description[0], sizeof(char) * 128, desc2);
-	area_c.f = CreateArea;
+	//clear
+	Cmd clear = CreateCommand("clear", "Clears the console.", (defFunction)(&ClearConsoleScreen));
+	RegisterCommand(clear);
 
-	area.options.insert(pair<char, CmdOption>(area_c.option, area_c));
+	//area
+	Cmd area = CreateCommand("area", "Handles the areas where the bot will interact.", NULL);
 
-	CmdOption area_l; //List
-	area_l.option = 'l';
-	const char* desc3 = "Lists all areas.";
-	strcpy_s(&area_l.description[0], sizeof(char) * 128, desc3);
-	area_l.f = ListAreas;
+	CreateOption('c', "Creates a new area.", CreateArea, area); // -c create
+	CreateOption('l', "Lists all areas.", ListAreas, area); // -l list
+	CreateOption('r', "<area_to_remove> Removes area_to_remove from the list", RemoveArea, area); // -r remove
+	CreateOption('e', "Edit an area.\n Use 'area -e rename <area_to_rename> <new_name>' to change the name.\n Use 'area -e space <area>' to edit it.", EditArea, area);
 
-	area.options.insert(pair<char, CmdOption>(area_l.option, area_l));
+	RegisterCommand(area);
 
-	CmdOption area_r; //Remove
-	area_r.option = 'r';
-	const char* desc4 = "<area_to_remove> Removes area_to_remove from the list";
-	strcpy_s(&area_r.description[0], sizeof(char) * 128, desc4);
-	area_r.f = RemoveArea;
+}
 
-	area.options.insert(pair<char, CmdOption>(area_r.option, area_r));
+Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 
+{
+	Cmd c;
 
+	strcpy_s(&c.command[0], sizeof(char) * 8, name);
+	strcpy_s(&c.description[0], sizeof(char) * 128, description);
+	
+	if (func != NULL)
+		c.f = func;
 
-	RegisterCommand(area); //TODO CREATE A METHOD TO SPEED UP THIS
+	return c;
+}
 
+void Console::CreateOption(char option, const char * description, defFunction func, Cmd & command)
+{
+	CmdOption o;
+
+	o.option = option;
+	strcpy_s(&o.description[0], sizeof(char) * 128, description);
+	o.f = func;
+
+	command.options.insert(pair<char, CmdOption>(o.option, o));
 }
