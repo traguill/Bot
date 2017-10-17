@@ -21,7 +21,7 @@ void AreaManager::Update()
 {
 	if (last_area_visible)
 	{
-		Rectangle(hdc, left, up, right, down); //This makes the computer slow. Investigate why.
+		Rectangle(hdc, left, top, right, bottom); //This makes the computer slow. Investigate why.
 	}
 }
 
@@ -65,19 +65,44 @@ bool AreaManager::AreaEditingUpdate()
 
 		if (up_pos.y > down_pos.y)
 		{
-			down = up_pos.y;
-			up = down_pos.y;
+			bottom = up_pos.y;
+			top = down_pos.y;
 		}
 		else
 		{
-			down = down_pos.y;
-			up = up_pos.y;
+			bottom = down_pos.y;
+			top = up_pos.y;
 		}
 
 		return true;
 	}
 
 	return false;
+}
+
+void AreaManager::GetLastAreaSize(int & top, int & left, int & bottom, int & right)
+{
+	top = this->top;
+	left = this->left;
+	right = this->right;
+	bottom = this->bottom;
+}
+
+void AreaManager::PrintAllAreas() const
+{
+	if (area_list.size() == 0)
+	{
+		MSG_INFO("Empty. No areas created.");
+		MSG_INFO("use area -c to create a new area");
+		return;
+	}
+
+	MSG_INFO("Number of areas defined: %i", area_list.size());
+	MSG_INFO(""); //line jump
+	for (auto a : area_list)
+	{
+		MSG_INFO("* %s", a.first.data());
+	}
 }
 
 Area::Area(const string & name, int left, int top, int bottom, int right) : name(name), left_top(Point<int>(left, top)), bottom_right(Point<int>(bottom, right))

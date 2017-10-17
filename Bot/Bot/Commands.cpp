@@ -8,20 +8,26 @@
 
 void CreateArea(const vector<string>* args)
 {
-	string input;
+	string name;
 	MSG_INFO("Area Name: ");
-	getline(cin, input);
+	getline(cin, name);
 	MSG_INFO("Make a selection of the area");
 
 	//Request app to change to area editing
 	App->editor->ChangeState(EDITOR_STATE::CREATING_AREA);
 	App->BlockConsole();
 
-	App->editor->area_manager->last_area_visible = true;
-	MSG_INFO("Area: %s with position bla bla", input.data());
+	//Show rectangle
+	App->editor->area_manager->last_area_visible = true; //Change this for a function. The rectangle drawn makes the program slow (issue)
+
+	int top, bottom, right, left;
+	App->editor->area_manager->GetLastAreaSize(top, left, bottom, right);
+
+	MSG_INFO("Area: %s with top-left: %i, %i bottom-right: %i %i", name.data(), top, left, bottom, right);
 
 	bool completed = false;
 
+	string input;
 	while (!completed)
 	{
 		completed = true;
@@ -32,6 +38,9 @@ void CreateArea(const vector<string>* args)
 		if (input == "s")
 		{
 			//Save
+			completed = App->editor->area_manager->CreateArea(name, left, top, bottom, right);
+			if (!completed)
+				MSG_ERROR("Area %s has not been created.", name.data());
 		}
 		else if (input == "r")
 		{
@@ -40,6 +49,7 @@ void CreateArea(const vector<string>* args)
 		else if (input == "d")
 		{
 			//exit without doing anything
+			MSG_INFO("Changes of area: %s have been discarted", name.data());
 		}
 		else
 		{
@@ -47,6 +57,9 @@ void CreateArea(const vector<string>* args)
 			completed = false;
 		}
 	}
-	
+}
 
+void ListAreas(const vector<string>* args)
+{
+	App->editor->area_manager->PrintAllAreas();
 }

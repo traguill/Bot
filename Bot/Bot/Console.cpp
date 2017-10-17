@@ -189,6 +189,15 @@ void Console::LoadDefaultCommands()
 
 	area.options.insert(pair<char, CmdOption>(area_c.option, area_c));
 
+	CmdOption area_l; //List
+	area_l.option = 'l';
+	const char* desc3 = "Lists all areas.";
+	strcpy_s(&area_l.description[0], sizeof(char) * 128, desc3);
+	area_l.f = ListAreas;
+
+	area.options.insert(pair<char, CmdOption>(area_l.option, area_l));
+
+
 	RegisterCommand(area); //TODO CREATE A METHOD TO SPEED UP THIS
 
 }

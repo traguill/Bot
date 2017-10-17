@@ -6,7 +6,10 @@
 
 using namespace std;
 
-void CreateArea(const vector<string>* args);
+
+//area
+void CreateArea(const vector<string>* args); //-c
+void ListAreas(const vector<string>* args); //-l
 
 
 #endif // !__COMMANDS_H__

@@ -29,6 +29,10 @@ public:
 
 	bool AreaEditingUpdate(); //Returns true when the edition is done
 
+	void GetLastAreaSize(int& top, int& left, int& bottom, int& right);
+
+	void PrintAllAreas()const;
+
 public:
 
 	bool last_area_visible = false;
@@ -41,7 +45,7 @@ private:
 	Point<int> down_pos; //Position of the mouse when the click is made to create an area
 	int left = -1; //Last area created positions
 	int right = -1;
-	int up = -1;
-	int down = -1;
+	int top = -1;
+	int bottom = -1;
 };
 #endif
