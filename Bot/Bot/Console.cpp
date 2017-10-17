@@ -2,6 +2,8 @@
 #include "Cmd.h"
 #include "Application.h"
 
+#include "Commands.h"
+
 Console::Console()
 {}
 
@@ -100,7 +102,7 @@ bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 			//Command must be smaller than 8 chars
 			if (i >= 8)
 			{
-				printf("Invalid command (%s). Name is too long", cmd_name);
+				printf("Invalid command (%s). Name is too long", &cmd_name[0]);
 				return false; //Command name too long
 			}
 
@@ -167,9 +169,26 @@ void Console::LoadDefaultCommands()
 	Cmd exit;
 
 	strcpy_s(&exit.command[0], sizeof(char) * 8, "exit");
-	const char* desc = "Quits the application";
+	const char* desc = "Quits the application.";
 	strcpy_s(&exit.description[0], sizeof(char) * 128, desc);
 	exit.f = &Quit;
 
 	RegisterCommand(exit);
+
+	//Areas
+	Cmd area;
+	strcpy_s(&area.command[0], sizeof(char) * 8, "area");
+	const char* desc1 = "Handles the areas where the bot will interact.";
+	strcpy_s(&area.description[0], sizeof(char) * 128, desc1);
+	//Options
+	CmdOption area_c; //Create
+	area_c.option = 'c';
+	const char* desc2 = "Creates a new area.";
+	strcpy_s(&area_c.description[0], sizeof(char) * 128, desc2);
+	area_c.f = CreateArea;
+
+	area.options.insert(pair<char, CmdOption>(area_c.option, area_c));
+
+	RegisterCommand(area); //TODO CREATE A METHOD TO SPEED UP THIS
+
 }

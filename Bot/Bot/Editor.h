@@ -3,6 +3,14 @@
 
 #include "Point.h"
 
+class AreaManager;
+
+enum EDITOR_STATE
+{
+	SLEEP,
+	CREATING_AREA
+};
+
 class Editor
 {
 public:
@@ -11,10 +19,13 @@ public:
 
 	bool Update();
 
+	bool ChangeState(EDITOR_STATE new_state);
 
+public:
+	AreaManager* area_manager = nullptr; //This should not be here.
 
 private:
-	Point<int> down_pos;
+	EDITOR_STATE state = SLEEP;
 };
 
 

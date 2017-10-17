@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Console">
       <UniqueIdentifier>{d631e7bc-068a-4bde-839c-360ea02b3fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Blocks">
+      <UniqueIdentifier>{a8e1214f-f83a-4ba4-ae36-fcbcc5c458f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Snippets">
+      <UniqueIdentifier>{3a86df05-140e-4d70-a2fa-c5b36f454a69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -52,6 +58,15 @@
       <Filter>Source Files\Console</Filter>
     </ClCompile>
     <ClCompile Include="Cmd.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaManager.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleMsgs.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,5 +98,19 @@
     <ClInclude Include="Cmd.h">
       <Filter>Source Files\Console</Filter>
     </ClInclude>
+    <ClInclude Include="AreaManager.h">
+      <Filter>Source Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleMsgs.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="command_function.snippet">
+      <Filter>Source Files</Filter>
+    </Xsd>
   </ItemGroup>
 </Project>

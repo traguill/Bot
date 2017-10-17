@@ -3,18 +3,13 @@
 
 #include <vector>
 #include <string>
+#include <mutex>
+#include <condition_variable>
 
 using namespace std;
 
 class Editor;
 class Input;
-
-enum APP_STATE
-{
-	MENU,
-	RECORDING_ROUTINE,
-	ROUTINE
-};
 
 class Application
 {
@@ -24,19 +19,24 @@ public:
 
 	bool Update(float dt);
 
+	//Blocks console input until Unblock() is called
+	void BlockConsole();
+	void UnblockConsole();
+
 private:
 
 	bool Menu();
-	bool CreateNewRoutine();
 
 public:
 	Editor* editor = nullptr;
 	Input* input = nullptr;
 	bool quit_request = false;
 
-private:
+	mutex mtx;
+	condition_variable cv;
 
-	APP_STATE state = MENU;
+private:
+	bool console_locked = false;
 };
 
 //Console commands

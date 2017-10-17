@@ -114,8 +114,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="Cmd.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ConsoleMsgs.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -125,14 +128,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AreaManager.h" />
     <ClInclude Include="Cmd.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="ConsoleMsgs.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MouseEmulator.h" />
     <ClInclude Include="MouseRoutine.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="command_function.snippet">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Xsd>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

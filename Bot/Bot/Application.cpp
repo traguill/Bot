@@ -33,49 +33,28 @@ bool Application::Update(float dt)
 	return ret;
 }
 
-bool Application::Menu()
+void Application::BlockConsole()
 {
-	return true;
-
-	bool succeed = true;
-	bool ret = false;
-
-	do
+	if (console_locked == false)
 	{
-		cout << "(1)- Create a routine\n";
-		cout << "(2)- Play last routine\n";
-		cout << "(3)- Quit\n";
-
-		int option;
-		cin >> option;
-
-		switch (option)
-		{
-		case 1:
-			ret = CreateNewRoutine();
-			break;
-		case 2:
-			break;
-		case 3:
-			ret = false; //Quit (not need it if ret is false by default)
-			break;
-		default:
-			cout << "Invalid option selected!\n";
-			succeed = false;
-			break;
-		}
-	} while (!succeed);
-
-
-	return ret;
+		console_locked = true;
+		unique_lock<mutex>lck(mtx);
+		cv.wait(lck);
+	}
 }
 
-bool Application::CreateNewRoutine()
+void Application::UnblockConsole()
 {
-	state = RECORDING_ROUTINE;
+	if (console_locked)
+	{
+		console_locked = false;
+		unique_lock<mutex>lck(mtx);
+		cv.notify_all();
+	}
+}
 
-
-
+bool Application::Menu()
+{
 	return true;
 }
 

@@ -10,7 +10,6 @@
 #include "Application.h"
 #include "Input.h"
 #include "Console.h"
-#include <atomic>
 
 using namespace std;
 
@@ -46,8 +45,10 @@ void InputMethod()
 	bool quit = false;
 	while (!quit)
 	{
+		printf("> ");
 		getline(cin, msg);
 		console->Execute(msg.data());
+		printf("\n");
 		quit = console->quit_request;
 	}
 
@@ -56,8 +57,6 @@ void InputMethod()
 
 int  main()
 {
-
-
 	MSG msg;
 
 	timer = new Timer();
@@ -72,7 +71,7 @@ int  main()
 	t.detach();
 	
 
-	//MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+	MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
 	bool quit = false;
 	while (!quit)
 	{
@@ -86,7 +85,7 @@ int  main()
 		quit = !App->Update(dt);
 	}
 
-	//UnhookWindowsHookEx(MouseHook);
+	UnhookWindowsHookEx(MouseHook);
 	
 	delete console;
 	delete App;
@@ -96,21 +95,3 @@ int  main()
 
 	return 0;
 }
-
-
-//Mouse hook to get the external input of the mouse
-
-//HHOOK MouseHook;
-
-/*LRESULT __stdcall MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
-{
-
-if (wParam == WM_LBUTTONUP)
-{
-
-}
-
-return CallNextHookEx(MouseHook, nCode, wParam, lParam);
-}*/
-//MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
-//UnhookWindowsHookEx(MouseHook);

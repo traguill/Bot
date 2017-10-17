@@ -3,59 +3,45 @@
 #include <Windows.h>
 
 #include "Application.h"
-#include "Input.h"
+#include "AreaManager.h"
 
 Editor::Editor()
 {
+	area_manager = new AreaManager();
 }
 
 Editor::~Editor()
 {
+	delete area_manager;
 }
 
 bool Editor::Update()
 {
-	if (App->input->GetMouseButton(0) == BUTTON_STATE::DOWN)
+
+	//Change this....
+	area_manager->Update();
+
+	switch (state)
 	{
-		down_pos = App->input->GetMousePosition();
-		printf("Mouse Down - x:%i y:%i", down_pos.x, down_pos.y);
+	case SLEEP:
+		//Do nothing
+		break;
+	case CREATING_AREA:
+	{	
+		bool ret = area_manager->AreaEditingUpdate(); 
+		if (ret == true)
+		{
+			App->UnblockConsole();
+			state = SLEEP;
+		}
 	}
-
-	if (App->input->GetMouseButton(0) == BUTTON_STATE::REPEAT)
-	{
-		//printf("repeat");
+		break;
 	}
+	return true;
+}
 
-	if (App->input->GetMouseButton(0) == BUTTON_STATE::UP)
-	{
-		Point<int> up_pos = App->input->GetMousePosition();
-
-		int left, right, up, down;
-
-		if (up_pos.x > down_pos.x)
-		{
-			right = up_pos.x;
-			left = down_pos.x;
-		}
-		else
-		{
-			right = down_pos.x;
-			left = up_pos.x;
-		}
-
-		if (up_pos.y > down_pos.y)
-		{
-			down = up_pos.y;
-			up = down_pos.y;
-		}
-		else
-		{
-			down = down_pos.y;
-			up = up_pos.y;
-		}
-
-		HDC const hdc = GetDC(0);
-		Rectangle(hdc, left, up, right, down);
-	}
+bool Editor::ChangeState(EDITOR_STATE new_state)
+{
+	state = new_state; //In the future check if the current state is able to change to another or it has to wait. 
 	return true;
 }
