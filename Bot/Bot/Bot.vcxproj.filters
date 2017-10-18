@@ -69,6 +69,9 @@
     <ClCompile Include="Commands.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
+    <ClCompile Include="Performance.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Commands.h">
       <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Performance.h">
+      <Filter>Source Files\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
