@@ -6,22 +6,35 @@
 #include <TCHAR.h>
 #include <Pdh.h>
 
+#pragma comment (lib, "pdh.lib")
+
+#define BYTETOMEGABYTE 1048576
+
 class Performance
 {
 public:
 	Performance();
 	~Performance();
 
+	void Init();
+
 private:
 
+	//Virtual memory
+	void InitVirtualMemory();
+
+	//CPU
 	void InitCPU();
 	void GetCPUValue();
 
 private:
 
+	//Virtual memory
+	DWORDLONG total_virtual_mem;
+
 	//CPU
-	static PDH_HQUERY cpu_query;
-	static PDH_HCOUNTER cpu_total;
+	PDH_HQUERY cpu_query;
+	PDH_HCOUNTER cpu_total;
 	double cpu_value = 0;
 
 };

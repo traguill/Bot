@@ -10,12 +10,14 @@
 #include "Application.h"
 #include "Input.h"
 #include "Console.h"
+#include "Performance.h"
 
 using namespace std;
 
 Timer* timer = nullptr;
 Application* App = nullptr;
 Console* console = nullptr;
+Performance* performance = nullptr;
 
 HHOOK MouseHook;
 
@@ -58,6 +60,9 @@ void InputMethod()
 int  main()
 {
 	MSG msg;
+	
+	performance = new Performance();
+	performance->Init();
 
 	timer = new Timer();
 	timer->Init();
@@ -90,6 +95,7 @@ int  main()
 	delete console;
 	delete App;
 	delete timer;
+	delete performance;
 	printf("Application exits\n");
 	Sleep(500);
 
