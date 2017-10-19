@@ -86,7 +86,6 @@ int  main()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
 		quit = !App->Update(dt);
 	}
 
