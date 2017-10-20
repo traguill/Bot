@@ -4,13 +4,16 @@
 //Windows performance https://stackoverflow.com/questions/63166/how-to-determine-cpu-and-memory-consumption-from-inside-a-process
 
 #include <TCHAR.h>
-#include <Pdh.h>
+#include <pdh.h>
 
+//TODO
 class Performance
 {
 public:
 	Performance();
 	~Performance();
+
+	void Init();
 
 private:
 

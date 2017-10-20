@@ -69,7 +69,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -119,9 +122,12 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ConsoleMsgs.cpp" />
+    <ClCompile Include="Data.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="JSON\parson.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="MouseEmulator.cpp" />
     <ClCompile Include="MouseRoutine.cpp" />
     <ClCompile Include="Performance.cpp" />
@@ -134,8 +140,11 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="ConsoleMsgs.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="JSON\parson.h" />
+    <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="MouseEmulator.h" />
     <ClInclude Include="MouseRoutine.h" />
     <ClInclude Include="Performance.h" />

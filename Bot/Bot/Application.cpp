@@ -5,11 +5,13 @@
 #include "Editor.h"
 #include "Input.h"
 #include "Console.h"
+#include "ModuleFileSystem.h"
 
 using namespace std;
 
-Application::Application()
+Application::Application(const char* argv0) : argv0(argv0)
 {
+	file_system = new ModuleFileSystem();
 	editor = new Editor();
 	input = new Input();
 }
@@ -18,6 +20,13 @@ Application::~Application()
 {
 	delete input;
 	delete editor;
+	delete file_system;
+}
+
+void Application::Init()
+{
+	file_system->Init();
+	editor->Init();
 }
 
 bool Application::Update(float dt)
@@ -51,11 +60,6 @@ void Application::UnblockConsole()
 		unique_lock<mutex>lck(mtx);
 		cv.notify_all();
 	}
-}
-
-bool Application::Menu()
-{
-	return true;
 }
 
 void Quit(const vector<string>* args)

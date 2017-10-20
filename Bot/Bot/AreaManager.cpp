@@ -3,6 +3,7 @@
 
 #include "Application.h"
 #include "Input.h"
+#include "ModuleFileSystem.h"
 
 AreaManager::AreaManager()
 {
@@ -11,10 +12,17 @@ AreaManager::AreaManager()
 
 AreaManager::~AreaManager()
 {
+	SaveAreas();
+
 	for (auto a : area_list)
 	{
 		delete a.second;
 	}
+}
+
+void AreaManager::Init()
+{
+	LoadAreas();
 }
 
 void AreaManager::Update()
@@ -200,6 +208,66 @@ void AreaManager::PrintAllAreas() const
 	{
 		MSG_INFO("* %s", a.first.data());
 	}
+}
+
+void AreaManager::LoadAreas()
+{
+	char* buf = nullptr;
+	unsigned int load_ret = App->file_system->Load("areas.json", &buf);
+
+	if (load_ret == 0)
+		MSG_WARNING("No area filesave was found or it is empty");
+
+	Data info(buf);
+
+	int size = info.GetArraySize("areas");
+	
+	for (int i = 0; i < size; ++i)
+	{
+		Data a_info = info.GetArray("areas", i);
+
+		string name = a_info.GetString("name");
+		Point<int> left_top = a_info.GetInt2("left_top");
+		Point<int> bottom_right = a_info.GetInt2("bottom_right");
+		Area* a = new Area(name, left_top.x, left_top.y, bottom_right.x, bottom_right.y);
+
+		area_list.insert(pair<string, Area*>(name, a));
+	}
+
+
+	if (buf)
+		delete[] buf;
+
+	MSG_INFO("Areas file load successfully");
+}
+
+void AreaManager::SaveAreas()
+{
+	Data file;
+
+	file.AppendArray("areas");
+
+	for (auto a : area_list)
+	{
+		Data a_info;
+		SerializeArea(a_info, a.second);
+		file.AppendArrayValue(a_info);
+	}
+
+	char* buf;
+	int size = file.Serialize(&buf);
+
+	App->file_system->Save("areas.json", buf, size);
+
+	if (buf)
+		delete[] buf;
+}
+
+void AreaManager::SerializeArea(Data & file, const Area * area) const
+{
+	file.AppendString("name", area->name.data());
+	file.AppendInt2("left_top", (const int*)&area->left_top);
+	file.AppendInt2("bottom_right", (const int*)&area->bottom_right);
 }
 
 Area::Area(const string & name, int left, int top, int bottom, int right) : name(name), left_top(Point<int>(left, top)), bottom_right(Point<int>(bottom, right))

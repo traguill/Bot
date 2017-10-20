@@ -17,6 +17,8 @@ public:
 	Editor();
 	~Editor();
 
+	void Init();
+
 	bool Update();
 
 	bool ChangeState(EDITOR_STATE new_state);

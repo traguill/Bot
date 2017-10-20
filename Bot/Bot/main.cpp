@@ -10,12 +10,14 @@
 #include "Application.h"
 #include "Input.h"
 #include "Console.h"
+#include "Performance.h"
 
 using namespace std;
 
 Timer* timer = nullptr;
 Application* App = nullptr;
 Console* console = nullptr;
+Performance* performance = nullptr; //TODO
 
 HHOOK MouseHook;
 
@@ -55,20 +57,24 @@ void InputMethod()
 	printf("Input thread exit\n");
 }
 
-int  main()
+int  main(int argc, char*argv[])
 {
 	MSG msg;
 
 	timer = new Timer();
 	timer->Init();
 
-	App = new Application();
+	App = new Application(argv[0]);
+	App->Init();
 
 	console = new Console();
 	console->Start();
 	
 	std::thread t = std::thread(InputMethod);
 	t.detach();
+
+	performance = new Performance();
+	performance->Init();
 	
 
 	MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);

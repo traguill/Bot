@@ -10,12 +10,15 @@ using namespace std;
 
 class Editor;
 class Input;
+class ModuleFileSystem;
 
 class Application
 {
 public:
-	Application();
+	Application(const char* argv0);
 	~Application();
+
+	void Init();
 
 	bool Update(float dt);
 
@@ -23,17 +26,17 @@ public:
 	void BlockConsole();
 	void UnblockConsole();
 
-private:
-
-	bool Menu();
 
 public:
 	Editor* editor = nullptr;
 	Input* input = nullptr;
+	ModuleFileSystem* file_system = nullptr;
 	bool quit_request = false;
 
 	mutex mtx;
 	condition_variable cv;
+
+	const char* argv0; 
 
 private:
 	bool console_locked = false;

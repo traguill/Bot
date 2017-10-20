@@ -15,6 +15,11 @@ Editor::~Editor()
 	delete area_manager;
 }
 
+void Editor::Init()
+{
+	area_manager->Init();
+}
+
 bool Editor::Update()
 {
 

@@ -5,8 +5,11 @@
 #include <string>
 #include <map>
 #include <windows.h>
+#include "Data.h"
 
 using namespace std;
+
+#define AREA_FILENAME "areas.json"
 
 struct Area
 {
@@ -23,6 +26,8 @@ public:
 	AreaManager();
 	~AreaManager();
 
+	void Init();
+
 	void Update();
 
 	bool ExistsArea(const string& name)const; //Check if there is an area with the given name
@@ -37,6 +42,13 @@ public:
 	void GetLastAreaSize(int& top, int& left, int& bottom, int& right);
 
 	void PrintAllAreas()const;
+
+private:
+
+	void LoadAreas();
+	void SaveAreas();
+	//Utility
+	void SerializeArea(Data& file, const Area* area)const;
 
 public:
 

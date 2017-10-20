@@ -31,6 +31,12 @@
     <Filter Include="Resource Files\Snippets">
       <UniqueIdentifier>{3a86df05-140e-4d70-a2fa-c5b36f454a69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\3rdParty">
+      <UniqueIdentifier>{eb7bfc1f-681a-4157-bbcb-28aa85c70ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3rdParty\JSON">
+      <UniqueIdentifier>{820e8b8d-44fd-439d-9e4f-e01684036433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +78,15 @@
     <ClCompile Include="Performance.cpp">
       <Filter>Source Files\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="JSON\parson.c">
+      <Filter>Source Files\3rdParty\JSON</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -112,6 +127,15 @@
     </ClInclude>
     <ClInclude Include="Performance.h">
       <Filter>Source Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Source Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="JSON\parson.h">
+      <Filter>Source Files\3rdParty\JSON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
