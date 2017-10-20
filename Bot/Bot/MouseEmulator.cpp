@@ -11,8 +11,6 @@ MouseEmulator::MouseEmulator()
 {
 	screen_size.x = GetSystemMetrics(SM_CXSCREEN);
 	screen_size.y = GetSystemMetrics(SM_CYSCREEN);
-
-	cout << "Screeen : " << screen_size.x << "///" << screen_size.y << "\n";
 }
 
 
@@ -36,15 +34,9 @@ void MouseEmulator::PrintPoints()
 		cout << "Click x:  " << (*p).x << " y: " << (*p).y << "\n";
 }
 
-void MouseEmulator::InitMovement()
+void MouseEmulator::InitMovement(float sec_delay)
 {
-	step.x = step.y = 0.0f;
-	dst.x = dst.y = 0;
-	accumulated_step.x = accumulated_step.y = 0.0f;
-	has_dst = false;
-	point_id = 0;
-
-	countdown_init = 2.5f;
+	countdown_init = sec_delay;
 }
 
 bool MouseEmulator::Move(float dt)
@@ -112,6 +104,16 @@ bool MouseEmulator::Move(float dt)
 
 
 	return false;
+}
+
+void MouseEmulator::Clear()
+{
+	step.x = step.y = 0.0f;
+	dst.x = dst.y = 0;
+	accumulated_step.x = accumulated_step.y = 0.0f;
+	has_dst = false;
+	point_id = 0;
+	points.clear();
 }
 
 bool MouseEmulator::ComputeDst()

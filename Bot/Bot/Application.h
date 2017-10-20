@@ -11,6 +11,7 @@ using namespace std;
 class Editor;
 class Input;
 class ModuleFileSystem;
+class Random;
 
 class Application
 {
@@ -28,6 +29,7 @@ public:
 
 
 public:
+	Random* rnd = nullptr;
 	Editor* editor = nullptr;
 	Input* input = nullptr;
 	ModuleFileSystem* file_system = nullptr;

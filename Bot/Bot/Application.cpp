@@ -6,11 +6,13 @@
 #include "Input.h"
 #include "Console.h"
 #include "ModuleFileSystem.h"
+#include "Random.h"
 
 using namespace std;
 
 Application::Application(const char* argv0) : argv0(argv0)
 {
+	rnd = new Random();
 	file_system = new ModuleFileSystem();
 	editor = new Editor();
 	input = new Input();
@@ -21,6 +23,7 @@ Application::~Application()
 	delete input;
 	delete editor;
 	delete file_system;
+	delete rnd;
 }
 
 void Application::Init()

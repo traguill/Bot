@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Input.h"
 #include "ModuleFileSystem.h"
+#include "Random.h"
 
 AreaManager::AreaManager()
 {
@@ -41,6 +42,22 @@ bool AreaManager::ExistsArea(const string & name) const
 		ret = false;
 	else
 		ret = true;
+
+	return ret;
+}
+
+bool AreaManager::ExistsArea(const string & name, Area & result) const
+{
+	bool ret = false;
+
+	map<string, Area*>::const_iterator found = area_list.find(name);
+	if (found == area_list.end())
+		ret = false;
+	else
+	{
+		result = *(*found).second;
+		ret = true;
+	}
 
 	return ret;
 }
@@ -210,6 +227,7 @@ void AreaManager::PrintAllAreas() const
 	}
 }
 
+
 void AreaManager::LoadAreas()
 {
 	char* buf = nullptr;
@@ -268,6 +286,21 @@ void AreaManager::SerializeArea(Data & file, const Area * area) const
 	file.AppendString("name", area->name.data());
 	file.AppendInt2("left_top", (const int*)&area->left_top);
 	file.AppendInt2("bottom_right", (const int*)&area->bottom_right);
+}
+
+bool AreaManager::GetRndPointArea(const Area * area, Point<int>& result) const
+{
+	if (area == nullptr)
+		return false;
+
+	result.x = App->rnd->RandomFloat(area->left_top.x, area->bottom_right.y);
+	result.y = App->rnd->RandomFloat(area->left_top.y, area->bottom_right.x);
+
+	return true;
+}
+
+Area::Area()
+{
 }
 
 Area::Area(const string & name, int left, int top, int bottom, int right) : name(name), left_top(Point<int>(left, top)), bottom_right(Point<int>(bottom, right))

@@ -17,7 +17,8 @@ using namespace std;
 Timer* timer = nullptr;
 Application* App = nullptr;
 Console* console = nullptr;
-Performance* performance = nullptr; //TODO
+Performance* performance = nullptr;
+
 
 HHOOK MouseHook;
 
@@ -60,6 +61,9 @@ void InputMethod()
 int  main(int argc, char*argv[])
 {
 	MSG msg;
+	
+	//performance = new Performance();
+	//performance->Init();
 
 	timer = new Timer();
 	timer->Init();
@@ -72,9 +76,6 @@ int  main(int argc, char*argv[])
 	
 	std::thread t = std::thread(InputMethod);
 	t.detach();
-
-	performance = new Performance();
-	performance->Init();
 	
 
 	MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
@@ -87,7 +88,6 @@ int  main(int argc, char*argv[])
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
 		quit = !App->Update(dt);
 	}
 
@@ -96,6 +96,7 @@ int  main(int argc, char*argv[])
 	delete console;
 	delete App;
 	delete timer;
+	//delete performance;
 	printf("Application exits\n");
 	Sleep(500);
 
