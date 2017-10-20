@@ -38,8 +38,8 @@ private:
 
 public:
 
-	float speed = 0.0f;
-	float dst_threshold = 0.0f; //Radius of threshold for the mouse to arrive to it's dst
+	float speed = 500.0f;
+	float dst_threshold = 30.0f; //Radius of threshold for the mouse to arrive to it's dst
 private:
 
 	vector<Point<int>> points;

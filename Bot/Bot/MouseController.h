@@ -1,6 +1,8 @@
 #ifndef __MOUSECONTROLLER_H__
 #define __MOUSECONTROLLER_H__
 
+#include "Point.h"
+
 class MouseEmulator;
 
 class MouseController
@@ -10,6 +12,8 @@ public:
 	~MouseController();
 
 	bool Update();
+
+	void GoTo(const Point<int>& dst, float delay);
 
 private:
 	MouseEmulator* mouse = nullptr;

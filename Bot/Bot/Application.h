@@ -40,6 +40,8 @@ public:
 
 	const char* argv0; 
 
+	float dt = 0.0f;
+
 private:
 	bool console_locked = false;
 };

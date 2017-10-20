@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Editor.h"
 #include "AreaManager.h"
+#include "MouseController.h"
 
 #include <iostream>
 
@@ -277,15 +278,14 @@ void MoveMouseToArea(const vector<string>* args)
 		return;
 	}
 
-	
+	Point<int> dst_p;
+	bool ret = App->editor->area_manager->GetRndPointArea(&destination, dst_p);
 
-	//Search if area exists -> Get pointer to area
-	//Random point in area
+	if (!ret)
+	{
+		MSG_ERROR("Error: couldn't find a random point in the specified area");
+		return; 
+	}
 
-	//Emulator -> set delay and point
-
-	//Change state to moving
-
-
-
+	App->editor->mouse_controller->GoTo(dst_p, delay);
 }

@@ -37,6 +37,9 @@ void MouseEmulator::PrintPoints()
 void MouseEmulator::InitMovement(float sec_delay)
 {
 	countdown_init = sec_delay;
+	speed = 800;
+	dst_threshold = 30;
+	can_start = false;
 }
 
 bool MouseEmulator::Move(float dt)
@@ -121,10 +124,6 @@ bool MouseEmulator::ComputeDst()
 	if (point_id == points.size())
 		return true;
 
-	cout << "comput";
-	cout << point_id;
-	cout << "MousePos x: " << current_mouse_position.x << " y: " << current_mouse_position.y;
-
 	dst = points[point_id];
 
 	has_dst = true;
@@ -140,7 +139,6 @@ bool MouseEmulator::RecomputeDst()
 	//Check dst
 	if (current_mouse_position.DistanceTo(dst) < dst_threshold)
 	{
-		cout << "end";
 		has_dst = false;
 		LeftClick();
 		accumulated_step.x = 0;
@@ -155,7 +153,6 @@ bool MouseEmulator::RecomputeDst()
 	step.x = ((float)direction.x / length) * speed;
 	step.y = ((float)direction.y / length) * speed;
 
-	return false;
 }
 
 void MouseEmulator::LeftClick()

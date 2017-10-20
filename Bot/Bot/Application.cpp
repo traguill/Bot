@@ -34,6 +34,8 @@ void Application::Init()
 
 bool Application::Update(float dt)
 {
+	this->dt = dt;
+
 	if (quit_request)
 		return false;
 

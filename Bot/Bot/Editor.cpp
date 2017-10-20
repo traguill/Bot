@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "AreaManager.h"
 #include "MouseController.h"
+#include "ConsoleMsgs.h"
 
 Editor::Editor()
 {
@@ -49,6 +50,7 @@ bool Editor::Update()
 		bool ret = mouse_controller->Update();
 		if (ret == true)
 		{
+			MSG_INFO("Move finished");
 			state = SLEEP; //Done
 		}
 	}

@@ -45,6 +45,9 @@ public:
 
 	void PrintAllAreas()const;
 
+	bool GetRndPointArea(const Area* area, Point<int>& result)const;
+
+
 private:
 
 	void LoadAreas();
@@ -52,7 +55,6 @@ private:
 	//Utility
 	void SerializeArea(Data& file, const Area* area)const;
 
-	bool GetRndPointArea(const Area* area, Point<int>& result)const;
 
 public:
 

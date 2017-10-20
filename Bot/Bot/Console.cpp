@@ -183,6 +183,9 @@ void Console::LoadDefaultCommands()
 
 	RegisterCommand(area);
 
+	//move
+	Cmd move = CreateCommand("move", "Moves the mouse and handles clicks", (defFunction)(&MoveMouseToArea));
+	RegisterCommand(move);
 }
 
 Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 
