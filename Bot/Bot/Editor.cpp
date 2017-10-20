@@ -4,14 +4,17 @@
 
 #include "Application.h"
 #include "AreaManager.h"
+#include "MouseController.h"
 
 Editor::Editor()
 {
 	area_manager = new AreaManager();
+	mouse_controller = new MouseController();
 }
 
 Editor::~Editor()
 {
+	delete mouse_controller;
 	delete area_manager;
 }
 
@@ -19,7 +22,7 @@ bool Editor::Update()
 {
 
 	//Change this....
-	area_manager->Update();
+	area_manager->Update(); //To make it visible
 
 	switch (state)
 	{
@@ -33,6 +36,15 @@ bool Editor::Update()
 		{
 			App->UnblockConsole();
 			state = SLEEP;
+		}
+	}
+	break;
+	case MOUSE_MOVING:
+	{
+		bool ret = mouse_controller->Update();
+		if (ret == true)
+		{
+			state = SLEEP; //Done
 		}
 	}
 		break;

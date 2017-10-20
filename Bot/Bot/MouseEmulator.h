@@ -21,8 +21,9 @@ public:
 	//Debug
 	void PrintPoints();
 
-	void InitMovement(); //Resets all the movement variables
+	void InitMovement(float sec_delay); //Init the movement with the delay specified
 	bool Move(float dt); //Return true when all points have been visited once. 
+	void Clear();
 
 private:
 

@@ -249,3 +249,43 @@ void ShowArea(const vector<string>* args)
 		MSG_ERROR("Area %s does not exist", name.data());
 
 }
+
+void MoveMouseToArea(const vector<string>* args)
+{
+	if (args == nullptr)
+	{
+		MSG_ERROR("Nullptr passed to MoveMouseToArea() method.");
+		return;
+	}
+
+	if (args->size() == 0)
+	{
+		MSG_ERROR("Error: requires a value");
+		MSG_INFO("Usage: mouse <area_to_move> <delay>(optional)");
+		return;
+	}
+
+	string area = (*args)[0];
+	float delay = (args->size() == 2) ? stof((*args)[1]) : 0.0f;
+
+	Area destination;
+	bool area_found = App->editor->area_manager->ExistsArea(area, destination);
+
+	if (area_found == false)
+	{
+		MSG_ERROR("Error area %s not found", area.data());
+		return;
+	}
+
+	
+
+	//Search if area exists -> Get pointer to area
+	//Random point in area
+
+	//Emulator -> set delay and point
+
+	//Change state to moving
+
+
+
+}

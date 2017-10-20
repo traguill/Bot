@@ -122,9 +122,10 @@
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MouseController.cpp" />
     <ClCompile Include="MouseEmulator.cpp" />
-    <ClCompile Include="MouseRoutine.cpp" />
     <ClCompile Include="Performance.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +137,11 @@
     <ClInclude Include="ConsoleMsgs.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MouseController.h" />
     <ClInclude Include="MouseEmulator.h" />
-    <ClInclude Include="MouseRoutine.h" />
     <ClInclude Include="Performance.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>

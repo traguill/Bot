@@ -4,11 +4,13 @@
 #include "Point.h"
 
 class AreaManager;
+class MouseController;
 
 enum EDITOR_STATE
 {
 	SLEEP,
-	CREATING_AREA
+	CREATING_AREA,
+	MOUSE_MOVING
 };
 
 class Editor
@@ -23,6 +25,7 @@ public:
 
 public:
 	AreaManager* area_manager = nullptr; //This should not be here.
+	MouseController* mouse_controller = nullptr;
 
 private:
 	EDITOR_STATE state = SLEEP;

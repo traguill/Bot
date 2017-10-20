@@ -5,11 +5,13 @@
 #include "Editor.h"
 #include "Input.h"
 #include "Console.h"
+#include "Random.h"
 
 using namespace std;
 
 Application::Application()
 {
+	rnd = new Random();
 	editor = new Editor();
 	input = new Input();
 }
@@ -18,6 +20,7 @@ Application::~Application()
 {
 	delete input;
 	delete editor;
+	delete rnd;
 }
 
 bool Application::Update(float dt)

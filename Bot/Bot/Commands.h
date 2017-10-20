@@ -17,6 +17,9 @@ void EditArea(const vector<string>* args); //-e
 void RedefineAreaSpace(const string& area_name); //helper
 void ShowArea(const vector<string>* args); //-s
 
+//move
+void MoveMouseToArea(const vector<string>* args); // <area> <delay>(Opt)
+
 
 #endif // !__COMMANDS_H__
 

@@ -10,6 +10,7 @@ using namespace std;
 
 class Editor;
 class Input;
+class Random;
 
 class Application
 {
@@ -28,6 +29,7 @@ private:
 	bool Menu();
 
 public:
+	Random* rnd = nullptr;
 	Editor* editor = nullptr;
 	Input* input = nullptr;
 	bool quit_request = false;
