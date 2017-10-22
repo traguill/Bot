@@ -5,6 +5,7 @@
 #include <string>
 #include <mutex>
 #include <condition_variable>
+#include <windows.h>
 
 using namespace std;
 
@@ -41,6 +42,10 @@ public:
 	const char* argv0; 
 
 	float dt = 0.0f;
+
+	//Console
+	HANDLE h_console; //Used to change the console color & font size
+	CONSOLE_SCREEN_BUFFER_INFO csbi; //To restore the initial console values
 
 private:
 	bool console_locked = false;

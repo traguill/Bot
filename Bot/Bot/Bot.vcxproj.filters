@@ -114,6 +114,12 @@
     <ClCompile Include="DecSequence.cpp">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
     </ClCompile>
+    <ClCompile Include="BlackBoard.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="DecSelector.cpp">
+      <Filter>Source Files\BehaviorTree\Decorators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -186,6 +192,12 @@
       <Filter>Source Files\BehaviorTree</Filter>
     </ClInclude>
     <ClInclude Include="DecSequence.h">
+      <Filter>Source Files\BehaviorTree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackBoard.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="DecSelector.h">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
     </ClInclude>
   </ItemGroup>

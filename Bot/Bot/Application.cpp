@@ -20,6 +20,8 @@ Application::Application(const char* argv0) : argv0(argv0)
 
 Application::~Application()
 {
+	SetConsoleTextAttribute(h_console, csbi.wAttributes);
+
 	delete input;
 	delete editor;
 	delete file_system;
@@ -28,6 +30,17 @@ Application::~Application()
 
 void Application::Init()
 {
+	h_console = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(h_console, &csbi);
+
+	//Make the font smaller
+	CONSOLE_FONT_INFOEX font;
+	font.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+	GetCurrentConsoleFontEx(h_console, false, &font);
+	font.dwFontSize.X = 14;
+	font.dwFontSize.Y = 14;
+	SetCurrentConsoleFontEx(h_console, false, &font);
+
 	file_system->Init();
 	editor->Init();
 }

@@ -120,6 +120,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="BehaviorTree.cpp" />
+    <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="Cmd.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="ConditionNode.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DecoratorNode.cpp" />
     <ClCompile Include="DecoratorSPNode.cpp" />
+    <ClCompile Include="DecSelector.cpp" />
     <ClCompile Include="DecSequence.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -146,6 +148,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="BehaviorTree.h" />
+    <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="Cmd.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ConditionNode.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="DecoratorNode.h" />
     <ClInclude Include="DecoratorSPNode.h" />
+    <ClInclude Include="DecSelector.h" />
     <ClInclude Include="DecSequence.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
