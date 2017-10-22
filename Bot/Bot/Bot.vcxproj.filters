@@ -28,21 +28,21 @@
     <Filter Include="Source Files\Blocks">
       <UniqueIdentifier>{a8e1214f-f83a-4ba4-ae36-fcbcc5c458f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Snippets">
-      <UniqueIdentifier>{3a86df05-140e-4d70-a2fa-c5b36f454a69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\3rdParty">
       <UniqueIdentifier>{eb7bfc1f-681a-4157-bbcb-28aa85c70ad3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\3rdParty\JSON">
       <UniqueIdentifier>{820e8b8d-44fd-439d-9e4f-e01684036433}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BehaviorTree">
+      <UniqueIdentifier>{e5f408b8-f94e-4dac-a3d1-f96d7a6ff6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BehaviorTree\Decorators">
+      <UniqueIdentifier>{63de7a7e-f1ec-4284-a4e1-1997948aad09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseEmulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
@@ -83,20 +83,41 @@
     </ClCompile>
     <ClCompile Include="JSON\parson.c">
       <Filter>Source Files\3rdParty\JSON</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="MouseController.cpp">
       <Filter>Source Files\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="MouseEmulator.cpp">
+      <Filter>Source Files\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviorTree.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionNode.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionNode.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoratorNode.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoratorSPNode.cpp">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="DecSequence.cpp">
+      <Filter>Source Files\BehaviorTree\Decorators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
       <Filter>Source Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseEmulator.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files\Helpers</Filter>
@@ -136,17 +157,41 @@
     </ClInclude>
     <ClInclude Include="JSON\parson.h">
       <Filter>Source Files\3rdParty\JSON</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="MouseController.h">
       <Filter>Source Files\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Source Files\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="MouseEmulator.h">
+      <Filter>Source Files\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviorTree.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionNode.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionNode.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoratorNode.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoratorSPNode.h">
+      <Filter>Source Files\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="DecSequence.h">
+      <Filter>Source Files\BehaviorTree\Decorators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="command_function.snippet">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Helpers</Filter>
     </Xsd>
   </ItemGroup>
 </Project>

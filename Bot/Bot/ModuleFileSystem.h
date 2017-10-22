@@ -8,7 +8,7 @@ public:
 	ModuleFileSystem();
 
 	// Destructor
-	virtual ~ModuleFileSystem();
+	~ModuleFileSystem();
 
 	bool Init();
 
