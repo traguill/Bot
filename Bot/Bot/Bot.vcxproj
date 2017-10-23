@@ -166,6 +166,7 @@
     <ClInclude Include="MouseController.h" />
     <ClInclude Include="MouseEmulator.h" />
     <ClInclude Include="Performance.h" />
+    <ClInclude Include="PhysFS\include\physfs.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Timer.h" />

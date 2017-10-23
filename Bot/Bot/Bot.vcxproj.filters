@@ -40,6 +40,9 @@
     <Filter Include="Source Files\BehaviorTree\Decorators">
       <UniqueIdentifier>{63de7a7e-f1ec-4284-a4e1-1997948aad09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\3rdParty\Physfs">
+      <UniqueIdentifier>{150703eb-b73f-43af-a7bd-aa423a1b219f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="DecSelector.h">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysFS\include\physfs.h">
+      <Filter>Source Files\3rdParty\Physfs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

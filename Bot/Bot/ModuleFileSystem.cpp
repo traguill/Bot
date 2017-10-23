@@ -7,12 +7,8 @@
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
-
 ModuleFileSystem::ModuleFileSystem()
-{
-
-	
-}
+{}
 
 // Destructor
 ModuleFileSystem::~ModuleFileSystem()
