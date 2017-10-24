@@ -62,6 +62,19 @@ bool AreaManager::ExistsArea(const string & name, Area & result) const
 	return ret;
 }
 
+Area * AreaManager::FindArea(const string & name) const
+{
+	Area* a = nullptr;
+
+	map<string, Area*>::const_iterator found = area_list.find(name);
+	if (found != area_list.end())
+	{
+		a = found->second;
+	}
+
+	return a;
+}
+
 bool AreaManager::CreateArea(const string & name, int left, int top, int bottom, int right)
 {
 	if (area_list.find(name) != area_list.end())

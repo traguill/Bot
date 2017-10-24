@@ -53,6 +53,7 @@ public:
 	bool InsertInt(const string& name, int value);
 	bool InsertFloat(const string& name, float value);
 	bool InsertString(const string& name, const string& value);
+	bool InsertArea(const string& name, const string& value);
 
 private:
 	void LoadBBInt(Data& data);

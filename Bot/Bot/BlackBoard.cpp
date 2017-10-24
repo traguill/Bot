@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 #include "ConsoleMsgs.h"
+#include "Editor.h"
+#include "AreaManager.h"
 
 BlackBoard::BlackBoard()
 {
@@ -14,7 +16,7 @@ BlackBoard::~BlackBoard()
 	{
 		if (it->second != nullptr)
 		{
-			if(it->second->value && it->second->type != BB_STRING)
+			if(it->second->value && it->second->type != BB_STRING && it->second->type != BB_AREA)
 				delete[] ((*it).second->value);
 			delete it->second;
 		}
@@ -153,6 +155,7 @@ void BlackBoard::PrintVars() const
 		case BB_VECTOR:
 			break;
 		case BB_AREA:
+			MSG_INFO("* Area %s: %s", it->first.data(), ((Area*)(it->second->value))->name.data());
 			break;
 		default:
 			break;
@@ -237,6 +240,30 @@ bool BlackBoard::InsertString(const string & name, const string & value)
 	return ret.second;
 }
 
+bool BlackBoard::InsertArea(const string & name, const string & value)
+{
+	//Same as string but first search if area exists
+	bool exists = App->editor->area_manager->ExistsArea(value);
+	if (exists == false)
+		return false;
+
+	BBVar* var = new BBVar();
+	var->name = name.data();
+	var->type = BB_AREA;
+	Area* a = App->editor->area_manager->FindArea(value);
+	var->value = (char*)a;
+
+	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
+
+	if (ret.second == false)
+	{
+		delete[] var->value;
+		delete var;
+	}
+
+	return ret.second;
+}
+
 void BlackBoard::LoadBBInt(Data & data)
 {
 	BBVar* var = new BBVar();
@@ -294,6 +321,23 @@ void BlackBoard::LoadBBVector(Data & data)
 void BlackBoard::LoadBBArea(Data & data)
 {
 	//value = area_name(string) ->Search the area in AreaManager pick the pointer.
+	BBVar* var = new BBVar();
+	var->type = BB_AREA;
+	var->name = data.GetString("name");
+	const char* data_val = data.GetString("value");
+
+	Area* a = App->editor->area_manager->FindArea(string(data_val));
+
+	if (a == nullptr)
+	{
+		MSG_ERROR("Area %s not loaded. This area does not exist.", var->name.data());
+		delete var;
+		return;
+	}
+
+	var->value = (char*)a; //Too hacky?
+
+	bb_vars.insert(pair<string, BBVar*>(var->name, var));
 }
 
 void BlackBoard::SaveBBInt(Data & data, const BBVar* var) const
@@ -342,4 +386,13 @@ void BlackBoard::SaveBBVector(Data & data, const BBVar* var) const
 
 void BlackBoard::SaveBBArea(Data & data, const BBVar* var) const
 {
+	Data data_var;
+	data_var.AppendString("name", var->name.data());
+	data_var.AppendInt("type", var->type);
+
+	string name = ((Area*)(var->value))->name; //This must be wrong for some reason. But it works...
+
+	data_var.AppendString("value", name.data());
+
+	data.AppendArrayValue(data_var);
 }

@@ -33,6 +33,7 @@ public:
 
 	bool ExistsArea(const string& name)const; //Check if there is an area with the given name
 	bool ExistsArea(const string& name, Area& result)const;
+	Area* FindArea(const string& name)const;
 	bool CreateArea(const string& name, int left, int top, int bottom, int right);
 	bool RemoveArea(const string& name);
 	bool Rename(const string& old_name, const string& new_name);
