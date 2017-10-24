@@ -186,6 +186,14 @@ void Console::LoadDefaultCommands()
 	//move
 	Cmd move = CreateCommand("move", "Moves the mouse and handles clicks", (defFunction)(&MoveMouseToArea));
 	RegisterCommand(move);
+
+	//bb
+	Cmd bb = CreateCommand("bb", "Blackboard", nullptr);
+
+	CreateOption('s', "Shows all the variables inside the BlackBoard and its values. Usage: bb -s <name>", BBShow, bb);
+	CreateOption('i', "Inserts a variable inside the Blackboard. Usage: -i <type> <name> <value>.bool/int/float/string/vector/area.", BBInsert, bb);
+
+	RegisterCommand(bb);
 }
 
 Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 

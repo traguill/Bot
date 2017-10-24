@@ -1,6 +1,7 @@
 #include "BlackBoard.h"
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ConsoleMsgs.h"
 
 BlackBoard::BlackBoard()
 {
@@ -8,7 +9,74 @@ BlackBoard::BlackBoard()
 
 BlackBoard::~BlackBoard()
 {
-	//TODO delete vars
+	Save("bb.json");
+	for (map<string, BBVar*>::iterator it = bb_vars.begin(); it != bb_vars.end(); ++it)
+	{
+		if (it->second != nullptr)
+		{
+			delete[] it->second->value;
+			delete it->second;
+		}
+	}
+}
+
+void BlackBoard::Init()
+{
+	bool ret = Load("bb.json");
+	if (ret)
+	{
+		MSG_INFO("BlackBoard loaded successfully.");
+	}
+	else
+	{
+		MSG_ERROR("An error occurred while loading BlackBoard");
+	}
+}
+
+bool BlackBoard::Save(const char * filename) const
+{
+	Data data;
+
+	data.AppendArray("vars");
+	
+	for (map<string, BBVar*>::const_iterator it = bb_vars.begin(); it != bb_vars.end(); ++it)
+	{
+		switch ((*it).second->type)
+		{
+		case BB_INT:
+			SaveBBInt(data, (*it).second);
+			break;
+		case BB_FLOAT:
+			SaveBBFloat(data, (*it).second);
+			break;
+		case BB_BOOL:
+			SaveBBBool(data, (*it).second);
+			break;
+		case BB_STRING:
+			SaveBBString(data, (*it).second);
+			break;
+		case BB_VECTOR:
+			SaveBBVector(data, (*it).second);
+			break;
+		case BB_AREA:
+			SaveBBArea(data, (*it).second);
+			break;
+		}
+	}
+
+	char* buf = nullptr;
+	size_t size = data.Serialize(&buf);
+
+	if (size <= 0)
+	{
+		if (buf)
+			delete[] buf;
+		return false;
+	}
+
+	size_t ret_size = App->file_system->Save(filename, buf, size);
+	
+	return (ret_size > 0) ? true : false;
 }
 
 bool BlackBoard::Load(const char * filename)
@@ -59,6 +127,113 @@ bool BlackBoard::Load(const char * filename)
 		delete[] buf;
 
 	return true;
+}
+
+void BlackBoard::PrintVars() const
+{
+	MSG_INFO("BlackBoard vars: ");
+	MSG_INFO("----------------------------------------------");
+	for (map<string, BBVar*>::const_iterator it = bb_vars.begin(); it != bb_vars.end(); ++it)
+	{
+		switch ((*it).second->type)
+		{
+		case BB_INT:
+			MSG_INFO("* %s: %i", it->first.data(), static_cast<int>(*it->second->value));
+			break;
+		case BB_FLOAT:
+			MSG_INFO("* %s: %f", it->first.data(), static_cast<float>(*it->second->value));
+			break;
+		case BB_BOOL:
+			MSG_INFO("* %s: %i", it->first.data(), static_cast<bool>(*it->second->value));
+			break;
+		case BB_STRING:
+			MSG_INFO("* %s: %s", it->first.data(), it->second->value);
+			break;
+		case BB_VECTOR:
+			break;
+		case BB_AREA:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+bool BlackBoard::InsertBool(const string & name, bool value)
+{
+	BBVar* var = new BBVar();
+	var->name = name.data();
+	var->type = BB_BOOL;
+	var->value = new char[sizeof(bool)];
+	memcpy(var->value, &value, sizeof(bool));
+
+	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
+
+	if (ret.second == false)
+	{
+		delete[] var->value;
+		delete var;
+	}
+
+	return ret.second;
+}
+
+bool BlackBoard::InsertInt(const string & name, int value)
+{
+	BBVar* var = new BBVar();
+	var->name = name.data();
+	var->type = BB_INT;
+	var->value = new char[sizeof(int)];
+	memcpy(var->value, &value, sizeof(int));
+
+	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
+
+	if (ret.second == false)
+	{
+		delete[] var->value;
+		delete var;
+	}
+
+	return ret.second;
+}
+
+bool BlackBoard::InsertFloat(const string & name, float value)
+{
+	BBVar* var = new BBVar();
+	var->name = name.data();
+	var->type = BB_FLOAT;
+	var->value = new char[sizeof(float)];
+	memcpy(var->value, &value, sizeof(float));
+
+	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
+
+	if (ret.second == false)
+	{
+		delete[] var->value;
+		delete var;
+	}
+
+	return ret.second;
+}
+
+bool BlackBoard::InsertString(const string & name, const string & value)
+{
+	BBVar* var = new BBVar();
+	var->name = name.data();
+	var->type = BB_INT;
+	size_t size = sizeof(char)*(value.length() + 1);
+	var->value = new char[size];
+	memcpy(var->value, &value, size);
+
+	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
+
+	if (ret.second == false)
+	{
+		delete[] var->value;
+		delete var;
+	}
+
+	return ret.second;
 }
 
 void BlackBoard::LoadBBInt(Data & data)
@@ -118,4 +293,48 @@ void BlackBoard::LoadBBVector(Data & data)
 void BlackBoard::LoadBBArea(Data & data)
 {
 	//value = area_name(string) ->Search the area in AreaManager pick the pointer.
+}
+
+void BlackBoard::SaveBBInt(Data & data, const BBVar* var) const
+{
+	Data data_var;
+	data_var.AppendString("name", var->name.data());
+	data_var.AppendInt("value", static_cast<int>(*var->value));
+
+	data.AppendArrayValue(data_var);
+}
+
+void BlackBoard::SaveBBFloat(Data & data, const BBVar* var) const
+{
+	Data data_var;
+	data_var.AppendString("name", var->name.data());
+	data_var.AppendFloat("value", static_cast<float>(*var->value));
+
+	data.AppendArrayValue(data_var);
+}
+
+void BlackBoard::SaveBBString(Data & data, const BBVar* var) const
+{
+	Data data_var;
+	data_var.AppendString("name", var->name.data());
+	data_var.AppendString("value", var->value);
+
+	data.AppendArrayValue(data_var);
+}
+
+void BlackBoard::SaveBBBool(Data & data, const BBVar* var) const
+{
+	Data data_var;
+	data_var.AppendString("name", var->name.data());
+	data_var.AppendBool("value", static_cast<bool>(*var->value));
+
+	data.AppendArrayValue(data_var);
+}
+
+void BlackBoard::SaveBBVector(Data & data, const BBVar* var) const
+{
+}
+
+void BlackBoard::SaveBBArea(Data & data, const BBVar* var) const
+{
 }

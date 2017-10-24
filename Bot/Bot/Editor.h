@@ -5,6 +5,7 @@
 
 class AreaManager;
 class MouseController;
+class BlackBoard;
 
 enum EDITOR_STATE
 {
@@ -28,6 +29,7 @@ public:
 public:
 	AreaManager* area_manager = nullptr; //This should not be here.
 	MouseController* mouse_controller = nullptr;
+	BlackBoard* black_board = nullptr;
 
 private:
 	EDITOR_STATE state = SLEEP;

@@ -40,8 +40,19 @@ public:
 	BlackBoard();
 	~BlackBoard();
 
+	void Init();
+
 	//Load vars
+	bool Save(const char* filename)const;
 	bool Load(const char* filename);
+
+	void PrintVars()const;
+
+	//Insert
+	bool InsertBool(const string& name, bool value);
+	bool InsertInt(const string& name, int value);
+	bool InsertFloat(const string& name, float value);
+	bool InsertString(const string& name, const string& value);
 
 private:
 	void LoadBBInt(Data& data);
@@ -50,6 +61,13 @@ private:
 	void LoadBBBool(Data& data);
 	void LoadBBVector(Data& data);
 	void LoadBBArea(Data& data);
+
+	void SaveBBInt(Data& data, const BBVar* var)const;
+	void SaveBBFloat(Data& data, const BBVar* var)const;
+	void SaveBBString(Data& data, const BBVar* var)const;
+	void SaveBBBool(Data& data, const BBVar* var)const;
+	void SaveBBVector(Data& data, const BBVar* var)const;
+	void SaveBBArea(Data& data, const BBVar* var)const;
 
 private:
 	map<string, BBVar*> bb_vars;

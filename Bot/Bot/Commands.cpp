@@ -4,8 +4,26 @@
 #include "Editor.h"
 #include "AreaManager.h"
 #include "MouseController.h"
+#include "BlackBoard.h"
 
 #include <iostream>
+
+bool CheckNumParameters(const vector<string>* args, int min_number, const char * function_name, char option)
+{
+	if (args == nullptr)
+	{
+		MSG_ERROR("Nullptr passed to %s() method.", function_name); 
+		return false;
+	}
+
+	if (args->size() < min_number)
+	{
+		MSG_ERROR("Error: option -%c requires a value", option);
+		return false;
+	}
+
+	return true;
+}
 
 void ClearConsoleScreen(const vector<string>* args)
 {
@@ -288,4 +306,32 @@ void MoveMouseToArea(const vector<string>* args)
 	}
 
 	App->editor->mouse_controller->GoTo(dst_p, delay);
+}
+
+void BBShow(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, "BBShow", 's');
+	if (ret == false)
+		return;
+
+	App->editor->black_board->PrintVars(); //TODO: filter by name
+}
+
+void BBInsert(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 3, "BBInsert", 'i');
+
+	if (ret == false)
+		return;
+
+	string bb_var_type = (*args)[0];
+	string bb_var_name = (*args)[1];
+	string bb_var_value = (*args)[2];
+
+	if (bb_var_type.compare("bool") == 0) App->editor->black_board->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
+	if (bb_var_type.compare("int") == 0) App->editor->black_board->InsertInt(bb_var_name, stoi(bb_var_value.data()));
+	if (bb_var_type.compare("float") == 0) App->editor->black_board->InsertFloat(bb_var_name, stof(bb_var_value.data()));
+	if (bb_var_type.compare("string") == 0) App->editor->black_board->InsertString(bb_var_name, bb_var_value);
+
+	//TODO: vector & area
 }

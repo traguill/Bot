@@ -6,15 +6,18 @@
 #include "AreaManager.h"
 #include "MouseController.h"
 #include "ConsoleMsgs.h"
+#include "BlackBoard.h"
 
 Editor::Editor()
 {
 	area_manager = new AreaManager();
 	mouse_controller = new MouseController();
+	black_board = new BlackBoard();
 }
 
 Editor::~Editor()
 {
+	delete black_board;
 	delete mouse_controller;
 	delete area_manager;
 }
@@ -22,6 +25,7 @@ Editor::~Editor()
 void Editor::Init()
 {
 	area_manager->Init();
+	black_board->Init();
 }
 
 bool Editor::Update()
