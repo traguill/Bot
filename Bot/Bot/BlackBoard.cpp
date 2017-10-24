@@ -14,7 +14,8 @@ BlackBoard::~BlackBoard()
 	{
 		if (it->second != nullptr)
 		{
-			delete[] it->second->value;
+			if(it->second->value && it->second->type != BB_STRING)
+				delete[] ((*it).second->value);
 			delete it->second;
 		}
 	}
@@ -138,13 +139,13 @@ void BlackBoard::PrintVars() const
 		switch ((*it).second->type)
 		{
 		case BB_INT:
-			MSG_INFO("* %s: %i", it->first.data(), static_cast<int>(*it->second->value));
+			MSG_INFO("* %s: %i", it->first.data(), *(reinterpret_cast<int*>((*it).second->value)));
 			break;
 		case BB_FLOAT:
-			MSG_INFO("* %s: %f", it->first.data(), static_cast<float>(*it->second->value));
+			MSG_INFO("* %s: %f", it->first.data(), *(reinterpret_cast<float*>((*it).second->value)));
 			break;
 		case BB_BOOL:
-			MSG_INFO("* %s: %i", it->first.data(), static_cast<bool>(*it->second->value));
+			MSG_INFO("* %s: %i", it->first.data(), *(reinterpret_cast<bool*>((*it).second->value)));
 			break;
 		case BB_STRING:
 			MSG_INFO("* %s: %s", it->first.data(), it->second->value);
@@ -220,10 +221,10 @@ bool BlackBoard::InsertString(const string & name, const string & value)
 {
 	BBVar* var = new BBVar();
 	var->name = name.data();
-	var->type = BB_INT;
+	var->type = BB_STRING;
 	size_t size = sizeof(char)*(value.length() + 1);
 	var->value = new char[size];
-	memcpy(var->value, &value, size);
+	memcpy(var->value, value.data(), size);
 
 	pair<map<string, BBVar*>::iterator, bool> ret = bb_vars.insert(pair<string, BBVar*>(name, var));
 
@@ -268,7 +269,7 @@ void BlackBoard::LoadBBString(Data & data)
 	const char* data_val = data.GetString("value");
 	size_t data_size = sizeof(char)*(strlen(data_val)+1);
 	var->value = new char[sizeof(data_val)];
-	memcpy_s(var->value, data_size, &data_val, data_size);
+	memcpy_s(var->value, data_size, data_val, data_size);
 
 	bb_vars.insert(pair<string, BBVar*>(var->name, var));
 }
@@ -299,7 +300,8 @@ void BlackBoard::SaveBBInt(Data & data, const BBVar* var) const
 {
 	Data data_var;
 	data_var.AppendString("name", var->name.data());
-	data_var.AppendInt("value", static_cast<int>(*var->value));
+	data_var.AppendInt("type", var->type);
+	data_var.AppendInt("value", *(reinterpret_cast<int*>(var->value)));
 
 	data.AppendArrayValue(data_var);
 }
@@ -308,7 +310,8 @@ void BlackBoard::SaveBBFloat(Data & data, const BBVar* var) const
 {
 	Data data_var;
 	data_var.AppendString("name", var->name.data());
-	data_var.AppendFloat("value", static_cast<float>(*var->value));
+	data_var.AppendInt("type", var->type);
+	data_var.AppendFloat("value", *(reinterpret_cast<float*>(var->value)));
 
 	data.AppendArrayValue(data_var);
 }
@@ -317,6 +320,7 @@ void BlackBoard::SaveBBString(Data & data, const BBVar* var) const
 {
 	Data data_var;
 	data_var.AppendString("name", var->name.data());
+	data_var.AppendInt("type", var->type);
 	data_var.AppendString("value", var->value);
 
 	data.AppendArrayValue(data_var);
@@ -326,7 +330,8 @@ void BlackBoard::SaveBBBool(Data & data, const BBVar* var) const
 {
 	Data data_var;
 	data_var.AppendString("name", var->name.data());
-	data_var.AppendBool("value", static_cast<bool>(*var->value));
+	data_var.AppendInt("type", var->type);
+	data_var.AppendBool("value", *(reinterpret_cast<bool*>(var->value)));
 
 	data.AppendArrayValue(data_var);
 }

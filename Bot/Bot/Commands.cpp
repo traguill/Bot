@@ -329,9 +329,9 @@ void BBInsert(const vector<string>* args)
 	string bb_var_value = (*args)[2];
 
 	if (bb_var_type.compare("bool") == 0) App->editor->black_board->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
-	if (bb_var_type.compare("int") == 0) App->editor->black_board->InsertInt(bb_var_name, stoi(bb_var_value.data()));
-	if (bb_var_type.compare("float") == 0) App->editor->black_board->InsertFloat(bb_var_name, stof(bb_var_value.data()));
-	if (bb_var_type.compare("string") == 0) App->editor->black_board->InsertString(bb_var_name, bb_var_value);
+	else if (bb_var_type.compare("int") == 0) App->editor->black_board->InsertInt(bb_var_name, stoi(bb_var_value.data()));
+	else if (bb_var_type.compare("float") == 0) App->editor->black_board->InsertFloat(bb_var_name, stof(bb_var_value.data()));
+	else if (bb_var_type.compare("string") == 0) App->editor->black_board->InsertString(bb_var_name, bb_var_value);
 
 	//TODO: vector & area
 }
