@@ -5,10 +5,11 @@
 #include "AreaManager.h"
 #include "MouseController.h"
 #include "BlackBoard.h"
+#include "BTManager.h"
 
 #include <iostream>
 
-bool CheckNumParameters(const vector<string>* args, int min_number, const char * function_name, char option)
+bool CheckNumParameters(const vector<string>* args, int min_number, int max_number, const char * function_name, char option)
 {
 	if (args == nullptr)
 	{
@@ -16,7 +17,7 @@ bool CheckNumParameters(const vector<string>* args, int min_number, const char *
 		return false;
 	}
 
-	if (args->size() < min_number)
+	if (args->size() < min_number || args->size() > max_number)
 	{
 		MSG_ERROR("Error: option -%c requires a value", option);
 		return false;
@@ -308,18 +309,18 @@ void MoveMouseToArea(const vector<string>* args)
 	App->editor->mouse_controller->GoTo(dst_p, delay);
 }
 
-void BBShow(const vector<string>* args)
+void BBShow(const vector<string>* args) //TODO: Ask current BT
 {
-	bool ret = CheckNumParameters(args, 1, "BBShow", 's');
+	bool ret = CheckNumParameters(args, 1, 1, "BBShow", 's');
 	if (ret == false)
 		return;
 
-	App->editor->black_board->PrintVars(); //TODO: filter by name
+	//App->editor->black_board->PrintVars(); //TODO: filter by name
 }
 
-void BBInsert(const vector<string>* args)
+void BBInsert(const vector<string>* args) //TODO: Ask current BT
 {
-	bool ret = CheckNumParameters(args, 3, "BBInsert", 'i');
+	bool ret = CheckNumParameters(args, 3, 3,"BBInsert", 'i');
 
 	if (ret == false)
 		return;
@@ -328,11 +329,46 @@ void BBInsert(const vector<string>* args)
 	string bb_var_name = (*args)[1];
 	string bb_var_value = (*args)[2];
 
-	if (bb_var_type.compare("bool") == 0) App->editor->black_board->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
+	/*if (bb_var_type.compare("bool") == 0) App->editor->black_board->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
 	else if (bb_var_type.compare("int") == 0) App->editor->black_board->InsertInt(bb_var_name, stoi(bb_var_value.data()));
 	else if (bb_var_type.compare("float") == 0) App->editor->black_board->InsertFloat(bb_var_name, stof(bb_var_value.data()));
 	else if (bb_var_type.compare("string") == 0) App->editor->black_board->InsertString(bb_var_name, bb_var_value);
-	else if (bb_var_type.compare("area") == 0) App->editor->black_board->InsertArea(bb_var_name, bb_var_value);
+	else if (bb_var_type.compare("area") == 0) App->editor->black_board->InsertArea(bb_var_name, bb_var_value);*/
 
 	//TODO: vector
+}
+
+void BTNew(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, 1, "BTNew", 'n');
+	if (ret == false)
+		return;
+
+	//Check if name already exists
+	string bt_name = (*args)[0];
+
+	ret = App->editor->bt_manager->IsNameAvailable(bt_name);
+
+	if (ret == false)
+	{
+		MSG_ERROR("BehaviorTree name %s is already in use.", bt_name.data());
+		return;
+	}
+
+	//Create a new BT
+	ret = App->editor->bt_manager->CreateBT(bt_name);
+
+	if (ret)
+		MSG_INFO("BehaviorTree %s was created successfully!", bt_name.data());
+	else
+		MSG_ERROR("BehaviorTree %s was not created. Check for errors.", bt_name.data());
+}
+
+void ShowBTs(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 0, 0, "ShowBTs", 's');
+	if (ret == false)
+		return;
+
+	App->editor->bt_manager->PrintAvailableBT();
 }

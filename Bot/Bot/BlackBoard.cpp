@@ -11,7 +11,7 @@ BlackBoard::BlackBoard()
 
 BlackBoard::~BlackBoard()
 {
-	Save("bb.json");
+	Save();
 	for (map<string, BBVar*>::iterator it = bb_vars.begin(); it != bb_vars.end(); ++it)
 	{
 		if (it->second != nullptr)
@@ -23,20 +23,34 @@ BlackBoard::~BlackBoard()
 	}
 }
 
-void BlackBoard::Init()
+void BlackBoard::Init(const char* filename, const char* name)
 {
-	bool ret = Load("bb.json");
-	if (ret)
+	if (filename == NULL)
 	{
-		MSG_INFO("BlackBoard loaded successfully.");
+		if (name == nullptr)
+		{
+			MSG_ERROR("A BlackBoard could not be initialize. No filename nor name");
+			return;
+		}
+		this->filename = name;
+		Save();
 	}
 	else
 	{
-		MSG_ERROR("An error occurred while loading BlackBoard");
+		bool ret = Load();
+		if (ret)
+		{
+			MSG_INFO("BlackBoard loaded successfully.");
+		}
+		else
+		{
+			MSG_ERROR("An error occurred while loading BlackBoard");
+		}
 	}
+	
 }
 
-bool BlackBoard::Save(const char * filename) const
+bool BlackBoard::Save() const
 {
 	Data data;
 
@@ -77,16 +91,16 @@ bool BlackBoard::Save(const char * filename) const
 		return false;
 	}
 
-	size_t ret_size = App->file_system->Save(filename, buf, size);
+	size_t ret_size = App->file_system->Save(filename.data(), buf, size);
 	
 	return (ret_size > 0) ? true : false;
 }
 
-bool BlackBoard::Load(const char * filename)
+bool BlackBoard::Load()
 {
 	bool ret = false;
 	char* buf = nullptr;
-	unsigned int size = App->file_system->Load(filename, &buf);
+	unsigned int size = App->file_system->Load(filename.data(), &buf);
 
 	if (size == 0)
 	{

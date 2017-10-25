@@ -40,11 +40,7 @@ public:
 	BlackBoard();
 	~BlackBoard();
 
-	void Init();
-
-	//Load vars
-	bool Save(const char* filename)const;
-	bool Load(const char* filename);
+	void Init(const char* filename, const char* name = nullptr);
 
 	void PrintVars()const;
 
@@ -56,6 +52,10 @@ public:
 	bool InsertArea(const string& name, const string& value);
 
 private:
+	//Load vars
+	bool Save()const;
+	bool Load();
+
 	void LoadBBInt(Data& data);
 	void LoadBBFloat(Data& data);
 	void LoadBBString(Data& data);
@@ -72,6 +72,7 @@ private:
 
 private:
 	map<string, BBVar*> bb_vars;
+	string filename;
 };
 #endif // !__BLACKBOARD_H__
 

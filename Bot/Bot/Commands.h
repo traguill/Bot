@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool CheckNumParameters(const vector<string>* args, int min_number, const char* function_name, char option);
+bool CheckNumParameters(const vector<string>* args, int min_number, int max_number, const char* function_name, char option);
 
 //clear
 void ClearConsoleScreen(const vector<string>* args);
@@ -25,6 +25,10 @@ void MoveMouseToArea(const vector<string>* args); // <area> <delay>(Opt)
 //bb
 void BBShow(const vector<string>* args); //-s <name>
 void BBInsert(const vector<string>* args); //-i <type> <name> <value>
+
+//bt
+void BTNew(const vector<string>* args); //-n <name>
+void ShowBTs(const vector<string>* args); //-s
 
 
 #endif // !__COMMANDS_H__

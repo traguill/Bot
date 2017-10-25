@@ -121,6 +121,7 @@
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="BehaviorTree.cpp" />
     <ClCompile Include="BlackBoard.cpp" />
+    <ClCompile Include="BTManager.cpp" />
     <ClCompile Include="Cmd.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="ConditionNode.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="BlackBoard.h" />
+    <ClInclude Include="BTManager.h" />
     <ClInclude Include="Cmd.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ConditionNode.h" />

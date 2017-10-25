@@ -123,6 +123,9 @@
     <ClCompile Include="DecSelector.cpp">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
     </ClCompile>
+    <ClCompile Include="BTManager.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="PhysFS\include\physfs.h">
       <Filter>Source Files\3rdParty\Physfs</Filter>
+    </ClInclude>
+    <ClInclude Include="BTManager.h">
+      <Filter>Source Files\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

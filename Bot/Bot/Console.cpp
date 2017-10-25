@@ -194,6 +194,14 @@ void Console::LoadDefaultCommands()
 	CreateOption('i', "Inserts a variable inside the Blackboard. Usage: -i <type> <name> <value>.bool/int/float/string/vector/area.", BBInsert, bb);
 
 	RegisterCommand(bb);
+
+	//bt
+	Cmd bt = CreateCommand("bt", "BehaviorTree", nullptr);
+
+	CreateOption('n', "Creates a new BT. Usage: bt -n <bt_name>", BTNew, bt);
+	CreateOption('s', "Shows the BTs available", ShowBTs, bt);
+
+	RegisterCommand(bt);
 }
 
 Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 
