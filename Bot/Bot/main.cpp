@@ -48,6 +48,7 @@ void InputMethod()
 	bool quit = false;
 	while (!quit)
 	{
+		console->PrintHeader();
 		printf("> ");
 		getline(cin, msg);
 		console->Execute(msg.data());

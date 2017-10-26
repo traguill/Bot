@@ -372,3 +372,17 @@ void ShowBTs(const vector<string>* args)
 
 	App->editor->bt_manager->PrintAvailableBT();
 }
+
+void BTEdit(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, 1, "BTEdit", 'e');
+	if (ret == false)
+		return;
+
+	string bt_name = (*args)[0];
+
+	ret = App->editor->bt_manager->SetCurrentBT(bt_name, true);
+
+	if (!ret)
+		MSG_ERROR("BehaviorTree %s error, unable to load to edit", bt_name.data());
+}

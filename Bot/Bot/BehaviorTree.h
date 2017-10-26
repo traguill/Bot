@@ -18,6 +18,7 @@ public:
 
 private:
 
+	bool Load();
 	void Save()const;
 
 private:
@@ -25,6 +26,9 @@ private:
 	TreeNode* current_node = nullptr;
 	BlackBoard* bb = nullptr;
 	string bb_filename; //name of the BlackBoard file
+
+public:
+	//Easy access
 	string bt_filename; //name of the BehaviorTree file
 };
 

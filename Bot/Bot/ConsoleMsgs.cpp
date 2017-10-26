@@ -6,7 +6,7 @@
 
 void  PrintErrorMessage(const char* format, ...)
 {
-	SetConsoleTextAttribute(App->h_console, 0x0C); //Red
+	SetConsoleTextAttribute(App->h_console, 0x0F); //Red
 
 	static va_list ap;
 
@@ -15,7 +15,7 @@ void  PrintErrorMessage(const char* format, ...)
 	printf("\n");
 	va_end(ap);
 
-	SetConsoleTextAttribute(App->h_console, 0x07); //Reset to white
+	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
 }
 
 void  PrintInfoMessage(const char* format, ...)
@@ -30,7 +30,7 @@ void  PrintInfoMessage(const char* format, ...)
 
 void  PrintWarningMessage(const char* format, ...)
 {
-	SetConsoleTextAttribute(App->h_console, 0x06); //Yellow
+	SetConsoleTextAttribute(App->h_console, 0x0E); //Yellow
 	static va_list ap;
 
 	va_start(ap, format);
@@ -38,5 +38,21 @@ void  PrintWarningMessage(const char* format, ...)
 	printf("\n");
 	va_end(ap);
 
-	SetConsoleTextAttribute(App->h_console, 0x07); //Reset to white
+	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
+}
+
+void PrintConsoleHeader(const char * bt_name, const char * format, ...)
+{
+	SetConsoleTextAttribute(App->h_console, 0x0A); //Green
+	printf("$ BT:%s", bt_name);
+	
+	SetConsoleTextAttribute(App->h_console, 0x0E); //Yellow
+	printf("~");
+	static va_list ap;
+
+	va_start(ap, format);
+	vprintf(format, ap);
+	printf("\n");
+	va_end(ap);
+	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
 }

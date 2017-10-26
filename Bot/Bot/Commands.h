@@ -29,6 +29,7 @@ void BBInsert(const vector<string>* args); //-i <type> <name> <value>
 //bt
 void BTNew(const vector<string>* args); //-n <name>
 void ShowBTs(const vector<string>* args); //-s
+void BTEdit(const vector<string>* args); //-e <name>
 
 
 #endif // !__COMMANDS_H__

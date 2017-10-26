@@ -212,6 +212,9 @@
     <ClInclude Include="BTManager.h">
       <Filter>Source Files\Blocks</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleHeader.h">
+      <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="command_function.snippet">

@@ -155,6 +155,7 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ConditionNode.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="ConsoleHeader.h" />
     <ClInclude Include="ConsoleMsgs.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="DecoratorNode.h" />

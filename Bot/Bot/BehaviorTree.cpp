@@ -37,8 +37,31 @@ void BehaviorTree::Init(const char * filename, const char* name)
 	}
 	else //Load from file
 	{
-
+		bt_filename = filename; bt_filename.append(".bt");
+		Load();
 	}
+}
+
+bool BehaviorTree::Load()
+{
+	char* buf = nullptr;
+	size_t size = App->file_system->Load(bt_filename.data(), &buf);
+	if (size <= 0)
+	{
+		MSG_ERROR("Could not load BehaviorTree %s", bt_filename.data());
+		if (buf)
+			delete[] buf;
+		return false;
+	}
+
+	Data data(buf);
+
+	bb_filename = data.GetString("bb_name");
+
+	if (buf)
+		delete[] buf;
+
+	return true;
 }
 
 void BehaviorTree::Save() const

@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "Commands.h"
+#include "ConsoleHeader.h"
 
 Console::Console()
 {}
@@ -12,6 +13,14 @@ Console::~Console()
 void Console::Start()
 {
 	LoadDefaultCommands();
+}
+
+void Console::PrintHeader() const
+{
+	if (header_enabled && current_header)
+	{
+		current_header->PrintHeader();
+	}
 }
 
 bool Console::Execute(const char* cmd) const
@@ -75,6 +84,21 @@ bool Console::RegisterCommand(Cmd& cmd)
 		return true;
 	}
 	return false;
+}
+
+bool Console::RequestHeader(ConsoleHeader * hc)
+{
+	if (hc)
+	{
+		header_enabled = true;
+		current_header = hc;
+	}
+	else
+	{
+		current_header = nullptr;
+		header_enabled = false;
+	}
+	return true; //TODO: Improve this approach
 }
 
 bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
@@ -200,6 +224,7 @@ void Console::LoadDefaultCommands()
 
 	CreateOption('n', "Creates a new BT. Usage: bt -n <bt_name>", BTNew, bt);
 	CreateOption('s', "Shows the BTs available", ShowBTs, bt);
+	CreateOption('e', "Sets a BT to edit it. Usage: bt -e <name>", BTEdit, bt);
 
 	RegisterCommand(bt);
 }

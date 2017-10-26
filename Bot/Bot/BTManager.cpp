@@ -4,6 +4,7 @@
 #include "ConsoleMsgs.h"
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "Console.h"
 
 BTManager::BTManager()
 {
@@ -65,4 +66,41 @@ bool BTManager::CreateBT(const string & name)
 	bt_files.push_back(name);
 
 	return true;
+}
+
+bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
+{
+	//Search if is already loaded
+	map<string, BehaviorTree*>::iterator bt_loaded_found = bt_loaded.find(name);
+	if (bt_loaded_found != bt_loaded.end())
+	{
+		this->editing_mode = editing_mode;
+		current_bt = (*bt_loaded_found).second;
+		console->RequestHeader(this);
+		return true;
+	}
+
+	//Search if there is a file for the bt
+	vector<string>::iterator bt_file_found = std::find(bt_files.begin(), bt_files.end(), name);
+	if (bt_file_found != bt_files.end())
+	{
+		//TODO: HANDLE ERRORS HERE
+		this->editing_mode = editing_mode;
+		BehaviorTree* bt = new BehaviorTree();
+		bt_loaded.insert(pair<string, BehaviorTree*>(name, bt));
+		bt->Init(name.data());
+		
+		current_bt = bt;
+		console->RequestHeader(this);
+		return true;
+	}
+
+	MSG_ERROR("BehaviorTree %s not found", name.data());
+	return false;
+}
+
+void BTManager::PrintHeader()
+{
+	if(current_bt)
+		BT_HEADER(current_bt->bt_filename.data(), "some things %s", "some more");
 }

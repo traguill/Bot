@@ -10,6 +10,7 @@ using namespace std;
 
 class Cmd;
 struct CmdUserIn;
+class ConsoleHeader;
 
 class Console
 {
@@ -19,10 +20,12 @@ public:
 
 	void Start();
 
+	void PrintHeader()const;
 	bool Execute(const char* cmd)const;
 
 	bool RegisterCommand(Cmd& cmd);
 
+	bool RequestHeader(ConsoleHeader* hc); //Asks the console if the class can print the header
 
 private:
 	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
@@ -34,6 +37,9 @@ private:
 
 private:
 	map<string, Cmd> commands;
+	bool header_enabled = false;
+
+	ConsoleHeader* current_header = nullptr;
 public:
 	bool quit_request = false;
 };
