@@ -61,6 +61,9 @@ bool BehaviorTree::Load()
 	if (buf)
 		delete[] buf;
 
+	bb = new BlackBoard();
+	bb->Init(bb_filename.data());
+
 	return true;
 }
 

@@ -6,6 +6,7 @@
 #include "MouseController.h"
 #include "BlackBoard.h"
 #include "BTManager.h"
+#include "BehaviorTree.h"
 
 #include <iostream>
 
@@ -309,13 +310,21 @@ void MoveMouseToArea(const vector<string>* args)
 	App->editor->mouse_controller->GoTo(dst_p, delay);
 }
 
-void BBShow(const vector<string>* args) //TODO: Ask current BT
+void BBShow(const vector<string>* args)
 {
-	bool ret = CheckNumParameters(args, 1, 1, "BBShow", 's');
+	bool ret = CheckNumParameters(args, 0, 0, "BBShow", 's');
 	if (ret == false)
 		return;
 
-	//App->editor->black_board->PrintVars(); //TODO: filter by name
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+
+	if (bt == nullptr)
+	{
+		MSG_WARNING("No BehaviorTree was loaded. Use: bt -e <bt_name> to start editing a BT and its BlackBoard");
+		return;
+	}
+
+	bt->bb->PrintVars();
 }
 
 void BBInsert(const vector<string>* args) //TODO: Ask current BT
@@ -325,15 +334,23 @@ void BBInsert(const vector<string>* args) //TODO: Ask current BT
 	if (ret == false)
 		return;
 
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+
+	if (bt == nullptr)
+	{
+		MSG_WARNING("No BehaviorTree was loaded. Use: bt -e <bt_name> to start editing a BT and its BlackBoard");
+		return;
+	}
+
 	string bb_var_type = (*args)[0];
 	string bb_var_name = (*args)[1];
 	string bb_var_value = (*args)[2];
 
-	/*if (bb_var_type.compare("bool") == 0) App->editor->black_board->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
-	else if (bb_var_type.compare("int") == 0) App->editor->black_board->InsertInt(bb_var_name, stoi(bb_var_value.data()));
-	else if (bb_var_type.compare("float") == 0) App->editor->black_board->InsertFloat(bb_var_name, stof(bb_var_value.data()));
-	else if (bb_var_type.compare("string") == 0) App->editor->black_board->InsertString(bb_var_name, bb_var_value);
-	else if (bb_var_type.compare("area") == 0) App->editor->black_board->InsertArea(bb_var_name, bb_var_value);*/
+	if (bb_var_type.compare("bool") == 0) bt->bb->InsertBool(bb_var_name, (bb_var_value.compare("0") ? false : true));
+	else if (bb_var_type.compare("int") == 0) bt->bb->InsertInt(bb_var_name, stoi(bb_var_value.data()));
+	else if (bb_var_type.compare("float") == 0) bt->bb->InsertFloat(bb_var_name, stof(bb_var_value.data()));
+	else if (bb_var_type.compare("string") == 0) bt->bb->InsertString(bb_var_name, bb_var_value);
+	else if (bb_var_type.compare("area") == 0) bt->bb->InsertArea(bb_var_name, bb_var_value);
 
 	//TODO: vector
 }
@@ -381,6 +398,13 @@ void BTEdit(const vector<string>* args)
 
 	string bt_name = (*args)[0];
 
+	if (bt_name.compare("quit") == 0) //quit editing mode
+	{
+		App->editor->bt_manager->QuitEditingMode();
+		return;
+	}
+
+	//Enable editing mode with the bt_name BT
 	ret = App->editor->bt_manager->SetCurrentBT(bt_name, true);
 
 	if (!ret)

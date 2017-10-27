@@ -12,6 +12,10 @@ BTManager::BTManager()
 
 BTManager::~BTManager()
 {
+	for (map<string, BehaviorTree*>::iterator it = bt_loaded.begin(); it != bt_loaded.end(); ++it)
+	{
+		delete (*it).second;
+	}
 }
 
 void BTManager::Init()
@@ -97,6 +101,18 @@ bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 
 	MSG_ERROR("BehaviorTree %s not found", name.data());
 	return false;
+}
+
+void BTManager::QuitEditingMode()
+{
+	editing_mode = false;
+	current_bt = nullptr;
+	console->RequestHeader(NULL);
+}
+
+BehaviorTree * BTManager::GetCurrentBT() const
+{
+	return current_bt;
 }
 
 void BTManager::PrintHeader()

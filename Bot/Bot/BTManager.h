@@ -24,6 +24,8 @@ public:
 	bool CreateBT(const string& name);
 
 	bool SetCurrentBT(const string& name, bool editing_mode = false);
+	void QuitEditingMode();
+	BehaviorTree* GetCurrentBT()const;
 
 	void PrintHeader();
 

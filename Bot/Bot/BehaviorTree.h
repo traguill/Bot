@@ -24,12 +24,12 @@ private:
 private:
 	TreeNode* root = nullptr;
 	TreeNode* current_node = nullptr;
-	BlackBoard* bb = nullptr;
 	string bb_filename; //name of the BlackBoard file
 
 public:
 	//Easy access
 	string bt_filename; //name of the BehaviorTree file
+	BlackBoard* bb = nullptr;
 };
 
 #endif // !__BEHAVIORTREE_H__

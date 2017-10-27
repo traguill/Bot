@@ -37,6 +37,7 @@ void BlackBoard::Init(const char* filename, const char* name)
 	}
 	else
 	{
+		this->filename = filename;
 		bool ret = Load();
 		if (ret)
 		{
