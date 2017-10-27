@@ -410,3 +410,28 @@ void BTEdit(const vector<string>* args)
 	if (!ret)
 		MSG_ERROR("BehaviorTree %s error, unable to load to edit", bt_name.data());
 }
+
+void BTInsert(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 2, 2, "BTInsert", 'i');
+	if (ret == false)
+		return;
+
+	string type = (*args)[0];
+	string sub_type = (*args)[1];
+
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+
+	if (bt == nullptr)
+	{
+		MSG_WARNING("No BehaviorTree was loaded. Use: bt -e <bt_name> to start editing a BT and its BlackBoard");
+		return;
+	}
+
+	ret = bt->InsertNode(type, sub_type);
+
+	if (ret == false)
+	{
+		MSG_ERROR("Node %s %s could not be inserted", type.data(), sub_type.data());
+	}
+}

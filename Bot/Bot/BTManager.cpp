@@ -12,6 +12,8 @@ BTManager::BTManager()
 
 BTManager::~BTManager()
 {
+	if (current_bt)
+		current_bt->Save();
 	for (map<string, BehaviorTree*>::iterator it = bt_loaded.begin(); it != bt_loaded.end(); ++it)
 	{
 		delete (*it).second;
@@ -118,5 +120,5 @@ BehaviorTree * BTManager::GetCurrentBT() const
 void BTManager::PrintHeader()
 {
 	if(current_bt)
-		BT_HEADER(current_bt->bt_filename.data(), "some things %s", "some more");
+		BT_HEADER(current_bt->bt_filename.data(), "%s", current_bt->header_current_node.data());
 }

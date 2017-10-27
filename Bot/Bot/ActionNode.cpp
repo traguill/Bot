@@ -1,7 +1,7 @@
 #include "ActionNode.h"
 #include "ConsoleMsgs.h"
 
-ActionNode::ActionNode()
+ActionNode::ActionNode(unsigned int uid) : TreeNode(uid)
 {
 	TreeNode::type = ACTION;
 }

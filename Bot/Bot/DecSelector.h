@@ -6,7 +6,7 @@
 class DecSelector : public DecoratorNode
 {
 public:
-	DecSelector();
+	DecSelector(unsigned int uid);
 	~DecSelector();
 
 	void OnStart();

@@ -22,10 +22,16 @@ enum NODERETURN
 	RUNNING
 };
 
+enum NODESUBTYPE
+{
+	DECSELECTOR,
+	DECSEQUENCE
+};
+
 class TreeNode
 {
 public:
-	TreeNode();
+	TreeNode(unsigned int uid);
 	virtual ~TreeNode();
 
 	virtual void OnStart();
@@ -34,17 +40,22 @@ public:
 	
 	virtual bool AddChild(TreeNode* child);
 	virtual bool RemoveChild(TreeNode* child);
+	bool HasChilds()const;
+	const vector<TreeNode*> GetChilds()const;
 
 	bool SetParent(TreeNode* parent);
 
+	void GetTypeSubType(NODETYPE& type, NODESUBTYPE& subtype);
+	unsigned int GetUid()const;
+
 protected:
 	NODETYPE type;
+	NODESUBTYPE subtype;
 
 	vector<TreeNode*> childs;
 	TreeNode* parent = nullptr;
 
-	BehaviorTree* bt; //Necessary?
-
+	unsigned int uid;
 };
 
 #endif // !__TREENODE_H__

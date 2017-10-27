@@ -6,7 +6,7 @@
 class DecSequence : public DecoratorNode
 {
 public:
-	DecSequence();
+	DecSequence(unsigned int uid);
 	~DecSequence();
 
 	void OnStart();

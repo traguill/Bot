@@ -1,7 +1,8 @@
 #include "DecSequence.h"
 
-DecSequence::DecSequence()
+DecSequence::DecSequence(unsigned int uid) : DecoratorNode(uid)
 {
+	TreeNode::subtype = DECSEQUENCE;
 }
 
 DecSequence::~DecSequence()

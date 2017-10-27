@@ -225,6 +225,7 @@ void Console::LoadDefaultCommands()
 	CreateOption('n', "Creates a new BT. Usage: bt -n <bt_name>", BTNew, bt);
 	CreateOption('s', "Shows the BTs available", ShowBTs, bt);
 	CreateOption('e', "Sets a BT to edit it. Usage: bt -e <name>", BTEdit, bt);
+	CreateOption('i', "Inserts a new node. Usage: bt -i <type> <sub-type>", BTInsert, bt);
 
 	RegisterCommand(bt);
 }

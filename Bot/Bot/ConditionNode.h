@@ -6,7 +6,7 @@
 class ConditionNode : public TreeNode
 {
 public:
-	ConditionNode();
+	ConditionNode(unsigned int uid);
 	~ConditionNode();
 };
 #endif // !__CONTIDITON_NODE_H__

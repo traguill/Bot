@@ -1,6 +1,6 @@
 #include "DecoratorNode.h"
 
-DecoratorNode::DecoratorNode()
+DecoratorNode::DecoratorNode(unsigned int uid) : TreeNode(uid)
 {
 	TreeNode::type = DECORATOR;
 }

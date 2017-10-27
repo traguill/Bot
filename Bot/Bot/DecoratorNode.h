@@ -6,7 +6,7 @@
 class DecoratorNode : public TreeNode
 {
 public:
-	DecoratorNode();
+	DecoratorNode(unsigned int uid);
 	~DecoratorNode();
 
 	bool AddChild(TreeNode* child);

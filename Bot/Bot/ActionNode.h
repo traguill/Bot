@@ -6,7 +6,7 @@
 class ActionNode : public TreeNode
 {
 public:
-	ActionNode();
+	ActionNode(unsigned int uid);
 	~ActionNode();
 };
 #endif // !__ACTION_NODE_H__

@@ -1,7 +1,8 @@
 #include "DecSelector.h"
 
-DecSelector::DecSelector()
+DecSelector::DecSelector(unsigned int uid) : DecoratorNode(uid)
 {
+	TreeNode::subtype = DECSELECTOR;
 }
 
 DecSelector::~DecSelector()

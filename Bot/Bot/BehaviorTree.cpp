@@ -3,9 +3,11 @@
 #include "TreeNode.h"
 #include "ConsoleMsgs.h"
 #include "BlackBoard.h"
-#include "Data.h"
 #include "ModuleFileSystem.h"
 #include "Application.h"
+
+#include "DecSequence.h"
+#include "DecSelector.h"
 
 BehaviorTree::BehaviorTree()
 {
@@ -42,6 +44,34 @@ void BehaviorTree::Init(const char * filename, const char* name)
 	}
 }
 
+bool BehaviorTree::InsertNode(const string & type, const string & sub_type)
+{
+	bool ret = false;
+
+	if (type.compare(type_decorator) == 0) //Decorator
+	{
+		ret = InsertDecorator(sub_type);
+	}
+	else if (type.compare(type_action) == 0)
+	{
+		//Action
+	}
+	else if (type.compare(type_condition) == 0)
+	{
+		//condition
+	}
+	else if (type.compare(type_decorator_sp) == 0)
+	{
+		//decorator sp
+	}
+	else
+	{
+		MSG_WARNING("Type %s is not a valid type", type.data());
+	}
+
+	return ret;
+}
+
 bool BehaviorTree::Load()
 {
 	char* buf = nullptr;
@@ -57,6 +87,13 @@ bool BehaviorTree::Load()
 	Data data(buf);
 
 	bb_filename = data.GetString("bb_name");
+	last_uid = data.GetUInt("last_uid");
+
+	size_t size_nodes = data.GetArraySize("nodes");
+	for (int i = 0; i < size_nodes; ++i)
+	{
+		LoadNode(data.GetArray("nodes", i));
+	}
 
 	if (buf)
 		delete[] buf;
@@ -72,6 +109,10 @@ void BehaviorTree::Save() const
 	Data data;
 
 	data.AppendString("bb_name", bb_filename.data());
+	data.AppendUInt("last_uid", last_uid);
+
+	data.AppendArray("nodes");
+	SaveNode(data, current_node);
 
 	char* buf = nullptr;
 	size_t size = data.Serialize(&buf);
@@ -91,4 +132,111 @@ void BehaviorTree::Save() const
 	
 	if (buf)
 		delete[] buf;
+}
+
+void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
+{
+	if (node)
+	{
+		Data d_node;
+
+		NODETYPE type;
+		NODESUBTYPE subtype;
+		node->GetTypeSubType(type, subtype);
+		d_node.AppendInt("type", type);
+		d_node.AppendInt("subtype", subtype);
+		d_node.AppendUInt("uid", node->GetUid());
+
+		if (node->HasChilds())
+		{
+			const vector<TreeNode*> childs = node->GetChilds();
+			for (vector<TreeNode*>::const_iterator child = childs.begin(); child != childs.end(); ++child)
+			{
+				SaveNode(d_node, *child);
+			}
+		}
+
+		data.AppendArrayValue(d_node);
+	}
+}
+
+bool BehaviorTree::LoadNode(Data & data)
+{
+	NODETYPE type = (NODETYPE)data.GetInt("type");
+	NODESUBTYPE subtype = (NODESUBTYPE)data.GetInt("subtype");
+	unsigned int uid = data.GetUInt("uid");
+
+	//TODO Create node
+	
+	return true; //TODO: Change this
+}
+
+unsigned int BehaviorTree::GetNewNodeUid()
+{
+	return ++last_uid;
+}
+
+bool BehaviorTree::InsertDecorator(const string & sub_type)
+{
+	bool ret = false;
+	if (sub_type.compare(dec_sequence) == 0) // Sequence
+	{
+		ret = InsertDecSequence();
+	}
+	else if (sub_type.compare(dec_selector) == 0) //Selector
+	{
+		ret = InsertDecSelector();
+	}
+	else
+	{
+		MSG_WARNING("Sub-type: %s is not valid", sub_type.data());
+	}
+	return ret;
+}
+
+bool BehaviorTree::InsertDecSequence()
+{
+	bool ret = false;
+	unsigned int id = GetNewNodeUid();
+	DecSequence* node = new DecSequence(id);
+
+	if (current_node == nullptr)
+	{
+		current_node = node;
+		ret = true;
+		
+		header_current_node = "/[D]Sequence(" + std::to_string(id);
+		header_current_node.append(")/");
+	}
+	else
+	{
+		ret = current_node->AddChild(node);
+		if (!ret && node)
+			delete node;
+	}
+
+	return ret;
+}
+
+bool BehaviorTree::InsertDecSelector()
+{
+	bool ret = false;
+	unsigned int id = GetNewNodeUid();
+	DecSelector* node = new DecSelector(id);
+
+	if (current_node == nullptr)
+	{
+		current_node = node;
+		ret = true;
+		header_current_node = "/[D]Selector(" + std::to_string(id);
+		header_current_node.append(")/");
+	}
+	else
+	{
+		ret = current_node->AddChild(node);
+		if (!ret && node)
+			delete node;
+	}
+
+	return ret;
 }
