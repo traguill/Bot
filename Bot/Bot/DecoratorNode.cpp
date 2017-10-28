@@ -7,10 +7,7 @@ DecoratorNode::DecoratorNode(unsigned int uid) : TreeNode(uid)
 
 DecoratorNode::~DecoratorNode()
 {
-	for (auto child : childs)
-	{
-		delete child;
-	}
+	//Handled outside
 }
 
 bool DecoratorNode::AddChild(TreeNode * child)
@@ -32,9 +29,7 @@ bool DecoratorNode::RemoveChild(TreeNode * child)
 		vector<TreeNode*>::iterator it = std::find(childs.begin(), childs.end(), child);
 		if (it != childs.end())
 		{
-			delete *it;
 			childs.erase(it);
-			child = nullptr;
 			return true;
 		}
 	}

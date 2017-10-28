@@ -19,6 +19,8 @@ BehaviorTree::~BehaviorTree()
 {
 	if (bb)
 		delete bb;
+
+	//TODO delete nodes
 }
 
 void BehaviorTree::Init(const char * filename, const char* name)
@@ -94,6 +96,54 @@ TreeNode* BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned 
 		break;
 	}
 	return ret;
+}
+
+void BehaviorTree::RemoveNode(unsigned int uid)
+{
+	TreeNode* node = FindNodeById(uid);
+	if (node == nullptr)
+		return;
+
+	RemoveNode(node);
+}
+
+void BehaviorTree::RemoveNode(TreeNode * node)
+{
+	if (node == nullptr)
+		return;
+
+	stack<TreeNode*> stack;
+	stack.push(node);
+	TreeNode* parent = node->GetParent();
+	if (parent)
+	{
+		parent->RemoveChild(node);
+	}
+	
+	if (root == node)
+		root = current_node = nullptr;
+	if (current_node == node)
+		current_node = parent;
+
+	TreeNode* item = nullptr;
+	while (stack.empty() == false)
+	{
+		item = stack.top();
+		stack.pop();
+		if (item->HasChilds())
+		{
+			const vector<TreeNode*> childs = item->GetChilds();
+			for (vector<TreeNode*>::const_iterator it = childs.begin(); it != childs.end(); ++it)
+				stack.push(*it);
+		}
+
+		delete item;
+	}
+
+	if (current_node)
+		SetCurrentNode(current_node);
+	else
+		header_current_node.clear();
 }
 
 bool BehaviorTree::Load()
@@ -241,6 +291,16 @@ TreeNode * BehaviorTree::FindNodeById(unsigned int uid) const
 	}
 
 	return nullptr;
+}
+
+TreeNode * BehaviorTree::GetCurrentNode() const
+{
+	return current_node;
+}
+
+TreeNode * BehaviorTree::GetRootNode() const
+{
+	return root;
 }
 
 void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
@@ -401,7 +461,7 @@ bool BehaviorTree::InsertDecSelector()
 TreeNode * BehaviorTree::InsertDecSelector(unsigned int uid, TreeNode * parent)
 {
 	DecSelector* node = new DecSelector(uid);
-	if(node)
+	if(node && parent)
 		parent->AddChild(node);
 
 	return node;

@@ -7,10 +7,7 @@ DecoratorSPNode::DecoratorSPNode(unsigned int uid) : TreeNode(uid)
 
 DecoratorSPNode::~DecoratorSPNode()
 {
-	for (auto child : childs)
-	{
-		delete child;
-	}
+	//Handled outside
 }
 
 bool DecoratorSPNode::AddChild(TreeNode * child)
@@ -30,8 +27,6 @@ bool DecoratorSPNode::RemoveChild(TreeNode * child)
 {
 	if (childs.front() == child) //Only has one child
 	{
-		delete child;
-		child = nullptr;
 		childs.clear();
 		return true;
 	}

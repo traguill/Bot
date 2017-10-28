@@ -19,6 +19,8 @@ public:
 
 	bool InsertNode(const string& type, const string& sub_type); //From console
 	TreeNode* InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid, TreeNode* parent); //From file
+	void RemoveNode(unsigned int uid);
+	void RemoveNode(TreeNode* node);
 	
 	void Save()const;
 
@@ -27,6 +29,8 @@ public:
 
 	bool SetCurrentNode(TreeNode* node);
 	TreeNode* FindNodeById(unsigned int uid)const;
+	TreeNode* GetCurrentNode()const;
+	TreeNode* GetRootNode()const;
 
 private:
 

@@ -33,7 +33,7 @@ void ShowBTs(const vector<string>* args); //-s
 void BTEdit(const vector<string>* args); //-e <name> / -e quit
 void BTInsert(const vector<string>* args); //-i
 void BTList(const vector<string>* args); //-l
-
+void BTRemove(const vector<string>* args); //-r <uid(Opt)>
 
 #endif // !__COMMANDS_H__
 

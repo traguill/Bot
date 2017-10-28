@@ -361,14 +361,6 @@ void BTGoToNode(const vector<string>* args)
 	if (ret == false)
 		return;
 
-	string uid_s = (*args)[0];
-	unsigned int uid;
-	try {uid = stoul(uid_s);}catch(const std::invalid_argument& ia)
-	{
-		MSG_WARNING("Invalid argument: %s", ia.what());
-		return;
-	}
-
 	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
 	if (bt == nullptr)
 	{
@@ -376,12 +368,32 @@ void BTGoToNode(const vector<string>* args)
 		return;
 	}
 
-	TreeNode* node = bt->FindNodeById(uid);
-	if (node == nullptr)
+	string uid_s = (*args)[0];
+	TreeNode* node;
+	if (uid_s.compare("root") == 0)
 	{
-		MSG_ERROR("Node %s doesn't exist", uid_s.data());
-		return;
+		node = bt->GetRootNode();
 	}
+	else
+	{
+		unsigned int uid;
+		try { uid = stoul(uid_s); }
+		catch (const std::invalid_argument& ia)
+		{
+			MSG_WARNING("Invalid argument: %s", ia.what());
+			return;
+		}
+
+		
+
+		node = bt->FindNodeById(uid);
+		if (node == nullptr)
+		{
+			MSG_ERROR("Node %s doesn't exist", uid_s.data());
+			return;
+		}
+	}
+	
 
 	bt->SetCurrentNode(node);
 }
@@ -481,4 +493,44 @@ void BTList(const vector<string>* args)
 	}
 
 	bt->PrintChildNodes();
+}
+
+void BTRemove(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 0, 1, "BTRemove", 'r');
+	if (ret == false)
+		return;
+
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+	if (bt == nullptr)
+	{
+		MSG_ERROR("No BT selected");
+		return;
+	}
+
+	if (args->size() > 0) //uid specified
+	{
+		string uid_s = (*args)[0];
+		unsigned int uid;
+		try { uid = stoul(uid_s); }
+		catch (const std::invalid_argument& ia)
+		{
+			MSG_WARNING("Invalid argument: %s", ia.what());
+			return;
+		}
+		bt->RemoveNode(uid);
+	}
+	else //remove current node
+	{
+		TreeNode* node = bt->GetCurrentNode();
+		if (node)
+		{
+			bt->RemoveNode(node);
+		}
+		else
+		{
+			MSG_ERROR("There isn't a current node selected");
+		}
+	}
+
 }

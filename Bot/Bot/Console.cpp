@@ -232,6 +232,7 @@ void Console::LoadCommandBehaviorTree()
 	CreateOption('e', "Sets a BT to edit it. Usage: bt -e <name>", BTEdit, bt);
 	CreateOption('i', "Inserts a new node. Usage: bt -i <type> <sub-type>", BTInsert, bt);
 	CreateOption('l', "Lists all the child nodes of the current one. Usage: bt -l", BTList, bt);
+	CreateOption('r', "Removes the current node. If an id is specified later, removes that node", BTRemove, bt);
 
 	RegisterCommand(bt);
 }

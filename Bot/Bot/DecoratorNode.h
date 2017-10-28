@@ -10,7 +10,7 @@ public:
 	~DecoratorNode();
 
 	bool AddChild(TreeNode* child);
-	bool RemoveChild(TreeNode* child);
+	bool RemoveChild(TreeNode* child); //Only removes the child from the list. Doesn't clean the memory
 
 private:
 
