@@ -44,6 +44,7 @@ public:
 	bool HasChilds()const;
 	const vector<TreeNode*> GetChilds()const;
 
+	TreeNode* GetParent()const;
 	bool SetParent(TreeNode* parent);
 
 	void GetTypeSubType(NODETYPE& type, NODESUBTYPE& subtype);

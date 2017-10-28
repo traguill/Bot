@@ -45,6 +45,11 @@ const vector<TreeNode*> TreeNode::GetChilds() const
 	return childs;
 }
 
+TreeNode * TreeNode::GetParent() const
+{
+	return parent;
+}
+
 bool TreeNode::SetParent(TreeNode * parent)
 {
 	if (parent != nullptr)

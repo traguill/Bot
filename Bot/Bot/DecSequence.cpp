@@ -54,6 +54,6 @@ void DecSequence::Print() const
 string DecSequence::GetNodeHeader() const
 {
 	string ret = "/[D]Sequence(" + std::to_string(uid);
-	ret.append(")/");
+	ret.append(")");
 	return ret;
 }

@@ -25,6 +25,9 @@ public:
 	//Helper
 	void PrintChildNodes()const;
 
+	bool SetCurrentNode(TreeNode* node);
+	TreeNode* FindNodeById(unsigned int uid)const;
+
 private:
 
 	bool Load();

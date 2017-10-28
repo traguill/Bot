@@ -8,6 +8,9 @@
 #include "DecSequence.h"
 #include "DecSelector.h"
 
+#include <stack>
+#include <queue>
+
 BehaviorTree::BehaviorTree()
 {
 }
@@ -139,7 +142,7 @@ void BehaviorTree::Save() const
 	data.AppendUInt("last_uid", last_uid);
 
 	data.AppendArray("nodes");
-	SaveNode(data, current_node);
+	SaveNode(data, root);
 
 	char* buf = nullptr;
 	size_t size = data.Serialize(&buf);
@@ -180,6 +183,64 @@ void BehaviorTree::PrintChildNodes() const
 	{
 		(*child)->Print();
 	}
+}
+
+bool BehaviorTree::SetCurrentNode(TreeNode * node)
+{
+	if (node == nullptr)
+		return false;
+
+	current_node = node;
+	header_current_node.clear();
+
+	TreeNode* item = node->GetParent();
+
+	if (item == nullptr)
+	{
+		header_current_node.append(node->GetNodeHeader());
+		return true;
+	}
+
+	queue<TreeNode*> fifo;
+	while (item != nullptr)
+	{
+		fifo.push(item);
+		item = item->GetParent();
+	}
+
+	while (fifo.empty() == false)
+	{
+		header_current_node.append(fifo.front()->GetNodeHeader());
+		fifo.pop();
+	}
+	header_current_node.append(node->GetNodeHeader());
+
+	return true;
+}
+
+TreeNode * BehaviorTree::FindNodeById(unsigned int uid) const
+{
+	if (root == nullptr)
+		return nullptr;
+
+	stack<TreeNode*> stack;
+	stack.push(root);
+
+	TreeNode* item;
+	while (stack.empty() == false)
+	{
+		item = stack.top();
+		stack.pop();
+
+		if (item->GetUid() == uid)
+			return item;
+
+		const vector<TreeNode*> childs = item->GetChilds();
+		for (vector<TreeNode*>::const_iterator child = childs.begin(); child != childs.end(); ++child)
+			stack.push(*child);
+	}
+
+	return nullptr;
 }
 
 void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
@@ -225,7 +286,7 @@ TreeNode* BehaviorTree::LoadNode(Data & data, TreeNode* parent)
 	else
 	{
 		TreeNode* child_ret = ret;
-		size_t childs = data.GetArraySize("childs");
+		int childs = data.GetArraySize("childs");
 		for (int i = 0; i < childs; ++i)
 		{
 			child_ret = LoadNode(data.GetArray("childs", i), ret);
@@ -290,9 +351,9 @@ bool BehaviorTree::InsertDecSequence()
 	unsigned int id = GetNewNodeUid();
 	DecSequence* node = new DecSequence(id);
 
-	if (current_node == nullptr)
+	if (root == nullptr)
 	{
-		current_node = node;
+		root = current_node = node;
 		ret = true;
 		header_current_node.append(current_node->GetNodeHeader());
 	}
@@ -321,9 +382,9 @@ bool BehaviorTree::InsertDecSelector()
 	unsigned int id = GetNewNodeUid();
 	DecSelector* node = new DecSelector(id);
 
-	if (current_node == nullptr)
+	if (root == nullptr)
 	{
-		current_node = node;
+		root = current_node = node;
 		ret = true;
 		header_current_node.append(current_node->GetNodeHeader());
 	}

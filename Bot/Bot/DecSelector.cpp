@@ -54,6 +54,6 @@ void DecSelector::Print() const
 string DecSelector::GetNodeHeader() const
 {
 	string ret = "/[D]Selector(" + std::to_string(uid);
-	ret.append(")/");
+	ret.append(")");
 	return ret;
 }

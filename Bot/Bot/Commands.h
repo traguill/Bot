@@ -27,6 +27,7 @@ void BBShow(const vector<string>* args); //-s <name>
 void BBInsert(const vector<string>* args); //-i <type> <name> <value>
 
 //bt
+void BTGoToNode(const vector<string>* args); // <node_uid>
 void BTNew(const vector<string>* args); //-n <name>
 void ShowBTs(const vector<string>* args); //-s
 void BTEdit(const vector<string>* args); //-e <name> / -e quit

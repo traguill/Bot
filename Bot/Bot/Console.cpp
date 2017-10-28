@@ -33,25 +33,11 @@ bool Console::Execute(const char* cmd) const
 	CmdUserIn user_input;
 	ret = SplitCommand(cmd, user_input);
 
-	//Debug-----------------------------------------------
-	/*printf("Command %s\n", &user_input.command[0]);
-	if (user_input.option != NULL)
-		printf("Option: %c\n", user_input.option);
-	if (user_input.args.size() > 0)
-	{
-		int count = 0;
-		for (auto arg : user_input.args)
-		{
-			++count;
-			printf("Arg(%i): %s\n", count, arg.data());
-		}
-	}*/
-
 	map<string, Cmd>::const_iterator result = commands.find(user_input.command);
 
 	if (result != commands.end())
 	{
-		if (result->second.f != NULL) //Only command + args(optional)
+		if (user_input.option == NULL && result->second.f != NULL) //Only command + args(optional)
 		{
 			(*(result->second.f))(&user_input.args);
 		}
@@ -239,7 +225,7 @@ void Console::LoadCommandBlackBoard()
 
 void Console::LoadCommandBehaviorTree()
 {
-	Cmd bt = CreateCommand("bt", "BehaviorTree", nullptr);
+	Cmd bt = CreateCommand("bt", "BehaviorTree", BTGoToNode);
 
 	CreateOption('n', "Creates a new BT. Usage: bt -n <bt_name>", BTNew, bt);
 	CreateOption('s', "Shows the BTs available", ShowBTs, bt);

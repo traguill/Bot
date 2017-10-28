@@ -18,7 +18,7 @@ bool CheckNumParameters(const vector<string>* args, int min_number, int max_numb
 		return false;
 	}
 
-	if (args->size() < min_number || args->size() > max_number)
+	if ((int)args->size() < min_number || (int)args->size() > max_number)
 	{
 		MSG_ERROR("Error: option -%c requires a value", option);
 		return false;
@@ -353,6 +353,37 @@ void BBInsert(const vector<string>* args) //TODO: Ask current BT
 	else if (bb_var_type.compare("area") == 0) bt->bb->InsertArea(bb_var_name, bb_var_value);
 
 	//TODO: vector
+}
+
+void BTGoToNode(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, 1, "BTGoToNode", '0');
+	if (ret == false)
+		return;
+
+	string uid_s = (*args)[0];
+	unsigned int uid;
+	try {uid = stoul(uid_s);}catch(const std::invalid_argument& ia)
+	{
+		MSG_WARNING("Invalid argument: %s", ia.what());
+		return;
+	}
+
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+	if (bt == nullptr)
+	{
+		MSG_WARNING("Select a BT to edit. Use bt -e <bt_name>. Use bt -s to see the BT available");
+		return;
+	}
+
+	TreeNode* node = bt->FindNodeById(uid);
+	if (node == nullptr)
+	{
+		MSG_ERROR("Node %s doesn't exist", uid_s.data());
+		return;
+	}
+
+	bt->SetCurrentNode(node);
 }
 
 void BTNew(const vector<string>* args)
