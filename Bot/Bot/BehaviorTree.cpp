@@ -1,6 +1,5 @@
 #include "BehaviorTree.h"
 
-#include "TreeNode.h"
 #include "ConsoleMsgs.h"
 #include "BlackBoard.h"
 #include "ModuleFileSystem.h"
@@ -69,6 +68,28 @@ bool BehaviorTree::InsertNode(const string & type, const string & sub_type)
 		MSG_WARNING("Type %s is not a valid type", type.data());
 	}
 
+	return ret;
+}
+
+bool BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid)
+{
+	bool ret = false;
+
+	switch (type)
+	{
+	case ACTION:
+		break;
+	case CONDITION:
+		break;
+	case DECORATOR:
+		ret = InsertDecorator(subtype, uid);
+		break;
+	case DECORATOR_SP:
+		break;
+	default:
+		MSG_ERROR("Type %i is not a valid type", type);
+		break;
+	}
 	return ret;
 }
 
@@ -162,13 +183,14 @@ void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
 
 bool BehaviorTree::LoadNode(Data & data)
 {
+	bool ret = false;
 	NODETYPE type = (NODETYPE)data.GetInt("type");
 	NODESUBTYPE subtype = (NODESUBTYPE)data.GetInt("subtype");
 	unsigned int uid = data.GetUInt("uid");
 
-	//TODO Create node
+	ret = InsertNode(type, subtype, uid);
 	
-	return true; //TODO: Change this
+	return ret;
 }
 
 unsigned int BehaviorTree::GetNewNodeUid()
@@ -194,10 +216,29 @@ bool BehaviorTree::InsertDecorator(const string & sub_type)
 	return ret;
 }
 
-bool BehaviorTree::InsertDecSequence()
+bool BehaviorTree::InsertDecorator(NODESUBTYPE subtype, unsigned int uid)
 {
 	bool ret = false;
-	unsigned int id = GetNewNodeUid();
+	switch (subtype)
+	{
+	case DECSELECTOR:
+		ret = InsertDecSelector(uid);
+		break;
+	case DECSEQUENCE:
+		ret = InsertDecSequence(uid);
+		break;
+	default:
+		MSG_ERROR("Subtype: %i is not valid", subtype);
+		break;
+	}
+	return ret;
+}
+
+bool BehaviorTree::InsertDecSequence(int id)
+{
+	bool ret = false;
+	if(id == -1)
+		id = GetNewNodeUid();
 	DecSequence* node = new DecSequence(id);
 
 	if (current_node == nullptr)
@@ -218,10 +259,11 @@ bool BehaviorTree::InsertDecSequence()
 	return ret;
 }
 
-bool BehaviorTree::InsertDecSelector()
+bool BehaviorTree::InsertDecSelector(int id)
 {
 	bool ret = false;
-	unsigned int id = GetNewNodeUid();
+	if(id == -1)
+		id = GetNewNodeUid();
 	DecSelector* node = new DecSelector(id);
 
 	if (current_node == nullptr)

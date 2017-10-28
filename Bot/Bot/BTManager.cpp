@@ -76,6 +76,10 @@ bool BTManager::CreateBT(const string & name)
 
 bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 {
+	//Save changes of current if exists
+	if (current_bt && editing_mode)
+		current_bt->Save();
+
 	//Search if is already loaded
 	map<string, BehaviorTree*>::iterator bt_loaded_found = bt_loaded.find(name);
 	if (bt_loaded_found != bt_loaded.end())
@@ -107,6 +111,8 @@ bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 
 void BTManager::QuitEditingMode()
 {
+	if (current_bt)
+		current_bt->Save();
 	editing_mode = false;
 	current_bt = nullptr;
 	console->RequestHeader(NULL);

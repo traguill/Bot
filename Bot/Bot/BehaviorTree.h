@@ -3,8 +3,8 @@
 
 #include <string>
 #include "Data.h"
+#include "TreeNode.h"
 
-class TreeNode;
 class BlackBoard;
 
 using namespace std;
@@ -17,7 +17,9 @@ public:
 
 	void Init(const char* filename, const char* name = nullptr);
 
-	bool InsertNode(const string& type, const string& sub_type);
+	bool InsertNode(const string& type, const string& sub_type); //From console
+	bool InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid); //From file
+	
 	void Save()const;
 private:
 
@@ -30,10 +32,11 @@ private:
 
 	//Inserts
 	bool InsertDecorator(const string& sub_type);
+	bool InsertDecorator(NODESUBTYPE subtype, unsigned int uid);
 
 	//Decorators
-	bool InsertDecSequence();
-	bool InsertDecSelector();
+	bool InsertDecSequence(int id = -1);
+	bool InsertDecSelector(int id = -1);
 
 private:
 	TreeNode* root = nullptr;
