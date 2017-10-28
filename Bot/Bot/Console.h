@@ -31,6 +31,13 @@ private:
 	bool SplitCommand(const char* cmd, CmdUserIn& result)const;
 
 	void LoadDefaultCommands();
+	//Load all commands
+	void LoadCommandExit();
+	void LoadCommandClear();
+	void LoadCommandArea();
+	void LoadCommandMove();
+	void LoadCommandBlackBoard();
+	void LoadCommandBehaviorTree();
 
 	Cmd CreateCommand(const char* name, const char* description, defFunction func);
 	void CreateOption(char option, const char* description, defFunction func, Cmd& command);

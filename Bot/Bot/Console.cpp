@@ -188,15 +188,28 @@ bool Console::SplitCommand(const char * cmd, CmdUserIn& result) const
 
 void Console::LoadDefaultCommands()
 {
-	//exit
+	LoadCommandExit();
+	LoadCommandClear();
+	LoadCommandArea();
+	LoadCommandMove();
+	LoadCommandBlackBoard();
+	LoadCommandBehaviorTree();	
+}
+
+void Console::LoadCommandExit()
+{
 	Cmd exit = CreateCommand("exit", "Quits the application", (defFunction)(&Quit));
 	RegisterCommand(exit);
+}
 
-	//clear
+void Console::LoadCommandClear()
+{
 	Cmd clear = CreateCommand("clear", "Clears the console.", (defFunction)(&ClearConsoleScreen));
 	RegisterCommand(clear);
+}
 
-	//area
+void Console::LoadCommandArea()
+{
 	Cmd area = CreateCommand("area", "Handles the areas where the bot will interact.", NULL);
 
 	CreateOption('c', "Creates a new area.", CreateArea, area); // -c create
@@ -206,20 +219,26 @@ void Console::LoadDefaultCommands()
 	CreateOption('s', "Makes an area visible.", ShowArea, area); //-s show
 
 	RegisterCommand(area);
+}
 
-	//move
+void Console::LoadCommandMove()
+{
 	Cmd move = CreateCommand("move", "Moves the mouse and handles clicks", (defFunction)(&MoveMouseToArea));
 	RegisterCommand(move);
+}
 
-	//bb
+void Console::LoadCommandBlackBoard()
+{
 	Cmd bb = CreateCommand("bb", "Blackboard", nullptr);
 
 	CreateOption('s', "Shows all the variables inside the BlackBoard and its values. Usage: bb -s <name>", BBShow, bb);
 	CreateOption('i', "Inserts a variable inside the Blackboard. Usage: -i <type> <name> <value>.bool/int/float/string/vector/area.", BBInsert, bb);
 
 	RegisterCommand(bb);
+}
 
-	//bt
+void Console::LoadCommandBehaviorTree()
+{
 	Cmd bt = CreateCommand("bt", "BehaviorTree", nullptr);
 
 	CreateOption('n', "Creates a new BT. Usage: bt -n <bt_name>", BTNew, bt);

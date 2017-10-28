@@ -99,7 +99,7 @@ int  main(int argc, char*argv[])
 	delete timer;
 	//delete performance;
 	printf("Application exits\n");
-	Sleep(500);
+	Sleep(200);
 
 	return 0;
 }
