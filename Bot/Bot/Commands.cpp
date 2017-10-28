@@ -435,3 +435,19 @@ void BTInsert(const vector<string>* args)
 		MSG_ERROR("Node %s %s could not be inserted", type.data(), sub_type.data());
 	}
 }
+
+void BTList(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 0, 0, "BTList", 'l');
+	if (ret == false)
+		return;
+
+	BehaviorTree* bt = App->editor->bt_manager->GetCurrentBT();
+	if (bt == nullptr)
+	{
+		MSG_ERROR("No BT selected");
+		return;
+	}
+
+	bt->PrintChildNodes();
+}

@@ -71,9 +71,9 @@ bool BehaviorTree::InsertNode(const string & type, const string & sub_type)
 	return ret;
 }
 
-bool BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid)
+TreeNode* BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid, TreeNode* parent)
 {
-	bool ret = false;
+	TreeNode* ret = nullptr;
 
 	switch (type)
 	{
@@ -82,7 +82,7 @@ bool BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int u
 	case CONDITION:
 		break;
 	case DECORATOR:
-		ret = InsertDecorator(subtype, uid);
+		ret = InsertDecorator(subtype, uid, parent);
 		break;
 	case DECORATOR_SP:
 		break;
@@ -110,11 +110,15 @@ bool BehaviorTree::Load()
 	bb_filename = data.GetString("bb_name");
 	last_uid = data.GetUInt("last_uid");
 
-	size_t size_nodes = data.GetArraySize("nodes");
-	for (int i = 0; i < size_nodes; ++i)
-	{
-		LoadNode(data.GetArray("nodes", i));
-	}
+	size_t size_nodes = data.GetArraySize("nodes"); //Size nodes should always be 1. Only one root
+	if (size_nodes > 1)
+		MSG_WARNING("This BT has more than one root node!");
+
+	current_node = LoadNode(data.GetArray("nodes", 0), nullptr);
+	root = current_node;
+
+	if (current_node == nullptr)
+		MSG_WARNING("This BT doesn't have any nodes");
 
 	if (buf)
 		delete[] buf;
@@ -155,6 +159,27 @@ void BehaviorTree::Save() const
 		delete[] buf;
 }
 
+void BehaviorTree::PrintChildNodes() const
+{
+	if (current_node == nullptr)
+	{
+		MSG_WARNING("This BT has no nodes");
+		return;
+	}
+
+	const vector<TreeNode*>childs = current_node->GetChilds();
+	if (childs.size() == 0)
+	{
+		MSG_INFO("This node has no childs");
+		return;
+	}
+
+	for (vector<TreeNode*>::const_iterator child = childs.begin(); child != childs.end(); ++child)
+	{
+		(*child)->Print();
+	}
+}
+
 void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
 {
 	if (node)
@@ -167,7 +192,7 @@ void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
 		d_node.AppendInt("type", type);
 		d_node.AppendInt("subtype", subtype);
 		d_node.AppendUInt("uid", node->GetUid());
-
+		d_node.AppendArray("childs");
 		if (node->HasChilds())
 		{
 			const vector<TreeNode*> childs = node->GetChilds();
@@ -181,14 +206,36 @@ void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
 	}
 }
 
-bool BehaviorTree::LoadNode(Data & data)
+TreeNode* BehaviorTree::LoadNode(Data & data, TreeNode* parent)
 {
-	bool ret = false;
+	TreeNode* ret = nullptr;
+
 	NODETYPE type = (NODETYPE)data.GetInt("type");
 	NODESUBTYPE subtype = (NODESUBTYPE)data.GetInt("subtype");
 	unsigned int uid = data.GetUInt("uid");
 
-	ret = InsertNode(type, subtype, uid);
+	ret = InsertNode(type, subtype, uid, parent);
+
+	if (ret == nullptr)
+	{
+		MSG_ERROR("Error while loading the node %i. The data might be corrupted", uid);
+	}
+	else
+	{
+		TreeNode* child_ret = ret;
+		size_t childs = data.GetArraySize("childs");
+		for (int i = 0; i < childs; ++i)
+		{
+			child_ret = LoadNode(data.GetArray("childs", i), ret);
+			if (child_ret == nullptr)
+				break;
+		}
+		if (child_ret == nullptr)
+		{
+			MSG_ERROR("Error while loading a child of node %i", uid);
+			return nullptr;
+		}
+	}
 	
 	return ret;
 }
@@ -216,16 +263,16 @@ bool BehaviorTree::InsertDecorator(const string & sub_type)
 	return ret;
 }
 
-bool BehaviorTree::InsertDecorator(NODESUBTYPE subtype, unsigned int uid)
+TreeNode* BehaviorTree::InsertDecorator(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent)
 {
-	bool ret = false;
+	TreeNode* ret = nullptr;
 	switch (subtype)
 	{
 	case DECSELECTOR:
-		ret = InsertDecSelector(uid);
+		ret = InsertDecSelector(uid, parent);
 		break;
 	case DECSEQUENCE:
-		ret = InsertDecSequence(uid);
+		ret = InsertDecSequence(uid, parent);
 		break;
 	default:
 		MSG_ERROR("Subtype: %i is not valid", subtype);
@@ -234,11 +281,11 @@ bool BehaviorTree::InsertDecorator(NODESUBTYPE subtype, unsigned int uid)
 	return ret;
 }
 
-bool BehaviorTree::InsertDecSequence(int id)
+bool BehaviorTree::InsertDecSequence()
 {
 	bool ret = false;
-	if(id == -1)
-		id = GetNewNodeUid();
+	
+	unsigned int id = GetNewNodeUid();
 	DecSequence* node = new DecSequence(id);
 
 	if (current_node == nullptr)
@@ -259,11 +306,19 @@ bool BehaviorTree::InsertDecSequence(int id)
 	return ret;
 }
 
-bool BehaviorTree::InsertDecSelector(int id)
+TreeNode * BehaviorTree::InsertDecSequence(unsigned int uid, TreeNode * parent)
+{
+	DecSequence* node = new DecSequence(uid);
+	if (node && parent)
+		parent->AddChild(node);
+
+	return node;
+}
+
+bool BehaviorTree::InsertDecSelector()
 {
 	bool ret = false;
-	if(id == -1)
-		id = GetNewNodeUid();
+	unsigned int id = GetNewNodeUid();
 	DecSelector* node = new DecSelector(id);
 
 	if (current_node == nullptr)
@@ -281,4 +336,13 @@ bool BehaviorTree::InsertDecSelector(int id)
 	}
 
 	return ret;
+}
+
+TreeNode * BehaviorTree::InsertDecSelector(unsigned int uid, TreeNode * parent)
+{
+	DecSelector* node = new DecSelector(uid);
+	if(node)
+		parent->AddChild(node);
+
+	return node;
 }

@@ -48,6 +48,8 @@ public:
 	void GetTypeSubType(NODETYPE& type, NODESUBTYPE& subtype);
 	unsigned int GetUid()const;
 
+	virtual void Print()const; //Prints the node type/subtype/id in the console
+
 protected:
 	NODETYPE type;
 	NODESUBTYPE subtype;

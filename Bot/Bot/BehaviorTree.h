@@ -18,25 +18,31 @@ public:
 	void Init(const char* filename, const char* name = nullptr);
 
 	bool InsertNode(const string& type, const string& sub_type); //From console
-	bool InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid); //From file
+	TreeNode* InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid, TreeNode* parent); //From file
 	
 	void Save()const;
+
+	//Helper
+	void PrintChildNodes()const;
+
 private:
 
 	bool Load();
 	
 	void SaveNode(Data& data, TreeNode* node)const;
-	bool LoadNode(Data& data);
+	TreeNode* LoadNode(Data& data, TreeNode* parent);
 
 	unsigned int GetNewNodeUid();
 
 	//Inserts
 	bool InsertDecorator(const string& sub_type);
-	bool InsertDecorator(NODESUBTYPE subtype, unsigned int uid);
+	TreeNode* InsertDecorator(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
 
 	//Decorators
-	bool InsertDecSequence(int id = -1);
-	bool InsertDecSelector(int id = -1);
+	bool InsertDecSequence();
+	TreeNode* InsertDecSequence(unsigned int uid, TreeNode* parent);
+	bool InsertDecSelector();
+	TreeNode* InsertDecSelector(unsigned int uid, TreeNode* parent);
 
 private:
 	TreeNode* root = nullptr;

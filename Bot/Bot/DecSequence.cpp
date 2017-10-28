@@ -1,4 +1,5 @@
 #include "DecSequence.h"
+#include "ConsoleMsgs.h"
 
 DecSequence::DecSequence(unsigned int uid) : DecoratorNode(uid)
 {
@@ -44,3 +45,8 @@ NODERETURN DecSequence::Run()
 
 void DecSequence::OnExit()
 {}
+
+void DecSequence::Print() const
+{
+	MSG_INFO("* [decorator] [sequence]: %i", uid);
+}

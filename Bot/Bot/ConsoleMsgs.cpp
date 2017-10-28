@@ -6,7 +6,7 @@
 
 void  PrintErrorMessage(const char* format, ...)
 {
-	SetConsoleTextAttribute(App->h_console, 0x0F); //Red
+	SetConsoleTextAttribute(App->h_console, 0x0C); //Red
 
 	static va_list ap;
 

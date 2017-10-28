@@ -226,6 +226,7 @@ void Console::LoadDefaultCommands()
 	CreateOption('s', "Shows the BTs available", ShowBTs, bt);
 	CreateOption('e', "Sets a BT to edit it. Usage: bt -e <name>", BTEdit, bt);
 	CreateOption('i', "Inserts a new node. Usage: bt -i <type> <sub-type>", BTInsert, bt);
+	CreateOption('l', "Lists all the child nodes of the current one. Usage: bt -l", BTList, bt);
 
 	RegisterCommand(bt);
 }

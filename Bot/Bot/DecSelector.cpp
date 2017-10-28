@@ -1,4 +1,5 @@
 #include "DecSelector.h"
+#include "ConsoleMsgs.h"
 
 DecSelector::DecSelector(unsigned int uid) : DecoratorNode(uid)
 {
@@ -44,3 +45,8 @@ NODERETURN DecSelector::Run()
 
 void DecSelector::OnExit()
 {}
+
+void DecSelector::Print() const
+{
+	MSG_INFO("* [decorator] [selector]: %i", uid);
+}

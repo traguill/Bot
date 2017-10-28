@@ -66,3 +66,7 @@ unsigned int TreeNode::GetUid() const
 {
 	return uid;
 }
+
+void TreeNode::Print() const
+{
+}

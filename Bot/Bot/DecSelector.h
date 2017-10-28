@@ -13,6 +13,8 @@ public:
 	NODERETURN Run();
 	void OnExit();
 
+	void Print()const;
+
 private:
 	unsigned int current_child = 0; //Current child node
 };
