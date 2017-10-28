@@ -14,6 +14,7 @@ public:
 	void OnExit();
 
 	void Print()const;
+	string GetNodeHeader()const;
 
 private:
 	unsigned int current_child = 0; //Current child node

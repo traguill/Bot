@@ -50,3 +50,10 @@ void DecSequence::Print() const
 {
 	MSG_INFO("* [decorator] [sequence]: %i", uid);
 }
+
+string DecSequence::GetNodeHeader() const
+{
+	string ret = "/[D]Sequence(" + std::to_string(uid);
+	ret.append(")/");
+	return ret;
+}

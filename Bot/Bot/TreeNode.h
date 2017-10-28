@@ -2,6 +2,7 @@
 #define __TREENODE_H__
 
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -49,6 +50,7 @@ public:
 	unsigned int GetUid()const;
 
 	virtual void Print()const; //Prints the node type/subtype/id in the console
+	virtual string GetNodeHeader()const;
 
 protected:
 	NODETYPE type;

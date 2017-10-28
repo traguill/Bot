@@ -50,3 +50,10 @@ void DecSelector::Print() const
 {
 	MSG_INFO("* [decorator] [selector]: %i", uid);
 }
+
+string DecSelector::GetNodeHeader() const
+{
+	string ret = "/[D]Selector(" + std::to_string(uid);
+	ret.append(")/");
+	return ret;
+}

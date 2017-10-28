@@ -119,6 +119,8 @@ bool BehaviorTree::Load()
 
 	if (current_node == nullptr)
 		MSG_WARNING("This BT doesn't have any nodes");
+	else
+		header_current_node.append(current_node->GetNodeHeader());
 
 	if (buf)
 		delete[] buf;
@@ -292,9 +294,7 @@ bool BehaviorTree::InsertDecSequence()
 	{
 		current_node = node;
 		ret = true;
-		
-		header_current_node = "/[D]Sequence(" + std::to_string(id);
-		header_current_node.append(")/");
+		header_current_node.append(current_node->GetNodeHeader());
 	}
 	else
 	{
@@ -325,8 +325,7 @@ bool BehaviorTree::InsertDecSelector()
 	{
 		current_node = node;
 		ret = true;
-		header_current_node = "/[D]Selector(" + std::to_string(id);
-		header_current_node.append(")/");
+		header_current_node.append(current_node->GetNodeHeader());
 	}
 	else
 	{

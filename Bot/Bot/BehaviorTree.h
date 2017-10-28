@@ -68,7 +68,7 @@ public:
 	string bt_filename; //name of the BehaviorTree file
 	BlackBoard* bb = nullptr;
 
-	string header_current_node; //To show the path to the current node
+	string header_current_node = ""; //To show the path to the current node
 };
 
 #endif // !__BEHAVIORTREE_H__

@@ -70,3 +70,8 @@ unsigned int TreeNode::GetUid() const
 void TreeNode::Print() const
 {
 }
+
+string TreeNode::GetNodeHeader() const
+{
+	return string("Empty");
+}
