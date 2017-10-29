@@ -178,6 +178,18 @@ void BlackBoard::PrintVars() const
 	}
 }
 
+void * BlackBoard::FindVar(const string & name, BBType type) const
+{
+	map<string, BBVar*>::const_iterator result = bb_vars.find(name);
+	if (result == bb_vars.end())
+		return nullptr;
+	
+	if (result->second->type == type) //Match the type
+		return result->second->value;
+
+	return nullptr;
+}
+
 bool BlackBoard::InsertBool(const string & name, bool value)
 {
 	BBVar* var = new BBVar();

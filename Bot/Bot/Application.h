@@ -13,6 +13,7 @@ class Editor;
 class Input;
 class ModuleFileSystem;
 class Random;
+class MouseEmulator;
 
 class Application
 {
@@ -34,6 +35,7 @@ public:
 	Editor* editor = nullptr;
 	Input* input = nullptr;
 	ModuleFileSystem* file_system = nullptr;
+	MouseEmulator* mouse = nullptr;
 	bool quit_request = false;
 
 	mutex mtx;

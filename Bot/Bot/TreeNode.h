@@ -25,8 +25,12 @@ enum NODERETURN
 
 enum NODESUBTYPE
 {
+	//Decorator
 	DECSELECTOR,
-	DECSEQUENCE
+	DECSEQUENCE,
+
+	//Actions
+	ACMOVE
 };
 
 class TreeNode

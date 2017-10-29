@@ -64,14 +64,6 @@ bool MouseEmulator::Move(float dt)
 
 	ScreenToMouseUnits(current_mouse_position.x, current_mouse_position.y);
 
-	if (mouse_down)
-	{
-		countdown_mouse -= dt;
-		if (countdown_mouse < 0.0f)
-			LeftClickUp();
-		return false;
-	}
-
 	if (!has_dst)
 		if (ComputeDst())
 			return true; //End
@@ -104,7 +96,6 @@ bool MouseEmulator::Move(float dt)
 	input.mi.dwExtraInfo = NULL;
 	input.mi.time = 0;
 	SendInput(1, &input, sizeof(INPUT));
-
 
 	return false;
 }
@@ -140,7 +131,6 @@ bool MouseEmulator::RecomputeDst()
 	if (current_mouse_position.DistanceTo(dst) < dst_threshold)
 	{
 		has_dst = false;
-		LeftClick();
 		accumulated_step.x = 0;
 		accumulated_step.y = 0;
 		++point_id;

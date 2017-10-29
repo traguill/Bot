@@ -43,6 +43,12 @@
     <Filter Include="Source Files\3rdParty\Physfs">
       <UniqueIdentifier>{150703eb-b73f-43af-a7bd-aa423a1b219f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BehaviorTree\Actions">
+      <UniqueIdentifier>{17d5f13e-3610-44c1-90d1-628758e4aaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BehaviorTree\NodeTypes">
+      <UniqueIdentifier>{80085ded-2029-40ab-a614-330e8655c716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,18 +108,6 @@
     <ClCompile Include="TreeNode.cpp">
       <Filter>Source Files\BehaviorTree</Filter>
     </ClCompile>
-    <ClCompile Include="ActionNode.cpp">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="ConditionNode.cpp">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="DecoratorNode.cpp">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="DecoratorSPNode.cpp">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClCompile>
     <ClCompile Include="DecSequence.cpp">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
     </ClCompile>
@@ -125,6 +119,21 @@
     </ClCompile>
     <ClCompile Include="BTManager.cpp">
       <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionNode.cpp">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionNode.cpp">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoratorNode.cpp">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoratorSPNode.cpp">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="AcMove.cpp">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,18 +194,6 @@
     <ClInclude Include="TreeNode.h">
       <Filter>Source Files\BehaviorTree</Filter>
     </ClInclude>
-    <ClInclude Include="ActionNode.h">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="ConditionNode.h">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="DecoratorNode.h">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="DecoratorSPNode.h">
-      <Filter>Source Files\BehaviorTree</Filter>
-    </ClInclude>
     <ClInclude Include="DecSequence.h">
       <Filter>Source Files\BehaviorTree\Decorators</Filter>
     </ClInclude>
@@ -214,6 +211,21 @@
     </ClInclude>
     <ClInclude Include="ConsoleHeader.h">
       <Filter>Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionNode.h">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionNode.h">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoratorNode.h">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoratorSPNode.h">
+      <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="AcMove.h">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

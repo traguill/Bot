@@ -8,6 +8,8 @@
 #include "DecSequence.h"
 #include "DecSelector.h"
 
+#include "AcMove.h"
+
 #include <stack>
 #include <queue>
 
@@ -56,9 +58,9 @@ bool BehaviorTree::InsertNode(const string & type, const string & sub_type)
 	{
 		ret = InsertDecorator(sub_type);
 	}
-	else if (type.compare(type_action) == 0)
+	else if (type.compare(type_action) == 0) //Action
 	{
-		//Action
+		ret = InsertAction(sub_type);
 	}
 	else if (type.compare(type_condition) == 0)
 	{
@@ -83,6 +85,7 @@ TreeNode* BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned 
 	switch (type)
 	{
 	case ACTION:
+		ret = InsertAction(subtype, uid, parent);
 		break;
 	case CONDITION:
 		break;
@@ -163,6 +166,9 @@ bool BehaviorTree::Load()
 	bb_filename = data.GetString("bb_name");
 	last_uid = data.GetUInt("last_uid");
 
+	bb = new BlackBoard();
+	bb->Init(bb_filename.data());
+
 	size_t size_nodes = data.GetArraySize("nodes"); //Size nodes should always be 1. Only one root
 	if (size_nodes > 1)
 		MSG_WARNING("This BT has more than one root node!");
@@ -177,9 +183,6 @@ bool BehaviorTree::Load()
 
 	if (buf)
 		delete[] buf;
-
-	bb = new BlackBoard();
-	bb->Init(bb_filename.data());
 
 	return true;
 }
@@ -316,6 +319,8 @@ void BehaviorTree::SaveNode(Data & data, TreeNode * node) const
 		d_node.AppendInt("subtype", subtype);
 		d_node.AppendUInt("uid", node->GetUid());
 		d_node.AppendArray("childs");
+		if (type == ACTION)
+			((ActionNode*)node)->Save(d_node);
 		if (node->HasChilds())
 		{
 			const vector<TreeNode*> childs = node->GetChilds();
@@ -345,6 +350,8 @@ TreeNode* BehaviorTree::LoadNode(Data & data, TreeNode* parent)
 	}
 	else
 	{
+		if (type == ACTION)
+			((ActionNode*)ret)->Load(data);
 		TreeNode* child_ret = ret;
 		int childs = data.GetArraySize("childs");
 		for (int i = 0; i < childs; ++i)
@@ -404,13 +411,38 @@ TreeNode* BehaviorTree::InsertDecorator(NODESUBTYPE subtype, unsigned int uid, T
 	return ret;
 }
 
-bool BehaviorTree::InsertDecSequence()
+bool BehaviorTree::InsertAction(const string & sub_type)
 {
 	bool ret = false;
-	
-	unsigned int id = GetNewNodeUid();
-	DecSequence* node = new DecSequence(id);
+	if (sub_type.compare(ac_move) == 0) // move
+	{
+		ret = InsertAcMove();
+	}
+	else
+	{
+		MSG_WARNING("Sub-type: %s is not valid", sub_type.data());
+	}
+	return ret;
+}
 
+TreeNode * BehaviorTree::InsertAction(NODESUBTYPE subtype, unsigned int uid, TreeNode * parent)
+{
+	TreeNode* ret = nullptr;
+	switch (subtype)
+	{
+	case ACMOVE:
+		ret = InsertAcMove(uid, parent);
+		break;
+	default:
+		MSG_ERROR("Subtype: %i is not valid", subtype);
+		break;
+	}
+	return ret;
+}
+
+bool BehaviorTree::HandleInsertion(TreeNode * node)
+{
+	bool ret;
 	if (root == nullptr)
 	{
 		root = current_node = node;
@@ -423,8 +455,13 @@ bool BehaviorTree::InsertDecSequence()
 		if (!ret && node)
 			delete node;
 	}
-
 	return ret;
+}
+
+bool BehaviorTree::InsertDecSequence()
+{
+	DecSequence* node = new DecSequence(GetNewNodeUid());
+	return HandleInsertion(node);
 }
 
 TreeNode * BehaviorTree::InsertDecSequence(unsigned int uid, TreeNode * parent)
@@ -432,30 +469,13 @@ TreeNode * BehaviorTree::InsertDecSequence(unsigned int uid, TreeNode * parent)
 	DecSequence* node = new DecSequence(uid);
 	if (node && parent)
 		parent->AddChild(node);
-
 	return node;
 }
 
 bool BehaviorTree::InsertDecSelector()
 {
-	bool ret = false;
-	unsigned int id = GetNewNodeUid();
-	DecSelector* node = new DecSelector(id);
-
-	if (root == nullptr)
-	{
-		root = current_node = node;
-		ret = true;
-		header_current_node.append(current_node->GetNodeHeader());
-	}
-	else
-	{
-		ret = current_node->AddChild(node);
-		if (!ret && node)
-			delete node;
-	}
-
-	return ret;
+	DecSelector* node = new DecSelector(GetNewNodeUid());
+	return HandleInsertion(node);
 }
 
 TreeNode * BehaviorTree::InsertDecSelector(unsigned int uid, TreeNode * parent)
@@ -463,6 +483,26 @@ TreeNode * BehaviorTree::InsertDecSelector(unsigned int uid, TreeNode * parent)
 	DecSelector* node = new DecSelector(uid);
 	if(node && parent)
 		parent->AddChild(node);
+	return node;
+}
 
+bool BehaviorTree::InsertAcMove()
+{
+	AcMove* node = new AcMove(GetNewNodeUid(), bb);
+	bool ret = HandleInsertion(node);
+	if (ret)
+	{
+		ret = node->AskParameters(); //TODO: Remove the node if this returns false
+	}
+	return ret;
+}
+
+TreeNode * BehaviorTree::InsertAcMove(unsigned int uid, TreeNode * parent)
+{
+	AcMove* node = new AcMove(uid, bb);
+	if (node && parent)
+	{
+		parent->AddChild(node);
+	}
 	return node;
 }

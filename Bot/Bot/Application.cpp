@@ -7,6 +7,7 @@
 #include "Console.h"
 #include "ModuleFileSystem.h"
 #include "Random.h"
+#include "MouseEmulator.h"
 
 using namespace std;
 
@@ -16,12 +17,14 @@ Application::Application(const char* argv0) : argv0(argv0)
 	file_system = new ModuleFileSystem();
 	editor = new Editor();
 	input = new Input();
+	mouse = new MouseEmulator();
 }
 
 Application::~Application()
 {
 	SetConsoleTextAttribute(h_console, csbi.wAttributes);
 
+	delete mouse;
 	delete input;
 	delete editor;
 	delete file_system;

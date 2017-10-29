@@ -112,7 +112,10 @@ bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 void BTManager::QuitEditingMode()
 {
 	if (current_bt)
+	{
 		current_bt->Save();
+		current_bt->SetCurrentNode(current_bt->GetRootNode());
+	}
 	editing_mode = false;
 	current_bt = nullptr;
 	console->RequestHeader(NULL);

@@ -44,6 +44,8 @@ public:
 
 	void PrintVars()const;
 
+	void* FindVar(const string& name, BBType type)const;
+
 	//Insert
 	bool InsertBool(const string& name, bool value);
 	bool InsertInt(const string& name, int value);

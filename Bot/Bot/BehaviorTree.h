@@ -44,12 +44,28 @@ private:
 	//Inserts
 	bool InsertDecorator(const string& sub_type);
 	TreeNode* InsertDecorator(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
+	bool InsertAction(const string& sub_type);
+	TreeNode* InsertAction(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
+
+	//Helper Insert
+	bool HandleInsertion(TreeNode* node);
 
 	//Decorators
 	bool InsertDecSequence();
 	TreeNode* InsertDecSequence(unsigned int uid, TreeNode* parent);
 	bool InsertDecSelector();
 	TreeNode* InsertDecSelector(unsigned int uid, TreeNode* parent);
+
+	//Actions
+	bool InsertAcMove();
+	TreeNode* InsertAcMove(unsigned int uid, TreeNode* parent);
+
+public:
+	//Easy access
+	string bt_filename; //name of the BehaviorTree file
+	BlackBoard* bb = nullptr;
+
+	string header_current_node = ""; //To show the path to the current node
 
 private:
 	TreeNode* root = nullptr;
@@ -69,13 +85,8 @@ private:
 	//Decorator types
 	const char* dec_sequence = "sequence";
 	const char* dec_selector = "selector";
-
-public:
-	//Easy access
-	string bt_filename; //name of the BehaviorTree file
-	BlackBoard* bb = nullptr;
-
-	string header_current_node = ""; //To show the path to the current node
+	//Action types
+	const char* ac_move = "move";
 };
 
 #endif // !__BEHAVIORTREE_H__
