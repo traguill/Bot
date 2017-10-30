@@ -86,7 +86,8 @@ bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 	{
 		this->editing_mode = editing_mode;
 		current_bt = (*bt_loaded_found).second;
-		console->RequestHeader(this);
+		if(editing_mode)
+			console->RequestHeader(this);
 		return true;
 	}
 
@@ -101,7 +102,8 @@ bool BTManager::SetCurrentBT(const string & name, bool editing_mode)
 		bt->Init(name.data());
 		
 		current_bt = bt;
-		console->RequestHeader(this);
+		if(editing_mode)
+			console->RequestHeader(this);
 		return true;
 	}
 
@@ -124,6 +126,29 @@ void BTManager::QuitEditingMode()
 BehaviorTree * BTManager::GetCurrentBT() const
 {
 	return current_bt;
+}
+
+bool BTManager::StartRunning(const string & bt)
+{
+	QuitEditingMode();
+	bool ret = SetCurrentBT(bt);
+	if (ret)
+	{
+		current_bt->GetCurrentNode()->OnStart();
+		running = true;
+	}
+	return ret;
+}
+
+bool BTManager::Run()
+{
+	bool ret = current_bt->Run();
+	if (ret)
+	{
+		current_bt = nullptr;
+		running = false;
+	}
+	return ret;
 }
 
 void BTManager::PrintHeader()

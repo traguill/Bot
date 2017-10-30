@@ -35,5 +35,8 @@ void BTInsert(const vector<string>* args); //-i
 void BTList(const vector<string>* args); //-l
 void BTRemove(const vector<string>* args); //-r <uid(Opt)>
 
+//run
+void RunBT(const vector<string>* args); //<bt_name>
+
 #endif // !__COMMANDS_H__
 

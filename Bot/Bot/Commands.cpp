@@ -534,3 +534,24 @@ void BTRemove(const vector<string>* args)
 	}
 
 }
+
+void RunBT(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, 1, "RunBT", '-');
+	if (ret == false)
+		return;
+
+	string bt_name = (*args)[0];
+
+	ret = App->editor->bt_manager->IsNameAvailable(bt_name);
+	if (ret == true)
+	{
+		MSG_ERROR("No BehaviorTree named %s was found", bt_name.data());
+		return;
+	}
+
+	ret = App->editor->bt_manager->StartRunning(bt_name);
+	if (ret)
+		App->editor->ChangeState(BT_RUNNING);
+
+}

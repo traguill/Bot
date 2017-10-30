@@ -27,6 +27,9 @@ public:
 	void QuitEditingMode();
 	BehaviorTree* GetCurrentBT()const;
 
+	bool StartRunning(const string& bt);
+	bool Run();
+
 	void PrintHeader();
 
 private:
@@ -36,6 +39,7 @@ private:
 	BehaviorTree* current_bt = nullptr;
 
 	bool editing_mode = false;
+	bool running = false;
 
 };
 #endif // !__BTMANAGER_H__

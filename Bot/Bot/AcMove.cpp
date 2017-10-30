@@ -19,6 +19,7 @@ AcMove::~AcMove()
 
 void AcMove::OnStart()
 {
+	App->mouse->Clear();
 	Point<int> p_dst;
 	App->editor->area_manager->GetRndPointArea(area_dst, p_dst);
 	App->mouse->AddPoint(p_dst.x, p_dst.y);

@@ -38,6 +38,7 @@ private:
 	void LoadCommandMove();
 	void LoadCommandBlackBoard();
 	void LoadCommandBehaviorTree();
+	void LoadCommandRun();
 
 	Cmd CreateCommand(const char* name, const char* description, defFunction func);
 	void CreateOption(char option, const char* description, defFunction func, Cmd& command);

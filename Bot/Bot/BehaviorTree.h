@@ -16,6 +16,7 @@ public:
 	~BehaviorTree();
 
 	void Init(const char* filename, const char* name = nullptr);
+	bool Run();
 
 	bool InsertNode(const string& type, const string& sub_type); //From console
 	TreeNode* InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned int uid, TreeNode* parent); //From file

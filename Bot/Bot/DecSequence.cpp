@@ -13,6 +13,7 @@ DecSequence::~DecSequence()
 void DecSequence::OnStart()
 {
 	current_child = 0;
+	childs[current_child]->OnStart();
 }
 
 NODERETURN DecSequence::Run()

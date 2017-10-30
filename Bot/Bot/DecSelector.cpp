@@ -13,6 +13,7 @@ DecSelector::~DecSelector()
 void DecSelector::OnStart()
 {
 	current_child = 0;
+	childs[current_child]->OnStart();
 }
 
 NODERETURN DecSelector::Run()

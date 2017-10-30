@@ -59,6 +59,16 @@ bool Editor::Update()
 		}
 	}
 		break;
+	case BT_RUNNING:
+	{
+		bool ret = bt_manager->Run();
+		if (ret)
+		{
+			MSG_INFO("BT finished");
+			state = SLEEP;
+		}
+	}
+	break;
 	}
 	return true;
 }

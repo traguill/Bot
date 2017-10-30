@@ -180,6 +180,7 @@ void Console::LoadDefaultCommands()
 	LoadCommandMove();
 	LoadCommandBlackBoard();
 	LoadCommandBehaviorTree();	
+	LoadCommandRun();
 }
 
 void Console::LoadCommandExit()
@@ -235,6 +236,12 @@ void Console::LoadCommandBehaviorTree()
 	CreateOption('r', "Removes the current node. If an id is specified later, removes that node", BTRemove, bt);
 
 	RegisterCommand(bt);
+}
+
+void Console::LoadCommandRun()
+{
+	Cmd run = CreateCommand("run", "Runs a BT. Usage: run <bt_name>", RunBT);
+	RegisterCommand(run);
 }
 
 Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 
