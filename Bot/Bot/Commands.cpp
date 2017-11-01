@@ -555,3 +555,12 @@ void RunBT(const vector<string>* args)
 		App->editor->ChangeState(BT_RUNNING);
 
 }
+
+void Pause(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 0, 0, "Pause", '-');
+	if (ret == false)
+		return;
+
+	App->editor->ChangeState(SLEEP);
+}

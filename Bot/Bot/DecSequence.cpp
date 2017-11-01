@@ -12,6 +12,7 @@ DecSequence::~DecSequence()
 
 void DecSequence::OnStart()
 {
+	MSG_INFO("Sequence(%i): START", uid);
 	current_child = 0;
 	childs[current_child]->OnStart();
 }
@@ -45,7 +46,9 @@ NODERETURN DecSequence::Run()
 }
 
 void DecSequence::OnExit()
-{}
+{
+	MSG_INFO("Sequence(%i): EXIT", uid);
+}
 
 void DecSequence::Print() const
 {

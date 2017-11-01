@@ -38,5 +38,8 @@ void BTRemove(const vector<string>* args); //-r <uid(Opt)>
 //run
 void RunBT(const vector<string>* args); //<bt_name>
 
+//pause (debug only) may crash or something i dunno
+void Pause(const vector<string>* args);
+
 #endif // !__COMMANDS_H__
 

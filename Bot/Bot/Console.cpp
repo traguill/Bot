@@ -187,6 +187,10 @@ void Console::LoadCommandExit()
 {
 	Cmd exit = CreateCommand("exit", "Quits the application", (defFunction)(&Quit));
 	RegisterCommand(exit);
+
+	//Debug only
+	Cmd pause = CreateCommand("pause", "I don't know what it does", (defFunction)(&Pause));
+	RegisterCommand(pause);
 }
 
 void Console::LoadCommandClear()

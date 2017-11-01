@@ -1,6 +1,8 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
+#include <math.h>
+
 template<class TYPE>
 class Point
 {
@@ -57,20 +59,23 @@ public:
 
 	int Lengthi()const
 	{
-		return sqrt(x*x + y*y);
+		return sqrt((x*x) + (y*y));
 	}
 
 	float Lengthf()const
 	{
-		return sqrt(x*x + y*y);
+		float x2 = (float)x*(float)x;
+		float y2 = (float)y*(float)y;
+		float sum = x2 + y2;
+		return sqrtf(sum);
 	}
 
-	TYPE DistanceTo(const Point<TYPE>& p2)const
+	float DistanceTo(const Point<TYPE>& p2)const
 	{
 		TYPE w = p2.x - x;
 		TYPE h = p2.y - y;
 
-		return sqrt(w*w + h*h);
+		return sqrtf(powf((float)w, 2) + powf((float)h, 2));
 	}
 
 public:

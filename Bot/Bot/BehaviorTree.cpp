@@ -53,7 +53,6 @@ void BehaviorTree::Init(const char * filename, const char* name)
 bool BehaviorTree::Run()
 {
 	NODERETURN ret = root->Run();
-
 	return (ret == RUNNING) ? false : true;
 }
 

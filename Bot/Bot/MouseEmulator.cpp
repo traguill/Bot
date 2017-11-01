@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <iostream>
+#include "ConsoleMsgs.h"
 
 #include "Input.h"
 
@@ -23,15 +24,13 @@ void MouseEmulator::AddPoint(int x, int y)
 	float y_conv = (float)y / (float)screen_size.y * 65535.0f;
 	points.push_back(Point<int>(x_conv, y_conv));
 
-	/*cout << "Click x:  " << x << " y: " << y << "\n";
-	cout << "Click[CONV] x:  " << x_conv << " y: " << y_conv << "\n";
-	cout << "Click[RES] x:  " << points.back().x << " y: " << points.back().y << "\n";*/
+	PrintPoints();
 }
 
 void MouseEmulator::PrintPoints()
 {
 	for (vector<Point<int>>::iterator p = points.begin(); p != points.end(); ++p)
-		cout << "Click x:  " << (*p).x << " y: " << (*p).y << "\n";
+		MSG_INFO("Click x: %i y: %i", (*p).x, (*p).y);
 }
 
 void MouseEmulator::InitMovement(float sec_delay)
@@ -52,18 +51,19 @@ bool MouseEmulator::Move(float dt)
 		{
 			can_start = true;
 			countdown_init = 0.0f;
+
 		}
-		return false;
+		else
+			return false;
 	}
 
 	POINT cursor_pos;
 	GetCursorPos(&cursor_pos);
-
 	current_mouse_position.x = cursor_pos.x;
 	current_mouse_position.y = cursor_pos.y;
 
 	ScreenToMouseUnits(current_mouse_position.x, current_mouse_position.y);
-
+	
 	if (!has_dst)
 		if (ComputeDst())
 			return true; //End
@@ -125,9 +125,10 @@ bool MouseEmulator::ComputeDst()
 bool MouseEmulator::RecomputeDst()
 {
 	if (point_id == points.size())
+	{
 		return true;
+	}
 
-	//Check dst
 	if (current_mouse_position.DistanceTo(dst) < dst_threshold)
 	{
 		has_dst = false;
@@ -138,11 +139,11 @@ bool MouseEmulator::RecomputeDst()
 	}
 
 	Point<int> direction = points[point_id] - current_mouse_position;
-
 	float length = direction.Lengthf();
 	step.x = ((float)direction.x / length) * speed;
 	step.y = ((float)direction.y / length) * speed;
 
+	return false;
 }
 
 void MouseEmulator::LeftClick()

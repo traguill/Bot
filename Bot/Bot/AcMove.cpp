@@ -19,9 +19,11 @@ AcMove::~AcMove()
 
 void AcMove::OnStart()
 {
+	MSG_INFO("MOVE(%i): START", uid);
 	App->mouse->Clear();
 	Point<int> p_dst;
 	App->editor->area_manager->GetRndPointArea(area_dst, p_dst);
+	MSG_WARNING("Area %s - Point x: %i y: %i", area_dst->name.data(), p_dst.x, p_dst.y);
 	App->mouse->AddPoint(p_dst.x, p_dst.y);
 	App->mouse->InitMovement(0);
 }
@@ -37,6 +39,7 @@ NODERETURN AcMove::Run()
 
 void AcMove::OnExit()
 {
+	MSG_INFO("MOVE(%i): START", uid);
 	App->mouse->Clear();
 }
 

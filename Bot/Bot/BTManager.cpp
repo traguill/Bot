@@ -134,7 +134,7 @@ bool BTManager::StartRunning(const string & bt)
 	bool ret = SetCurrentBT(bt);
 	if (ret)
 	{
-		current_bt->GetCurrentNode()->OnStart();
+		current_bt->GetRootNode()->OnStart();
 		running = true;
 	}
 	return ret;

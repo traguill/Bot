@@ -16,7 +16,7 @@ public:
 	void GoTo(const Point<int>& dst, float delay);
 
 private:
-	MouseEmulator* mouse = nullptr;
+
 
 };
 #endif // !__MOUSECONTROLLER_H__

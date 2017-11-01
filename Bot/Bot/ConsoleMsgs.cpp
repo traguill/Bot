@@ -41,6 +41,17 @@ void  PrintWarningMessage(const char* format, ...)
 	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
 }
 
+void PrintWindowsLastError()
+{
+	char* buf;
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&buf, 0, NULL);
+	if (buf)
+	{
+		MSG_ERROR("WinLastError: %s", buf);
+		delete[] buf;
+	}
+}
+
 void PrintConsoleHeader(const char * bt_name, const char * format, ...)
 {
 	SetConsoleTextAttribute(App->h_console, 0x0A); //Green
