@@ -14,6 +14,7 @@ class Input;
 class ModuleFileSystem;
 class Random;
 class MouseEmulator;
+class KeyboardEmulator;
 
 class Application
 {
@@ -36,6 +37,7 @@ public:
 	Input* input = nullptr;
 	ModuleFileSystem* file_system = nullptr;
 	MouseEmulator* mouse = nullptr;
+	KeyboardEmulator* keyboard = nullptr;
 	bool quit_request = false;
 
 	mutex mtx;

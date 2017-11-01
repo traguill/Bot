@@ -120,6 +120,7 @@
     <ClCompile Include="AcDrag.cpp" />
     <ClCompile Include="AcMove.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="AcWrite.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="BehaviorTree.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON\parson.c" />
+    <ClCompile Include="KeyboardEmulator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="MouseController.cpp" />
@@ -152,6 +154,7 @@
     <ClInclude Include="AcDrag.h" />
     <ClInclude Include="AcMove.h" />
     <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="AcWrite.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="BehaviorTree.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON\parson.h" />
+    <ClInclude Include="KeyboardEmulator.h" />
     <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="MouseController.h" />
     <ClInclude Include="MouseEmulator.h" />

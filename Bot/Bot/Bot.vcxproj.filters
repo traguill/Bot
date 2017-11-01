@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Helpers">
       <UniqueIdentifier>{f639299d-d605-4a7f-829e-a75c3410b5c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Mouse">
-      <UniqueIdentifier>{ceef456a-2989-4eca-a864-068d5dcd9ca3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{4c3f5b35-42b3-4e33-80aa-ec94ff9c0da6}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="Source Files\BehaviorTree\NodeTypes">
       <UniqueIdentifier>{80085ded-2029-40ab-a614-330e8655c716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{ceef456a-2989-4eca-a864-068d5dcd9ca3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,13 +94,13 @@
       <Filter>Source Files\3rdParty\JSON</Filter>
     </ClCompile>
     <ClCompile Include="MouseController.cpp">
-      <Filter>Source Files\Mouse</Filter>
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="MouseEmulator.cpp">
-      <Filter>Source Files\Mouse</Filter>
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="BehaviorTree.cpp">
       <Filter>Source Files\BehaviorTree</Filter>
@@ -139,6 +139,12 @@
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClCompile>
     <ClCompile Include="AcDrag.cpp">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardEmulator.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="AcWrite.cpp">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClCompile>
   </ItemGroup>
@@ -186,13 +192,13 @@
       <Filter>Source Files\3rdParty\JSON</Filter>
     </ClInclude>
     <ClInclude Include="MouseController.h">
-      <Filter>Source Files\Mouse</Filter>
+      <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Source Files\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="MouseEmulator.h">
-      <Filter>Source Files\Mouse</Filter>
+      <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="BehaviorTree.h">
       <Filter>Source Files\BehaviorTree</Filter>
@@ -237,6 +243,12 @@
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
     <ClInclude Include="AcDrag.h">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardEmulator.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="AcWrite.h">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,7 +31,8 @@ enum NODESUBTYPE
 	//Actions
 	ACMOVE,
 	ACCLICK,
-	ACDRAG
+	ACDRAG,
+	ACWRITE
 };
 
 class TreeNode
