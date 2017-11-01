@@ -60,6 +60,8 @@ private:
 	//Actions
 	bool InsertAcMove();
 	TreeNode* InsertAcMove(unsigned int uid, TreeNode* parent);
+	bool InsertAcClick();
+	TreeNode* InsertAcClick(unsigned int uid, TreeNode* parent);
 
 public:
 	//Easy access
@@ -88,6 +90,7 @@ private:
 	const char* dec_selector = "selector";
 	//Action types
 	const char* ac_move = "move";
+	const char* ac_click = "click";
 };
 
 #endif // !__BEHAVIORTREE_H__

@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <iostream>
 #include "ConsoleMsgs.h"
+#include "Application.h"
 
 #include "Input.h"
 
@@ -23,8 +24,6 @@ void MouseEmulator::AddPoint(int x, int y)
 	float x_conv = (float)x / (float)screen_size.x * 65535.0f;//Mouse coordinates screen conversion
 	float y_conv = (float)y / (float)screen_size.y * 65535.0f;
 	points.push_back(Point<int>(x_conv, y_conv));
-
-	PrintPoints();
 }
 
 void MouseEmulator::PrintPoints()
@@ -110,6 +109,38 @@ void MouseEmulator::Clear()
 	points.clear();
 }
 
+void MouseEmulator::InitClick(float sec_delay)
+{
+	mouse_down = false;
+	mouse_start = false;
+	countdown_mouse = sec_delay;
+}
+
+bool MouseEmulator::Clicking()
+{
+	if (mouse_start == false)
+	{
+		countdown_mouse -= App->dt;
+		if (countdown_mouse <= 0.0f)
+		{
+			mouse_start = true;
+			countdown_mouse = 0.1f;
+			LeftClick();
+			return false;
+		}
+		else
+			return false;
+	}
+
+	countdown_mouse -= App->dt;
+	if (countdown_mouse <= 0.0f)
+	{
+		LeftClickUp();
+		return true;
+	}
+	return false;
+}
+
 bool MouseEmulator::ComputeDst()
 {
 	if (point_id == points.size())
@@ -153,9 +184,6 @@ void MouseEmulator::LeftClick()
 	input.type = INPUT_MOUSE;
 	input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 	SendInput(1, &input, sizeof(INPUT));
-
-	mouse_down = true;
-	countdown_mouse = 0.1f;
 }
 
 void MouseEmulator::LeftClickUp()
@@ -164,14 +192,6 @@ void MouseEmulator::LeftClickUp()
 	input.type = INPUT_MOUSE;
 	input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
 	SendInput(1, &input, sizeof(INPUT));
-
-	mouse_down = false;
-	countdown_mouse = 0.0f;
-
-	can_start = false;
-	countdown_init = 1.5f;
-
-
 }
 
 void MouseEmulator::ScreenToMouseUnits(int & x, int & y) const

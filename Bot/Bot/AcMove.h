@@ -27,6 +27,7 @@ public:
 private:
 	Area* area_dst;
 	string area_name;
+	float delay = 0;
 };
 #endif // !__ACMOVE_H__
 

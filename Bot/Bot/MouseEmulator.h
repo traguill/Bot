@@ -21,9 +21,14 @@ public:
 	//Debug
 	void PrintPoints();
 
+	//Movement
 	void InitMovement(float sec_delay); //Init the movement with the delay specified
 	bool Move(float dt); //Return true when all points have been visited once. 
 	void Clear();
+
+	//Click
+	void InitClick(float sec_delay);
+	bool Clicking();
 
 private:
 
@@ -56,7 +61,8 @@ private:
 	Point<int> screen_size;
 
 	bool mouse_down = false;
-	float countdown_mouse = 0.0f; //Counter for the time the left button is down
+	float countdown_mouse = 0.0f; //Counter for the time the left button is down. Also used for the begining delay
+	bool mouse_start = false;
 
 	bool can_start = false;
 	float countdown_init = 0.0f;

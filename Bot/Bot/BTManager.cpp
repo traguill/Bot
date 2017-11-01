@@ -145,6 +145,7 @@ bool BTManager::Run()
 	bool ret = current_bt->Run();
 	if (ret)
 	{
+		MSG_INFO("%s finished", current_bt->bt_filename.data());
 		current_bt = nullptr;
 		running = false;
 	}

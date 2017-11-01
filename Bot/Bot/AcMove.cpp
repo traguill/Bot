@@ -19,13 +19,11 @@ AcMove::~AcMove()
 
 void AcMove::OnStart()
 {
-	MSG_INFO("MOVE(%i): START", uid);
 	App->mouse->Clear();
 	Point<int> p_dst;
 	App->editor->area_manager->GetRndPointArea(area_dst, p_dst);
-	MSG_WARNING("Area %s - Point x: %i y: %i", area_dst->name.data(), p_dst.x, p_dst.y);
 	App->mouse->AddPoint(p_dst.x, p_dst.y);
-	App->mouse->InitMovement(0);
+	App->mouse->InitMovement(delay);
 }
 
 NODERETURN AcMove::Run()
@@ -39,12 +37,12 @@ NODERETURN AcMove::Run()
 
 void AcMove::OnExit()
 {
-	MSG_INFO("MOVE(%i): START", uid);
 	App->mouse->Clear();
 }
 
 void AcMove::Load(const Data & data)
 {
+	delay = data.GetFloat("delay");
 	area_name = data.GetString("bb_area");
 	void* ret = bb->FindVar(area_name, BBType::BB_AREA);
 	if (ret == nullptr)
@@ -57,11 +55,12 @@ void AcMove::Save(Data & data) const
 {
 	if (area_dst)
 		data.AppendString("bb_area", area_name.data());
+	data.AppendFloat("delay", delay);
 }
 
 void AcMove::Print() const
 {
-	MSG_INFO("* [action] [move]: %i ~area:%s", uid, area_name.data());
+	MSG_INFO("* [action] [move]: %i ~area:%s, delay:%.3f", uid, area_name.data(), delay);
 }
 
 string AcMove::GetNodeHeader() const
@@ -77,7 +76,7 @@ bool AcMove::AskParameters()
 
 	while (area_dst == nullptr) //WARNING: if no area was defined in the BB this will cause an endless loop 
 	{
-		MSG_INFO("Area: destination");
+		MSG_INFO("Area:");
 		string msg;
 		getline(cin, msg);
 
@@ -90,6 +89,12 @@ bool AcMove::AskParameters()
 			area_name = msg;
 		}
 	}
+
+	MSG_INFO("Delay(s): ");
+	string s_delay;
+	getline(cin, s_delay);
+
+	delay = stof(s_delay);
 	
 	return true;
 }

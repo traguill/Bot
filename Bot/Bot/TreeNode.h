@@ -28,9 +28,9 @@ enum NODESUBTYPE
 	//Decorator
 	DECSELECTOR,
 	DECSEQUENCE,
-
 	//Actions
-	ACMOVE
+	ACMOVE,
+	ACCLICK
 };
 
 class TreeNode

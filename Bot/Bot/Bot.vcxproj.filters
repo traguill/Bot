@@ -135,6 +135,9 @@
     <ClCompile Include="AcMove.cpp">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="AcClick.cpp">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -225,6 +228,9 @@
       <Filter>Source Files\BehaviorTree\NodeTypes</Filter>
     </ClInclude>
     <ClInclude Include="AcMove.h">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="AcClick.h">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
   </ItemGroup>
