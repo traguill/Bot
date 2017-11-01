@@ -62,6 +62,8 @@ private:
 	TreeNode* InsertAcMove(unsigned int uid, TreeNode* parent);
 	bool InsertAcClick();
 	TreeNode* InsertAcClick(unsigned int uid, TreeNode* parent);
+	bool InsertAcDrag();
+	TreeNode* InsertAcDrag(unsigned int uid, TreeNode* parent);
 
 public:
 	//Easy access
@@ -91,6 +93,7 @@ private:
 	//Action types
 	const char* ac_move = "move";
 	const char* ac_click = "click";
+	const char* ac_drag = "drag";
 };
 
 #endif // !__BEHAVIORTREE_H__

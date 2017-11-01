@@ -30,13 +30,15 @@ public:
 	void InitClick(float sec_delay);
 	bool Clicking();
 
+	void LeftClick();
+	void LeftClickUp();
+
 private:
 
 	bool ComputeDst();
 	bool RecomputeDst();
 
-	void LeftClick();
-	void LeftClickUp();
+
 	
 
 	void ScreenToMouseUnits(int& x, int& y)const;

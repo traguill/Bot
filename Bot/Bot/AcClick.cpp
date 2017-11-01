@@ -49,7 +49,9 @@ void AcClick::Print() const
 
 string AcClick::GetNodeHeader() const
 {
-	return string();
+	string ret = "/[A]Click(" + std::to_string(uid);
+	ret.append(")");
+	return ret;
 }
 
 bool AcClick::AskParameters()

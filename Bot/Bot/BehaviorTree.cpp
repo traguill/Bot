@@ -10,6 +10,7 @@
 
 #include "AcMove.h"
 #include "AcClick.h"
+#include "AcDrag.h"
 
 #include <stack>
 #include <queue>
@@ -429,7 +430,10 @@ bool BehaviorTree::InsertAction(const string & sub_type)
 	{
 		ret = InsertAcClick();
 	}
-	else
+	else if (sub_type.compare(ac_drag) == 0)
+	{
+		ret = InsertAcDrag();
+	}else
 	{
 		MSG_WARNING("Sub-type: %s is not valid", sub_type.data());
 	}
@@ -446,6 +450,9 @@ TreeNode * BehaviorTree::InsertAction(NODESUBTYPE subtype, unsigned int uid, Tre
 		break;
 	case ACCLICK:
 		ret = InsertAcClick(uid, parent);
+		break;
+	case ACDRAG:
+		ret = InsertAcDrag(uid, parent);
 		break;
 	default:
 		MSG_ERROR("Subtype: %i is not valid", subtype);
@@ -529,6 +536,23 @@ bool BehaviorTree::InsertAcClick()
 TreeNode * BehaviorTree::InsertAcClick(unsigned int uid, TreeNode * parent)
 {
 	AcClick* node = new AcClick(uid, bb);
+	if (node && parent)
+		parent->AddChild(node);
+	return node;
+}
+
+bool BehaviorTree::InsertAcDrag()
+{
+	AcDrag* node = new AcDrag(GetNewNodeUid(), bb);
+	bool ret = HandleInsertion(node);
+	if (ret)
+		ret = node->AskParameters(); //TODO: Remove the node if this returns false
+	return ret;
+}
+
+TreeNode * BehaviorTree::InsertAcDrag(unsigned int uid, TreeNode * parent)
+{
+	AcDrag* node = new AcDrag(uid, bb);
 	if (node && parent)
 		parent->AddChild(node);
 	return node;

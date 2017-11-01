@@ -30,7 +30,8 @@ enum NODESUBTYPE
 	DECSEQUENCE,
 	//Actions
 	ACMOVE,
-	ACCLICK
+	ACCLICK,
+	ACDRAG
 };
 
 class TreeNode

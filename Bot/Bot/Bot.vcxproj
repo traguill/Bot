@@ -117,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AcClick.cpp" />
+    <ClCompile Include="AcDrag.cpp" />
     <ClCompile Include="AcMove.cpp" />
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="Application.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AcClick.h" />
+    <ClInclude Include="AcDrag.h" />
     <ClInclude Include="AcMove.h" />
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="Application.h" />

@@ -138,6 +138,9 @@
     <ClCompile Include="AcClick.cpp">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="AcDrag.cpp">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -231,6 +234,9 @@
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
     <ClInclude Include="AcClick.h">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="AcDrag.h">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
     </ClInclude>
   </ItemGroup>
