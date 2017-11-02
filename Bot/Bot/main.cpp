@@ -79,7 +79,7 @@ int  main(int argc, char*argv[])
 	t.detach();
 	
 
-	MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+	//MouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
 	bool quit = false;
 	while (!quit)
 	{
@@ -92,7 +92,7 @@ int  main(int argc, char*argv[])
 		quit = !App->Update(dt);
 	}
 
-	UnhookWindowsHookEx(MouseHook);
+	//UnhookWindowsHookEx(MouseHook);
 	
 	delete console;
 	delete App;

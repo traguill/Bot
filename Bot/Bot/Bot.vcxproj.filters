@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{ceef456a-2989-4eca-a864-068d5dcd9ca3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BehaviorTree\DecoratorSP">
+      <UniqueIdentifier>{9e96d607-1512-4c83-b5eb-12fb0366e630}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="AcWrite.cpp">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="AcKey.cpp">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="DecSPRepeat.cpp">
+      <Filter>Source Files\BehaviorTree\DecoratorSP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="AcWrite.h">
       <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="AcKey.h">
+      <Filter>Source Files\BehaviorTree\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="DecSPRepeat.h">
+      <Filter>Source Files\BehaviorTree\DecoratorSP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

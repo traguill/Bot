@@ -32,7 +32,10 @@ enum NODESUBTYPE
 	ACMOVE,
 	ACCLICK,
 	ACDRAG,
-	ACWRITE
+	ACWRITE,
+	ACKEY,
+	//DecoratorSP
+	DECSPREPEAT,
 };
 
 class TreeNode

@@ -12,6 +12,9 @@
 #include "AcClick.h"
 #include "AcDrag.h"
 #include "AcWrite.h"
+#include "AcKey.h"
+
+#include "DecSPRepeat.h"
 
 #include <stack>
 #include <queue>
@@ -77,7 +80,7 @@ bool BehaviorTree::InsertNode(const string & type, const string & sub_type)
 	}
 	else if (type.compare(type_decorator_sp) == 0)
 	{
-		//decorator sp
+		ret = InsertDecoratorSP(sub_type);
 	}
 	else
 	{
@@ -102,6 +105,7 @@ TreeNode* BehaviorTree::InsertNode(NODETYPE type, NODESUBTYPE subtype, unsigned 
 		ret = InsertDecorator(subtype, uid, parent);
 		break;
 	case DECORATOR_SP:
+		ret = InsertDecoratorSP(subtype, uid, parent);
 		break;
 	default:
 		MSG_ERROR("Type %i is not a valid type", type);
@@ -438,6 +442,10 @@ bool BehaviorTree::InsertAction(const string & sub_type)
 	else if (sub_type.compare(ac_write) == 0)
 	{
 		ret = InsertAcWrite();
+	}
+	else if (sub_type.compare(ac_key) == 0)
+	{
+		ret = InsertAcKey();
 	}else
 	{
 		MSG_WARNING("Sub-type: %s is not valid", sub_type.data());
@@ -461,6 +469,37 @@ TreeNode * BehaviorTree::InsertAction(NODESUBTYPE subtype, unsigned int uid, Tre
 		break;
 	case ACWRITE:
 		ret = InsertAcWrite(uid, parent);
+		break;
+	case ACKEY:
+		break;
+	default:
+		MSG_ERROR("Subtype: %i is not valid", subtype);
+		break;
+	}
+	return ret;
+}
+
+bool BehaviorTree::InsertDecoratorSP(const string & sub_type)
+{
+	bool ret = false;
+	if (sub_type.compare(decsp_repeat) == 0) //Repeat
+	{
+		ret = InsertDecSPRepeat();
+	}
+	else
+	{
+		MSG_WARNING("Sub-type: %s is not valid", sub_type.data());
+	}
+	return ret;
+}
+
+TreeNode * BehaviorTree::InsertDecoratorSP(NODESUBTYPE subtype, unsigned int uid, TreeNode * parent)
+{
+	TreeNode* ret = nullptr;
+	switch (subtype)
+	{
+	case DECSPREPEAT:
+		ret = InsertDecSPRepeat(uid, parent);
 		break;
 	default:
 		MSG_ERROR("Subtype: %i is not valid", subtype);
@@ -578,6 +617,37 @@ bool BehaviorTree::InsertAcWrite()
 TreeNode * BehaviorTree::InsertAcWrite(unsigned int uid, TreeNode * parent)
 {
 	AcWrite* node = new AcWrite(uid, bb);
+	if (node && parent)
+		parent->AddChild(node);
+	return node;
+}
+
+bool BehaviorTree::InsertAcKey()
+{
+	AcKey* node = new AcKey(GetNewNodeUid(), bb);
+	bool ret = HandleInsertion(node);
+	if (ret)
+		ret = node->AskParameters(); //TODO: Remove the node if this returns false
+	return ret;
+}
+
+TreeNode * BehaviorTree::InsertAcKey(unsigned int uid, TreeNode * parent)
+{
+	AcKey* node = new AcKey(uid, bb);
+	if (node && parent)
+		parent->AddChild(node);
+	return node;
+}
+
+bool BehaviorTree::InsertDecSPRepeat()
+{
+	DecSPRepeat* node = new DecSPRepeat(GetNewNodeUid());
+	return HandleInsertion(node);
+}
+
+TreeNode * BehaviorTree::InsertDecSPRepeat(unsigned int uid, TreeNode * parent)
+{
+	DecSPRepeat* node = new DecSPRepeat(uid);
 	if (node && parent)
 		parent->AddChild(node);
 	return node;

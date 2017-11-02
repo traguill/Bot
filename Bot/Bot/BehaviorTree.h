@@ -47,6 +47,8 @@ private:
 	TreeNode* InsertDecorator(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
 	bool InsertAction(const string& sub_type);
 	TreeNode* InsertAction(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
+	bool InsertDecoratorSP(const string& sub_type);
+	TreeNode* InsertDecoratorSP(NODESUBTYPE subtype, unsigned int uid, TreeNode* parent);
 
 	//Helper Insert
 	bool HandleInsertion(TreeNode* node);
@@ -66,6 +68,12 @@ private:
 	TreeNode* InsertAcDrag(unsigned int uid, TreeNode* parent);
 	bool InsertAcWrite();
 	TreeNode* InsertAcWrite(unsigned int uid, TreeNode* parent);
+	bool InsertAcKey();
+	TreeNode* InsertAcKey(unsigned int uid, TreeNode* parent);
+
+	//DecoratorSP
+	bool InsertDecSPRepeat();
+	TreeNode* InsertDecSPRepeat(unsigned int uid, TreeNode* parent);
 
 public:
 	//Easy access
@@ -97,6 +105,9 @@ private:
 	const char* ac_click = "click";
 	const char* ac_drag = "drag";
 	const char* ac_write = "write";
+	const char* ac_key = "key";
+	//DecoratorSP types
+	const char* decsp_repeat = "repeat";
 };
 
 #endif // !__BEHAVIORTREE_H__

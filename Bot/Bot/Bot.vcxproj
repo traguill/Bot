@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="AcClick.cpp" />
     <ClCompile Include="AcDrag.cpp" />
+    <ClCompile Include="AcKey.cpp" />
     <ClCompile Include="AcMove.cpp" />
     <ClCompile Include="ActionNode.cpp" />
     <ClCompile Include="AcWrite.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="DecoratorSPNode.cpp" />
     <ClCompile Include="DecSelector.cpp" />
     <ClCompile Include="DecSequence.cpp" />
+    <ClCompile Include="DecSPRepeat.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON\parson.c" />
@@ -152,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="AcClick.h" />
     <ClInclude Include="AcDrag.h" />
+    <ClInclude Include="AcKey.h" />
     <ClInclude Include="AcMove.h" />
     <ClInclude Include="ActionNode.h" />
     <ClInclude Include="AcWrite.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="DecoratorSPNode.h" />
     <ClInclude Include="DecSelector.h" />
     <ClInclude Include="DecSequence.h" />
+    <ClInclude Include="DecSPRepeat.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON\parson.h" />
