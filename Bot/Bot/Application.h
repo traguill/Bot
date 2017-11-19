@@ -15,6 +15,8 @@ class ModuleFileSystem;
 class Random;
 class MouseEmulator;
 class KeyboardEmulator;
+class LogParser;
+class CardsDB;
 
 class Application
 {
@@ -38,6 +40,8 @@ public:
 	ModuleFileSystem* file_system = nullptr;
 	MouseEmulator* mouse = nullptr;
 	KeyboardEmulator* keyboard = nullptr;
+	LogParser* log_parser = nullptr;
+	CardsDB* cards_db = nullptr;
 	bool quit_request = false;
 
 	mutex mtx;

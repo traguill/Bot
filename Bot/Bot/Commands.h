@@ -41,5 +41,8 @@ void RunBT(const vector<string>* args); //<bt_name>
 //pause (debug only) may crash or something i dunno
 void Pause(const vector<string>* args);
 
+
+//hearthstone
+void HSCardInfo(const vector<string>* args); // <id>
 #endif // !__COMMANDS_H__
 

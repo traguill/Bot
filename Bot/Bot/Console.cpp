@@ -181,6 +181,7 @@ void Console::LoadDefaultCommands()
 	LoadCommandBlackBoard();
 	LoadCommandBehaviorTree();	
 	LoadCommandRun();
+	LoadCommandHearthstone();
 }
 
 void Console::LoadCommandExit()
@@ -246,6 +247,12 @@ void Console::LoadCommandRun()
 {
 	Cmd run = CreateCommand("run", "Runs a BT. Usage: run <bt_name>", RunBT);
 	RegisterCommand(run);
+}
+
+void Console::LoadCommandHearthstone()
+{
+	Cmd hs = CreateCommand("hs", "Hearthstone", HSCardInfo);
+	RegisterCommand(hs);
 }
 
 Cmd Console::CreateCommand(const char * name, const char * description, defFunction func) 

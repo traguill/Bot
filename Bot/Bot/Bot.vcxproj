@@ -127,6 +127,7 @@
     <ClCompile Include="BehaviorTree.cpp" />
     <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="BTManager.cpp" />
+    <ClCompile Include="CardsDB.cpp" />
     <ClCompile Include="Cmd.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="ConditionNode.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON\parson.c" />
     <ClCompile Include="KeyboardEmulator.cpp" />
+    <ClCompile Include="LogParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="MouseController.cpp" />
@@ -163,6 +165,7 @@
     <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="BTManager.h" />
+    <ClInclude Include="CardsDB.h" />
     <ClInclude Include="Cmd.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ConditionNode.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON\parson.h" />
     <ClInclude Include="KeyboardEmulator.h" />
+    <ClInclude Include="LogParser.h" />
     <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="MouseController.h" />
     <ClInclude Include="MouseEmulator.h" />

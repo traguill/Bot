@@ -9,6 +9,8 @@
 #include "Random.h"
 #include "MouseEmulator.h"
 #include "KeyboardEmulator.h"
+#include "LogParser.h";
+#include "CardsDB.h"
 
 using namespace std;
 
@@ -20,12 +22,16 @@ Application::Application(const char* argv0) : argv0(argv0)
 	input = new Input();
 	mouse = new MouseEmulator();
 	keyboard = new KeyboardEmulator();
+	log_parser = new LogParser();
+	cards_db = new CardsDB();
 }
 
 Application::~Application()
 {
 	SetConsoleTextAttribute(h_console, csbi.wAttributes);
 
+	delete cards_db;
+	delete log_parser;
 	delete keyboard;
 	delete mouse;
 	delete input;
@@ -49,6 +55,9 @@ void Application::Init()
 
 	file_system->Init();
 	editor->Init();
+
+	cards_db->Init();
+	
 }
 
 bool Application::Update(float dt)

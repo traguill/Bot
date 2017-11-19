@@ -7,6 +7,7 @@
 #include "BlackBoard.h"
 #include "BTManager.h"
 #include "BehaviorTree.h"
+#include "CardsDB.h"
 
 #include <iostream>
 
@@ -563,4 +564,13 @@ void Pause(const vector<string>* args)
 		return;
 
 	App->editor->ChangeState(SLEEP);
+}
+
+void HSCardInfo(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 1, 1, "HSCardInfo", '-');
+	if (ret == false)
+		return;
+
+	App->cards_db->PrintCardInfo((*args)[0]);
 }
