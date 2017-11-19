@@ -28,7 +28,25 @@ BehaviorTree::~BehaviorTree()
 	if (bb)
 		delete bb;
 
-	//TODO delete nodes
+	if (root)
+	{
+		TreeNode* item = root;
+		queue<TreeNode*> queue;
+		queue.push(item);
+
+		while (queue.empty() == false)
+		{
+			item = queue.front();
+			queue.pop();
+			if (item->HasChilds())
+			{
+				const vector<TreeNode*> childs = item->GetChilds();
+				for (vector<TreeNode*>::const_iterator it = childs.begin(); it != childs.end(); ++it)
+					queue.push(*it);
+			}
+			delete item;
+		}
+	}
 }
 
 void BehaviorTree::Init(const char * filename, const char* name)
