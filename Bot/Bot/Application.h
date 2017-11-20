@@ -17,6 +17,7 @@ class MouseEmulator;
 class KeyboardEmulator;
 class LogParser;
 class CardsDB;
+class GameManager;
 
 class Application
 {
@@ -42,6 +43,7 @@ public:
 	KeyboardEmulator* keyboard = nullptr;
 	LogParser* log_parser = nullptr;
 	CardsDB* cards_db = nullptr;
+	GameManager* game_manager = nullptr;
 	bool quit_request = false;
 
 	mutex mtx;

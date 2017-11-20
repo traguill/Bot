@@ -12,6 +12,8 @@ struct CardObj
 	int cost;
 	int attack;
 	int health;
+	std::string playerClass;
+	std::string type;
 };
 
 class CardsDB
@@ -24,6 +26,10 @@ public:
 	void CleanUp();
 
 	void PrintCardInfo(const std::string& c_id);
+
+	std::string GetName(const std::string& card_id);
+	std::string GetPlayerClass(const std::string& card_id);
+	std::string GetType(const std::string& card_id);
 
 private:
 	std::map<std::string, CardObj*> cards_list;

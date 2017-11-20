@@ -67,3 +67,17 @@ void PrintConsoleHeader(const char * bt_name, const char * format, ...)
 	va_end(ap);
 	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
 }
+
+void PrintHSLogMessage(const char * format, ...)
+{
+	SetConsoleTextAttribute(App->h_console, 0x0D); //Pink
+	printf("Log: ");
+
+	SetConsoleTextAttribute(App->h_console, 0x0F); //Reset to white
+
+	static va_list ap;
+	va_start(ap, format);
+	vprintf(format, ap);
+	printf("\n");
+	va_end(ap);
+}

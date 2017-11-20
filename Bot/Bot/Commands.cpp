@@ -574,3 +574,12 @@ void HSCardInfo(const vector<string>* args)
 
 	App->cards_db->PrintCardInfo((*args)[0]);
 }
+
+void HSLogTrack(const vector<string>* args)
+{
+	bool ret = CheckNumParameters(args, 0, 0, "HSLogTrack", '-');
+	if (ret == false)
+		return;
+
+	App->editor->ChangeState(LOG_TRACKING);
+}

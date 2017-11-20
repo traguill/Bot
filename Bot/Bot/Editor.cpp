@@ -7,6 +7,7 @@
 #include "MouseController.h"
 #include "ConsoleMsgs.h"
 #include "BTManager.h"
+#include "LogParser.h"
 
 Editor::Editor()
 {
@@ -67,6 +68,11 @@ bool Editor::Update()
 			MSG_INFO("BT finished");
 			state = SLEEP;
 		}
+	}
+	break;
+	case LOG_TRACKING:
+	{
+		App->log_parser->Update();
 	}
 	break;
 	}

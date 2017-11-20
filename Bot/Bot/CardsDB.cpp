@@ -32,7 +32,8 @@ void CardsDB::Init()
 			c_obj->attack = card.GetInt("attack");
 			c_obj->cost = card.GetInt("cost");
 			c_obj->health = card.GetInt("health");
-
+			c_obj->playerClass = (card.GetString("playerClass") != NULL) ? card.GetString("playerClass") : "";
+			c_obj->type = (card.GetString("type") != NULL) ? card.GetString("type") : "";
 			cards_list.insert(pair<std::string, CardObj*>(c_obj->id, c_obj));
 		}
 	}
@@ -62,9 +63,41 @@ void CardsDB::PrintCardInfo(const std::string & c_id)
 		MSG_INFO("Cost: %i", it->second->cost);
 		MSG_INFO("Attack: %i", it->second->attack);
 		MSG_INFO("Health: %i", it->second->health);
+		MSG_INFO("PlayerClass: %s", it->second->playerClass.data());
+		MSG_INFO("Type: %s", it->second->type.data());
 	}
 	else
 	{
 		MSG_WARNING("Card %s not found", c_id.data());
 	}
+}
+
+std::string CardsDB::GetName(const std::string & card_id)
+{
+	map<std::string, CardObj*>::iterator it = cards_list.find(card_id);
+	if (it != cards_list.end())
+	{
+		return it->second->name;
+	}
+	return std::string();
+}
+
+std::string CardsDB::GetPlayerClass(const std::string & card_id)
+{
+	map<std::string, CardObj*>::iterator it = cards_list.find(card_id);
+	if (it != cards_list.end())
+	{
+		return it->second->playerClass;
+	}
+	return std::string();
+}
+
+std::string CardsDB::GetType(const std::string & card_id)
+{
+	map<std::string, CardObj*>::iterator it = cards_list.find(card_id);
+	if (it != cards_list.end())
+	{
+		return it->second->type;
+	}
+	return std::string();
 }

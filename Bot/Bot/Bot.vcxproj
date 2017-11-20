@@ -140,6 +140,7 @@
     <ClCompile Include="DecSequence.cpp" />
     <ClCompile Include="DecSPRepeat.cpp" />
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="JSON\parson.c" />
     <ClCompile Include="KeyboardEmulator.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="BTManager.h" />
     <ClInclude Include="CardsDB.h" />
+    <ClInclude Include="CardTypes.h" />
     <ClInclude Include="Cmd.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ConditionNode.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="DecSequence.h" />
     <ClInclude Include="DecSPRepeat.h" />
     <ClInclude Include="Editor.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="JSON\parson.h" />
     <ClInclude Include="KeyboardEmulator.h" />

@@ -44,5 +44,6 @@ void Pause(const vector<string>* args);
 
 //hearthstone
 void HSCardInfo(const vector<string>* args); // <id>
+void HSLogTrack(const vector<string>* args); // -t
 #endif // !__COMMANDS_H__
 

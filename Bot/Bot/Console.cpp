@@ -252,6 +252,9 @@ void Console::LoadCommandRun()
 void Console::LoadCommandHearthstone()
 {
 	Cmd hs = CreateCommand("hs", "Hearthstone", HSCardInfo);
+
+	CreateOption('t', "Tracks the Power.log file", HSLogTrack, hs);
+
 	RegisterCommand(hs);
 }
 

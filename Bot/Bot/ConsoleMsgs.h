@@ -8,12 +8,14 @@
 #define MSG_WARNING PrintWarningMessage
 #define BT_HEADER PrintConsoleHeader
 #define MSG_WIN_LASTERROR PrintWindowsLastError
+#define HS_LOG PrintHSLogMessage
 
 void PrintErrorMessage(const char* format, ...);
 void PrintInfoMessage(const char* format, ...);
 void PrintWarningMessage(const char* format, ...);
 void PrintWindowsLastError();
 void PrintConsoleHeader(const char* bt_name, const char* format, ...);
+void PrintHSLogMessage(const char* format, ...);
 
 
 #endif // 

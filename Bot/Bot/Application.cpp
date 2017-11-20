@@ -11,6 +11,7 @@
 #include "KeyboardEmulator.h"
 #include "LogParser.h";
 #include "CardsDB.h"
+#include "GameManager.h"
 
 using namespace std;
 
@@ -24,12 +25,14 @@ Application::Application(const char* argv0) : argv0(argv0)
 	keyboard = new KeyboardEmulator();
 	log_parser = new LogParser();
 	cards_db = new CardsDB();
+	game_manager = new GameManager();
 }
 
 Application::~Application()
 {
 	SetConsoleTextAttribute(h_console, csbi.wAttributes);
 
+	delete game_manager;
 	delete cards_db;
 	delete log_parser;
 	delete keyboard;
@@ -71,8 +74,6 @@ bool Application::Update(float dt)
 
 	input->Update();
 	ret = editor->Update();
-
-	log_parser->Update();
 
 	return ret;
 }
