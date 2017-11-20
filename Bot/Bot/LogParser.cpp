@@ -24,6 +24,12 @@ void LogParser::Update() //Doesn't work
 	fseek(p_file, 0, SEEK_END);
 	long f_size = ftell(p_file);
 
+	if (f_size == file_pointer || f_size == 0)
+	{
+		fclose(p_file);
+		return;
+	}
+
 	long new_size = f_size - file_pointer;
 	char* buf = new char[new_size*sizeof(char)];
 	std::string buf_s;
@@ -50,7 +56,7 @@ void LogParser::Update() //Doesn't work
 			{
 				std::string line = buf_s.substr(sb_pointer, se_pointer - sb_pointer);
 				MSG_INFO("%s", line.data());
-				sb_pointer = se_pointer+1;
+				sb_pointer = se_pointer+2;
 			}
 		}
 	}

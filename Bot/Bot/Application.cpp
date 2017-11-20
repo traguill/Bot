@@ -72,6 +72,8 @@ bool Application::Update(float dt)
 	input->Update();
 	ret = editor->Update();
 
+	log_parser->Update();
+
 	return ret;
 }
 
