@@ -31,6 +31,8 @@ public:
 	std::string GetPlayerClass(const std::string& card_id);
 	std::string GetType(const std::string& card_id);
 
+	CardObj* GetCardObj(const std::string& card_id);
+
 private:
 	std::map<std::string, CardObj*> cards_list;
 };

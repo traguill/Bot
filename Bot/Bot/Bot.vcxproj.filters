@@ -168,6 +168,9 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files\H34rth5t0n3</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\H34rth5t0n3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
@@ -288,6 +291,9 @@
       <Filter>Source Files\H34rth5t0n3</Filter>
     </ClInclude>
     <ClInclude Include="CardTypes.h">
+      <Filter>Source Files\H34rth5t0n3</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>Source Files\H34rth5t0n3</Filter>
     </ClInclude>
   </ItemGroup>

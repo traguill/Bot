@@ -101,3 +101,13 @@ std::string CardsDB::GetType(const std::string & card_id)
 	}
 	return std::string();
 }
+
+CardObj* CardsDB::GetCardObj(const std::string & card_id)
+{
+	map<std::string, CardObj*>::iterator it = cards_list.find(card_id);
+	if (it != cards_list.end())
+	{
+		return it->second;
+	}
+	return nullptr;
+}
